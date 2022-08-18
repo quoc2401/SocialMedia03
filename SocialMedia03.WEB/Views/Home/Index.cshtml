@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Base";
+}
+
+<div class="home-content">
+    <div class="create-post card card-body">
+        <div class="d-flex align-items-center mb-3">
+            <div>
+                <a href="#"> <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt=""> </a>
+            </div>
+            <div class="btn-post w-100 d-flex align-items-center btn-show--post">
+                <span class="pe-4 border-0 text-secondary">Bạn đang nghĩ gì thế?</input>
+            </div>
+        </div>
+
+        <div class="photo-post">
+            <div class="photo-post--item py-1 px-2 mb-0 text-secondary btn-show--post"> 
+                <i class="fa-solid fa-image me-1 photo-icon"></i>
+                Ảnh
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
+        <div class="spinner-border text-muted"></div>
+    </div>
+    <div id="feeds-container">
+        <div class="post" id="post1">     
+                <div class="card post--item">
+                    <div class="card-header border-0 pb-0 pt-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-start">
+                                <div class="me-2">
+                                    <a href="${ctxPath}/user/${post.userId.id}">
+                                        <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="">
+                                    </a>
+                                </div>
+                                <!-- Info -->
+                                <div>
+                                    <div class="nav nav-divider">
+                                        <h6 class="nav-item card-title mb-0">
+                                            <a href="${ctxPath}/user/${post.userId.id}">UserLastname UserFirstname</a>
+                                        </h6>
+                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Menu-->
+                            <div class="dropdown">
+                                <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">
+                                            Chỉnh sửa bài viết
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="deletePost(${post.id}, this)">
+                                            Xóa bài viết
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="modalArticleReport(${post.id}, 'POST')">
+                                            Báo cáo
+                                        </a>
+                                    </li>
+                                        
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body pb-2">
+                        <p class="post--content mb-3 content--hashtag post-${post.id}">
+                           content
+                        </p>
+        
+                        
+                        <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="Post image" onclick="showFull(this)">
+                       
+
+                        <div class="line"></div>
+
+                        <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
+                            <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
+                                <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}', this)">
+                                    @*${listUserReact ? `<div class="list-user-liked">${listUserReact}</div>` : ``}*@
+                                    <div class="heart-like-button"></div>
+                                    <span class="post--action-text ms-2">Thích (<span id="likeCounter">0</span>)</span>
+                                </div>
+                            </div>
+                            <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
+                                <div class="post--action-hover" onclick="showComment(this, ${post.id})">
+                                    <i class="fa-regular fa-message post--action-icon"></i>
+                                    <span class="post--action-text ms-2">Bình luận</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <div class="d-flex align-items-center my-2">
+                                <div class="me-2">
+                                    <a href="#">
+                                        <img class="comment--avatar rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="">
+                                    </a>
+                                </div>
+                                <form class="w-100" onsubmit="addComment('${post.id}', this)" id="commentForm">
+                                    <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
+                                </form>
+                            </div>
+                            <div class="text-center mt-3 comment-loading" style="display:none;">
+                                <div class="spinner-border text-muted"></div>
+                            </div>
+                            <div id="commentedComment" class="flex">
+                                
+                            </div>
+                            
+                            <!--show more comment-->
+                            <div class="show-more-comment">
+                                <param id="commentPage" value="1"/>
+                                <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
+                                <span>
+                                    <span id="showedCommentLength"></span>/<span id="commentSetLength">${post.commentSetLength}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <param id="post${post.id}OwnerId" value="${post.userId.id}"/>
+            </div>
+    </div>
+
+    <div class="text-center mt-3 post-loading" id="loadingBottom">
+        <div class="spinner-border text-muted"></div>
+    </div>
+
+    <!--modal create post-->
+    <div id="modalCreatePost" class="modal modal-post">
+        <div class="modal-container modal-container-post">
+            <div class="modal-header">
+                <h5 class="my-2">Thêm bài viết</h5>
+                <div class="modal--close modal--close-post">
+                    <i class="fa-solid fa-xmark p-2"></i>
+                </div>
+            </div>
+
+            <div class="modal-body ">
+                <div class="d-flex mb-3">
+                    <div>
+                        <a href="#"> <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt=""> </a>
+                    </div>
+                    <form class="w-100">
+                        <textarea id="statusContent" class="form-control ms-2 pe-4 border-0 theSelector" rows="2" placeholder="Bạn đang nghĩ gì thế?" style="height: 115px;"></textarea>
+                    </form>
+                </div>
+
+                <div class="dropzone card shadow-none w-100">
+                    <div class="d-flex modal--remove-img justify-content-end" onclick="removeImg(this)">
+                        <i class="fa-solid fa-xmark p-2"></i>
+                    </div>
+                    <label class="d-flex align-items-center justify-content-center" style="cursor: pointer;">
+                        <img class="imagePreview" id="uploadPreview" />
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <i class="fa-solid fa-images images-icon"></i>
+                                <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
+                            </div>
+                        </div>
+                        <input id="uploadImage" type='file' name='upload-image' class='upload-image' onchange="previewImage(this)" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-danger me-2 modal--close-post">Huỷ</button>
+                <button type="button" class="btn btn-success" onclick="createPost()">Đăng</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
+        <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+            <img id="img01" style="max-width:100%; max-height:100vh;">
+        </div>
+    </div>
+</div>
