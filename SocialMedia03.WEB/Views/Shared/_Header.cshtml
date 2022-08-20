@@ -42,15 +42,12 @@
                     </li>
 
                     <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                    <c:if test="${sessionScope.currentUser.getUserRole() == 'ROLE_ADMIN'}">
                         <li class="nav-item px-2">
-                            <c:url value="/admin" var="adminUrl" />
                             <a class="nav-link" href="${adminUrl}" id="chartMenu">
                                 <i class="fa-solid fa-chart-simple menu-icon"></i>
                                 Thống kê & báo cáo
                             </a>
                         </li>
-                    </c:if>
 
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="notifyMenu">
@@ -201,12 +198,12 @@
     </nav>
 </header>
 
-<script src="<c:url value="/resources/js/notification.js" />"></script>
+<script src="~/js/notification.js"></script>
 <script>
     $(function () {
-        getNotifs();
-        currentUserId = '${sessionScope.currentUser.getId()}';
+        //getNotifs();
+        //currentUserId = '${sessionScope.currentUser.getId()}';
     });
 </script>
-<script src="<c:url value="/resources/js/websocket.js"/>"></script>
+@*<script src="~/js/websocket.js"></script>*@
 

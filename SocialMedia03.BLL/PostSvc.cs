@@ -31,6 +31,10 @@ namespace SocialMedia03.BLL
             return _rep.All.ToList();
         }
 
+        public List<Post> GetPost(int page, string kw)
+        {
+            return _rep.GetPost(page, kw);
+        }
 
     }
 }

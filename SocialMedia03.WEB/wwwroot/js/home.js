@@ -30,7 +30,7 @@ function loadPosts() {
 
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/posts?page=${postPage}`,
+        url: `/api/post/feeds?page=${postPage}`,
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
