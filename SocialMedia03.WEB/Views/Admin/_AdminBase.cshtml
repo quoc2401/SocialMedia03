@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "_Base";
+}
+
+<div class="main admin-wrap">
+<div class="leftside-menu menuitem-active">
+    <div class="admin-sidebar--close" onclick="closeSideBar()">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="h-100 show" id="leftside-menu-container" data-simplebar="init">
+        <!--- Sidemenu -->
+        <ul class="side-nav">
+            <li class="side-nav-item">
+                <a href="/admin" class="side-nav-link">
+                    <i class="fa-solid fa-chart-simple me-2"></i>
+                    <span>Thống kê</span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarReport" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">
+                    <i class="fa-solid fa-flag me-2"></i>
+                    <span>Báo cáo</span>
+                </a>
+                <div class="collapse" id="sidebarReport">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="/admin/post-reports" class="side-nav-link">
+                                <i class="fa-solid fa-file-lines me-2"></i>
+                                Báo cáo bài viết
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/user-reports" class="side-nav-link">
+                                <i class="fa-solid fa-user me-2"></i>
+                                Báo cáo người dùng
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="content-container">
+                
+    @RenderBody()
+
+    <footer class="footer-admin">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <script>document.write(new Date().getFullYear());</script> © SharingHope
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end footer-links">
+                        <a target="_blank" href="https://github.com/CongSang/SharingHope">Contact us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="~/js/main.js"></script>
+<script src="~/js/admin.js"></script>
+<script src="~/js/search.js"></script>
+<script src="~/js/chat.js"></script>

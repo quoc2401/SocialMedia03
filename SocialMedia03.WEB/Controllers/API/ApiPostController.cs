@@ -4,7 +4,7 @@ using SocialMedia03.Common.Res;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SocialMedia03.WEB.Controllers
+namespace SocialMedia03.WEB.Controllers.API
 {
     [Route("api/post")]
     [ApiController]
@@ -13,9 +13,9 @@ namespace SocialMedia03.WEB.Controllers
         private PostSvc postSvc = new PostSvc();
         // GET: api/post/feeds
         [HttpGet("feeds")]
-        public IActionResult GetPosts(int page, string? kw="")
+        public IActionResult GetPosts(int page, string? kw = "")
         {
-            return Ok(this.postSvc.GetPost(page,kw));
+            return Ok(postSvc.GetPost(page, kw));
         }
 
         // GET api/post/5
@@ -23,7 +23,7 @@ namespace SocialMedia03.WEB.Controllers
         public IActionResult Get(int id)
         {
             SingleRes res = new SingleRes();
-            res.Data = this.postSvc.Get(id);
+            res.Data = postSvc.Get(id);
             return Ok(res);
         }
 

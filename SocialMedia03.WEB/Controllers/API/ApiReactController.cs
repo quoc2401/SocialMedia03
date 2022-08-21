@@ -4,7 +4,7 @@ using SocialMedia03.BLL;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 #pragma warning disable CS8629 // Nullable value type may be null.
 
-namespace SocialMedia03.WEB.Controllers
+namespace SocialMedia03.WEB.Controllers.API
 {
     [Route("api/react")]
     [ApiController]
@@ -29,8 +29,8 @@ namespace SocialMedia03.WEB.Controllers
         [HttpPost("add")]
         public void CreateReact(int? postId, int? commentId)
         {
-            
-            int currentUserId = (int)( HttpContext.Session.GetInt32("currentUserId") == null ? 0 
+
+            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
                 : HttpContext.Session.GetInt32("currentUserId"));
 
             ReactSvc.CreateReact(postId, commentId, currentUserId);

@@ -3,7 +3,7 @@ using SocialMedia03.BLL;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SocialMedia03.WEB.Controllers
+namespace SocialMedia03.WEB.Controllers.API
 {
     [Route("api/comment")]
     [ApiController]
@@ -12,7 +12,7 @@ namespace SocialMedia03.WEB.Controllers
         private CommentSvc CommentSvc = new CommentSvc();
         // GET: api/comment?params
         [HttpGet]
-        public IActionResult GetCommentByPost(int postId, int? page=0)
+        public IActionResult GetCommentByPost(int postId, int? page = 0)
         {
             return Ok(CommentSvc.GetCommentsByPost(postId, page));
         }
