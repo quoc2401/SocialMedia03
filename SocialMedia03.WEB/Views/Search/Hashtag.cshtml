@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div>
+    <div class="hashtag-header">
+        <div class="hashtag-name-container">#@ViewBag.Hashtag</div>
+        <div class="hashtag-name-container-desciption mb-3"></div>
+        <div class="justify-content-center align-items-center mb-3" style="display: flex">
+            <img src="https://res.cloudinary.com/dynupxxry/image/upload/v1660150941/netflix/pixel-cat_tueoj0.gif" width="70px" height="70px" alt="No data"/>
+        </div>
+    </div>
+    <div class="home-content row justify-content-center container mx-auto g-0 pb-5">
+        <div class="text-center mt-3 post-loading" id="loadingTop" style="display:none;">
+            <div class="spinner-border text-muted"></div>
+        </div>
+        <div id="feeds-container" class="col-sm-12 col-md-12 col-lg-6">
+
+
+            <div class="text-center mt-3 post-loading" id="loadingBottom">
+                <div class="spinner-border text-muted"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
+    <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
+        <img id="img01" style="max-width:100%; max-height:100vh;">
+    </div>
+</div>
+<script src="~/js/search.js"></script>
+<script src="~/js/feeds.js"></script>
+<script src="~/js/comment.js"></script>
+<script src="~/js/post.js"></script>
+<script>
+            window.onload = function () {
+                //$('.content').hide();
+                currentUserId = '${sessionScope.currentUser.id}';
+                postPage = 1;
+                disableLoadMorePost = false;
+                $('#userNotification').on("click", function () {
+                    $('.notif-count').css('opacity', '0');
+                });
+
+                hashTagSearch();
+            };
+            $("textarea").hashtags();
+</script>

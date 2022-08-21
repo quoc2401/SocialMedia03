@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://kit.fontawesome.com/b448f5f567.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="~/js/hashtag/jquery.hashtags.js"></script>
     <script src="~/js/hashtag/jquery.autosize.js"></script>
     <script src="~/js/main.js"></script>
@@ -23,25 +25,18 @@
     <link rel="stylesheet" href="~/css/notification.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/userinfo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialMedia03.WEB.styles.css" asp-append-version="true" />
 </head>
 <body> 
     <div class="main">
         <partial name="_Header" />
         <div class="container content">
-            <div class="row g-3">
-                <div class="d-lg-block d-none col-lg-3">
-                    @*<partial name="LeftSideBar" />*@
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 g-3">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
-                <div class="d-lg-block d-none col-lg-3 sidebar-right">
-                    @*<partial name="RightSideBar" />*@
-                </div>
-            </div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+            
         </div>
         <partial name="_Footer" />
     </div>
