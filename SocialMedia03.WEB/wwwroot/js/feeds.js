@@ -33,15 +33,15 @@ function loadFeeds(posts) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
         let listUserReact;
-        if(post.reactSet.length <= 10 && post.reactSet.length > 0) {
-                 listUserReact = post.reactSet.map(react => {
+        if (post.reacts.length <= 10 && post.reacts.length > 0) {
+                 listUserReact = post.reacts.map(react => {
                 return `<p class="user-liked">${react.user.lastname} ${react.user.firstname}</p>`;
             }).join('');
-        } else if (post.reactSet.length > 10) {
+        } else if (post.reacts.length > 10) {
             for(let i = 0; i < 10; i++) {
-                listUserReact += `<p class="user-liked">${post.reactSet[i].lastname} ${react.user.firstname}</p>`;
+                listUserReact += `<p class="user-liked">${post.reacts[i].lastname} ${react.user.firstname}</p>`;
             }
-            listUserReact += `<p class="user-liked">và ${post.reactSet.length - 10} người khác...</p>`;
+            listUserReact += `<p class="user-liked">và ${post.reacts.length - 10} người khác...</p>`;
         }
         var html = `<div class="post" id="post${post.id}">     
                 <div class="card post--item">
@@ -49,15 +49,15 @@ function loadFeeds(posts) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}/user/${post.userId.id}">
-                                        <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
+                                    <a href="${ctxPath}/user/${post.user.id}">
+                                        <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
                                 <!-- Info -->
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="${ctxPath}/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -69,7 +69,7 @@ function loadFeeds(posts) {
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                    ${(currentUserId === post.userId.id) ?
+                                    ${(currentUserId === post.user.id) ?
                                             `<li>
                                                 <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">
                                                     Chỉnh sửa bài viết
@@ -107,15 +107,15 @@ function loadFeeds(posts) {
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
                                 <div class="post--action-hover position-relative" id="likeAction" onclick="createReact('${post.id}', this)">
                                     ${listUserReact ? `<div class="list-user-liked">${listUserReact}</div>` : ``}
-                                    ${((post.reactSet).length === 0) ? (
+                                    ${((post.reacts).length === 0) ? (
                                             `<div class="heart-like-button"></div>`
                                             ) : (
-                                            ((post.reactSet).some((react) => react.user.id === currentUserId)) ?
+                                        ((post.reacts).some((react) => react.user.id === currentUserId)) ?
                                                 `<div class="heart-like-button liked"></div>`
                                                 : `<div class="heart-like-button"></div>`
                                             )
                                     }
-                                    <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reactSet.length}</span>)</span>
+                                    <span class="post--action-text ms-2">Thích (<span id="likeCounter">${post.reacts.length}</span>)</span>
                                 </div>
                             </div>
                             <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
@@ -156,7 +156,7 @@ function loadFeeds(posts) {
                         </div>
                     </div>
                 </div>
-                <param id="post${post.id}OwnerId" value="${post.userId.id}"/>
+                <param id="post${post.id}OwnerId" value="${post.user.id}"/>
             </div>
             `;
 
@@ -185,15 +185,15 @@ function prependFeeds(post) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}/user/${post.userId.id}">
-                                        <img class="avatar-img rounded-circle" src="${post.userId.avatar}" alt="">
+                                    <a href="${ctxPath}/user/${post.user.id}">
+                                        <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
                                 <!-- Info -->
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/${ctxPath}/user/${post.userId.id}">${post.userId.lastname} ${post.userId.firstname}</a>
+                                            <a href="/${ctxPath}/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -291,22 +291,22 @@ function loadAuctionFeeds(auctions, container) {
     $.each(auctions, function (index, auction) {
         let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
         let html = `
-            ${(auction.userId.id === currentUserId) ? `
+            ${(auction.user.id === currentUserId) ? `
                 <div class="post auction-post-${auction.id}">
                     <div class="card post--item">
                         <div class="card-header border-0 pb-0 pt-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}/user/${auction.userId.id}">
-                                            <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
+                                        <a href="${ctxPath}/user/${auction.user.id}">
+                                            <img class="avatar-img rounded-circle" src="${auction.user.avatar}" alt="">
                                         </a>
                                     </div>
                                     <!-- Info -->
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
                                             </h6>
                                             <span id="auction-timeFromNow" class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                             <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
@@ -407,16 +407,16 @@ function loadAuctionFeeds(auctions, container) {
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}/user/${auction.userId.id}">
+                                        <a href="${ctxPath}/user/${auction.user.id}">
                                             <c:url value="/resources/img/non-avatar.png" var="a" />
-                                            <img class="avatar-img rounded-circle" src="${auction.userId.avatar}" alt="">
+                                            <img class="avatar-img rounded-circle" src="${auction.user.avatar}" alt="">
                                         </a>
                                     </div>
                                     <!-- Info -->
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}/user/${auction.userId.id}">${auction.userId.lastname} ${auction.userId.firstname}</a>
+                                                <a href="${ctxPath}/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                         </div>
@@ -486,14 +486,14 @@ function loadAuctionFeeds(auctions, container) {
                                     `${userAuction && `
                                             <div class="d-flex comment--item py-2">
                                                 <div class="me-2">
-                                                    <a href="${ctxPath}/user/${auction.userId.id}">
+                                                    <a href="${ctxPath}/user/${auction.user.id}">
                                                         <img class="comment--avatar rounded-circle" src="${userAuction[0].user.avatar}" alt="avatar">
                                                     </a>
                                                 </div>
                                                  <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${auction.userId.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${auction.user.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
                                                           <small>${moment(userAuction[0].bidDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">

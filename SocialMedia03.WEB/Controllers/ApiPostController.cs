@@ -13,8 +13,7 @@ namespace SocialMedia03.WEB.Controllers
         private PostSvc postSvc = new PostSvc();
         // GET: api/post/feeds
         [HttpGet("feeds")]
-        public IActionResult GetPosts([FromQuery(Name = "page")] int page,
-                [FromQuery(Name = "kw")] string kw="")
+        public IActionResult GetPosts(int page, string? kw="")
         {
             return Ok(this.postSvc.GetPost(page,kw));
         }

@@ -1,4 +1,5 @@
-﻿<header class="navbar-light fixed-top header-static">
+﻿
+<header class="navbar-light fixed-top header-static">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#Home">
@@ -75,7 +76,7 @@
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
                             <img src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="avatar" class="user-img me-2" />
-                            User name
+                            @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end drop" aria-labelledby="userMenu">
@@ -177,7 +178,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="dropdown-item">
-                            <span>Xin chào **User** </span>
+                            <span>Xin chào @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname") </span>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="#Userpagelink">

@@ -25,7 +25,7 @@
         <div class="spinner-border text-muted"></div>
     </div>
     <div id="feeds-container">
-        <div class="post" id="post1">     
+        <div class="post" id="postExample">     
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
@@ -39,9 +39,11 @@
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="${ctxPath}/user/${post.userId.id}">UserLastname UserFirstname</a>
+                                            <a href="${ctxPath}/user/@Context.Session.GetInt32("currentUserId")">
+                                                @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")    
+                                            </a>
                                         </h6>
-                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
+                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">xx phut truoc</span>
                                     </div>
                                 </div>
                             </div>
@@ -193,10 +195,10 @@
 
 <script>
      $(function () {
-        //currentUserId = '${sessionScope.currentUser.id}';
+        currentUserId = @Context.Session.GetInt32("currentUserId");
         loadPosts();
         //$("textarea").hashtags();
-
+        console.log(currentUserId);
         disableLoadMorePost = false;
         $('#userNotification').on("click", function () {
             $('.notif-count').css('opacity', '0');

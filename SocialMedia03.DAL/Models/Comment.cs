@@ -20,6 +20,7 @@ namespace SocialMedia03.DAL.Models
         public int? ParentId { get; set; }
 
         public virtual Comment? Parent { get; set; }
+        public virtual Post? Post { get; set; }
         public virtual User User { get; set; } = null!;
         public virtual ICollection<Comment> InverseParent { get; set; }
         public virtual ICollection<Notif> Notifs { get; set; }
