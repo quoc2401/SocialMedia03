@@ -12,25 +12,44 @@ namespace SocialMedia03.BLL
 {
     public class PostSvc : GenericSvc<PostRep, Post>
     {
+        private UserSvc UserSvc;
+        private ReactSvc ReactSvc;
+        private CommentSvc CommentSvc;
         public PostSvc()
         {
+            ReactSvc = new ReactSvc();
+            UserSvc = new UserSvc();
+            CommentSvc = new CommentSvc();
         }
 
-        public override SingleRes Get(int id)
+        public override Post Get(int id)
         {
-            var res = new SingleRes();
-            res.Data = _rep.Get(id);
-
-            return res;
+            return _rep.Get(id);
         }
 
-        public List<Post> GetAll()
+        public HashSet<Post> GetAll()
         {
+            HashSet<Post> rs = _rep.All.ToHashSet();
+            //foreach(var p in rs)
+            //{
+            //    p.User = UserSvc.Get(p.UserId);
+            //}
 
-
-            return _rep.All.ToList();
+            return rs;
         }
 
+        public HashSet<Post> GetPost(int page, string kw)
+        {
+            HashSet<Post> rs = _rep.GetPost(page, kw);
+            foreach (var p in rs)
+            {
+                p.User = UserSvc.Get(p.UserId);
+                p.Reacts = ReactSvc.GetReactsByPost(p.Id);
+                p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
+            }
+
+            return rs;
+        }
 
     }
 }

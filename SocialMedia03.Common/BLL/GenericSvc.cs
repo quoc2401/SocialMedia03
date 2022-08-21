@@ -72,7 +72,7 @@ namespace SocialMedia03.Common.BLL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        public virtual SingleRes Get(int id)
+        public virtual T Get(int id)
         {
             return null;
         }

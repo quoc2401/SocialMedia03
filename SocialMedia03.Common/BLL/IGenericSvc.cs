@@ -39,7 +39,7 @@ namespace SocialMedia03.Common.BLL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        SingleRes Get(int id);
+        T Get(int id);
 
         /// <summary>
         /// Read single object

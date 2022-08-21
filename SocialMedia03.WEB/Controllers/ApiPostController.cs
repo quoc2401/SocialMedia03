@@ -11,11 +11,11 @@ namespace SocialMedia03.WEB.Controllers
     public class ApiPostController : ControllerBase
     {
         private PostSvc postSvc = new PostSvc();
-        // GET: api/post
+        // GET: api/post/feeds
         [HttpGet("feeds")]
-        public IActionResult GetPosts()
+        public IActionResult GetPosts(int page, string? kw="")
         {
-            return Ok(this.postSvc.GetAll());
+            return Ok(this.postSvc.GetPost(page,kw));
         }
 
         // GET api/post/5

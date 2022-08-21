@@ -60,6 +60,11 @@ namespace SocialMedia03.DAL.Models
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_Comment_Reply");
 
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.PostId)
+                    .HasConstraintName("FK_Comment_Post");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId)
@@ -71,9 +76,7 @@ namespace SocialMedia03.DAL.Models
             {
                 entity.ToTable("Notif");
 
-                entity.HasIndex(e => new { e.CommentId, e.UserId, e.Type }, "Unique_Comment_Notif");
-
-                entity.HasIndex(e => new { e.UserId, e.PostId, e.Type }, "Unique_Post_Notif");
+                entity.HasIndex(e => new { e.UserId, e.PostId, e.Type, e.CommentId }, "Unique_Key_Notif");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -141,10 +144,7 @@ namespace SocialMedia03.DAL.Models
             {
                 entity.ToTable("React");
 
-                entity.HasIndex(e => new { e.UserId, e.CommentId }, "Unique_Key_React_Comment")
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.PostId, e.UserId }, "Unique_Key_React_Post")
+                entity.HasIndex(e => new { e.PostId, e.UserId, e.CommentId }, "Unique_Key_React")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");

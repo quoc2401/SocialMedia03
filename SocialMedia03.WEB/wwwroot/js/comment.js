@@ -45,7 +45,7 @@ function createReact(currentPostId, element) {
 
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}/api/delete-react/${currentPostId}`,
+            url: `${ctxPath}/api/react/delete?postId=${currentPostId}`,
             dataType: 'json'
         });
     } else {
@@ -55,7 +55,7 @@ function createReact(currentPostId, element) {
 
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-react/${currentPostId}`,
+            url: `${ctxPath}/api/react/add?postId=${currentPostId}`,
             dataType: 'json'
         });
     }
@@ -115,25 +115,25 @@ function loadComment(postId) {
 
     $.ajax({
             type: 'get',
-            url: `${ctxPath}/api/get-comments?page=` + commentPage + '&postId=' + postId,
+            url: `${ctxPath}/api/comment?page=` + commentPage + '&postId=' + postId,
             dataType: 'json',
             success: function (comments) {
+                currentPost.find('.comment-loading').css("display", "none");
+
                 let loadedCommentIds = $('.comment--item').map(function(){
                     return $(this).attr('id');
                 }).get();
-                
-                currentPost.find('.comment-loading').css("display", "none");
-                
-                let userComment = comments.filter(c => c.userId.id === currentUserId
-                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
-                userComment.sort(function (a, b) {
-                    return new Date(b.commentDate) - new Date(a.commentDate);
+
+                comments = comments.sort(function (a, b) {
+                    return new Date(b.createdDate) - new Date(a.createdDate);
                 });
-                let othersComment = comments.filter(c => c.userId.id !== currentUserId
-                        && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
-                othersComment.sort(function (a, b) {
-                    return new Date(b.commentDate) - new Date(a.commentDate);
-                });
+
+                let userComment = comments.filter(c => c.user.id === currentUserId
+                    && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
+                    
+                let othersComment = comments.filter(c => c.user.id !== currentUserId
+                    && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
+                console.log(loadedCommentIds);
                 
                 $(commentedComment).append(`${(userComment).map((comment, index) => {
                     return commentItem(comment, postId);
@@ -174,7 +174,7 @@ function loadComment(postId) {
 
 function commentItem(comment, postId) {
     let currentUserAvatar = $("#userAvatar").attr("src");
-    let reactSetLength = comment.reactCommentSet === null ? 0 : comment.reactCommentSet.length;
+    let reactSetLength = comment.reacts === null ? 0 : comment.reacts.length;
     let postOwnerId = $(`#post${postId}OwnerId`).val();
     let subLength = comment.commentSetLength;
     
@@ -182,18 +182,18 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="${ctxPath}/user/${comment.userId.id}">
-                        <img class="comment--avatar rounded-circle" src="${comment.userId.avatar}" alt="avatar">
+                    <a href="${ctxPath}/user/${comment.user.id}">
+                        <img class="comment--avatar rounded-circle" src="${comment.user.avatar}" alt="avatar">
                     </a>
                 </div>
                 <div class="comment--item-content">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
-                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="${ctxPath}/user/${comment.userId.id}">${comment.userId.lastname} ${comment.userId.firstname}
-                                ${comment.userId.id === postOwnerId ?
+                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="${ctxPath}/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
+                                ${comment.user.id === postOwnerId ?
             `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>
-                            <small class="comment-date">${moment(comment.commentDate).fromNow()}</small>
+                            <small class="comment-date">${moment(comment.createdDate).fromNow()}</small>
                         </div>
                         <p class="small mb-0">
                             ${comment.content}
@@ -210,14 +210,14 @@ function commentItem(comment, postId) {
                       <div class="d-flex justify-content-end me-2">
                             ${reactSetLength === 0 ? `
                                 <div class="comment-like comment-like${comment.id}" onclick="likedComment(${comment.id})">Thích</div>` : (
-            (comment.reactCommentSet).some((react) => react.user.id === currentUserId) ?
+            (comment.reacts).some((react) => react.user.id === currentUserId) ?
             `<div class="comment-like comment-like${comment.id} liked" onclick="likedComment(${comment.id})">Ðã Thích</div>` :
             `<div class="comment-like comment-like${comment.id}" onclick="likedComment(${comment.id})">Thích</div>`
             )}
 
 
                             <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
-                            ${(currentUserId === comment.userId.id || currentUserId === postOwnerId) ?
+                            ${(currentUserId === comment.user.id || currentUserId === postOwnerId) ?
             `<div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
                   </div>
@@ -309,15 +309,15 @@ function loadReplies(commentId, postId) {
                 return $(this).attr('id');
             }).get();
 
-                let userComment = comments.filter(c => c.userId.id === currentUserId
+                let userComment = comments.filter(c => c.user.id === currentUserId
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 userComment.sort(function (a, b) {
-                    return new Date(b.commentDate) - new Date(a.commentDate);
+                    return new Date(b.createdDate) - new Date(a.createdDate);
                 });
-                let othersComment = comments.filter(c => c.userId.id !== currentUserId
+                let othersComment = comments.filter(c => c.user.id !== currentUserId
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 othersComment.sort(function (a, b) {
-                    return new Date(b.commentDate) - new Date(a.commentDate);
+                    return new Date(b.createdDate) - new Date(a.createdDate);
                 });
 
                 $(repliedComment).append(`${(userComment).map((comment, index) => {
