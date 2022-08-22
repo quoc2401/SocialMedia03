@@ -150,7 +150,7 @@ function deletePost(id, el) {
 
         $.ajax({
                 type: 'delete',
-                url: `${ctxPath}/api/delete-post/${id}`,
+                url: `/api/delete-post/${id}`,
                 dataType: 'json',
                 success: function () {
                     swal("Xóa bài viết thành công", {
@@ -212,7 +212,7 @@ function comfirmEditPost(id) {
                     }
                     $.ajax({
                         type: 'post',
-                        url: `${ctxPath}/api/post-img`,
+                        url: `/api/post-img`,
                         data: formData,
                         dataType : "json",
                         processData : false,
@@ -222,7 +222,7 @@ function comfirmEditPost(id) {
                     .done(function(data){
                         $.ajax({
                             type: 'put',
-                            url: `${ctxPath}/api/edit-post/${id}`,
+                            url: `/api/edit-post/${id}`,
                             data: JSON.stringify({
                                 'content':content,
                                 'hashtag': findHashtags(content),
@@ -257,7 +257,7 @@ function comfirmEditPost(id) {
         removeEditModal();
         $.ajax({
             type: 'put',
-            url: `${ctxPath}/api/edit-post/${id}`,
+            url: `/api/edit-post/${id}`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
@@ -293,7 +293,7 @@ function editStatus(id) {
     removeEditModal();
     $.ajax({
         type: 'put',
-        url: `${ctxPath}/api/edit-post/${id}`,
+        url: `/api/edit-post/${id}`,
         data: JSON.stringify({
             'content':content,
             'hashtag': findHashtags(content),
