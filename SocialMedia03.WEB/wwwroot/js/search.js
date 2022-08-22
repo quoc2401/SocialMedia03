@@ -7,9 +7,9 @@ function searchSubmit() {
     event.preventDefault();
     var inputVal = $('input[name="kw"]').val();
     if (inputVal.trim().charAt(0) === "#")
-        window.location = `${ctxPath}/hashtag/${inputVal.slice(1)}`;
+        window.location = `/hashtag/${inputVal.slice(1)}`;
     else
-        window.location = `${ctxPath}/search/top?kw=${inputVal}`;
+        window.location = `/search/top?kw=${inputVal}`;
 }
 
 function hashTagSearch() {
@@ -18,7 +18,7 @@ function hashTagSearch() {
 
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/posts?hashtag=${hashtag}&page=${postPage}`,
+        url: `/api/posts?hashtag=${hashtag}&page=${postPage}`,
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
@@ -49,7 +49,7 @@ function contentSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `${ctxPath}/api/posts?kw=${kw}&page=${postPage}`;
+    let url = `/api/posts?kw=${kw}&page=${postPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -81,7 +81,7 @@ function personSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `${ctxPath}/api/users?kw=${kw}&page=${personPage}`;
+    let url = `/api/users?kw=${kw}&page=${personPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -114,7 +114,7 @@ function auctionSearch(limit) {
     $(loadingBottom).css("display", "block");
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
-    let url = `${ctxPath}/api/auctions`;
+    let url = `/api/auctions`;
     let bool = (limit !== undefined);
     
     $.ajax({
@@ -216,7 +216,7 @@ function loadUserSearch(users) {
                             </div>
                             <div class="person-search-item-name">
                                 <h6 class="mb-0">
-                                    <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
+                                    <a href="/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
                                 </h6>
                             </div>
                         </div>

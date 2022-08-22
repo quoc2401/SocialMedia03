@@ -8,7 +8,7 @@ function getNotifs() {
     
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/get-notifs?page=${notifPage}`,
+        url: `/api/get-notifs?page=${notifPage}`,
         dataType: 'json',
         success: function (data) {
             if(data.length === 0)
@@ -71,19 +71,19 @@ function notifItem(notif) {
 
 function notifRedirect(targetId, notifId, type) {
     if (type === 'REACT_POST' || type === 'COMMENT_POST')
-        window.location = `${ctxPath}/posts/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
+        window.location = `/posts/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
     else if (type === 'REACT_COMMENT' || type === 'REPLY_COMMENT') {
         $.ajax({
             type: 'get',
-            url:`${ctxPath}/api/find-post/${targetId}`,
+            url:`/api/find-post/${targetId}`,
             dataType: 'json',
             success: function (data) {
-                window.location = `${ctxPath}/posts/${data.id}?comment_id=${targetId}&notif_id=${notifId}&notif_type=${type}&ref=notif`;
+                window.location = `/posts/${data.id}?comment_id=${targetId}&notif_id=${notifId}&notif_type=${type}&ref=notif`;
             }
         });
     }
     else {
-        window.location = `${ctxPath}/auctions/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
+        window.location = `/auctions/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
     }
 }
 
@@ -92,7 +92,7 @@ function loadCommentNotifRef(commentId) {
     
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/get-comment/${commentId}`,
+        url: `/api/get-comment/${commentId}`,
         dataType: 'json',
         success: function (data) {
             loadParents(data, postId);
