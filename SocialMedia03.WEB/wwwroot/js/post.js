@@ -57,43 +57,42 @@ function createPost() {
                     formData.append("file", file);
                 }
                 $.ajax({
-                    type: 'post',
-                    url: `${ctxPath}/api/post-img`,
+                    type: 'POST',
+                    url: `/api/post/image-upload`,
                     data: formData,
-                    dataType : "json",
-                    processData : false,
-                    cache : false,
-                    contentType : false
+                    dataType: "json",
+                    processData: false,
+                    cache: false,
+                    contentType: false
                 })
-                .done(function(data){
+                .done(function(res){
 
                     $.ajax({
-                        type: 'post',
-                        url: `${ctxPath}/api/create-post`,
+                        type: 'POST',
+                        url: `/api/post/add`,
                         data: JSON.stringify({
                             'content':content,
                             'hashtag': findHashtags(content),
-                            'imgUrl':data.url
+                            'imageUrl':res.data
                         }),
                         dataType : 'json',
                         contentType : 'application/json',
-                        success: function (data) {
+                        success: function (post) {
                             $(loadingTop).css('display', 'none');
                             $('#statusContent').val(null);
                             $('.highlighter').html('');
                             $('uploadImage').val(null);
                             $('#uploadPreview').attr("src", "");
-                            prependFeeds(data);
+                            prependFeeds(post);
                         }
                     })
-                    .fail(function(){
+                        .fail(function (data) {
                         $(loadingTop).css('display', 'none');
                         $(feedContainer).prepend(errorHtml);
                     });
                 })
-                .fail(function(){
+                    .fail(function (data) {
                     $(loadingTop).css('display', 'none');
-                    $(feedContainer).prepend(errorHtml);
                 });
 
                 $('.modal-post').removeClass('open');
@@ -109,11 +108,11 @@ function createStatus() {
     var content = $('#statusContent').val();
     $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-post`,
+            url: `/api/post/add`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
-                'imgUrl':''
+                'imageUrl':''
             }),
             dataType : 'json',
             contentType : 'application/json',

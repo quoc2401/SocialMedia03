@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using SocialMedia03.Common;
 using SocialMedia03.Common.DAL;
 using SocialMedia03.DAL.Models;
@@ -18,7 +19,7 @@ namespace SocialMedia03.DAL
            
         }
 
-        public HashSet<Post> GetPost(int page, string kw)
+        public HashSet<Post> Get(int page, string kw)
         {
             HashSet<Post> rs = new HashSet<Post>();
             int size = configs.POST_PAGE_SIZE;
@@ -39,5 +40,21 @@ namespace SocialMedia03.DAL
             return rs;
         }
 
+        public bool Create(Post p)
+        {
+            try
+            {
+                base.Context.Entry(p).State = p.Id == 0 ?
+                    EntityState.Added : EntityState.Modified;
+                base.Context.SaveChanges();
+
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+                return false;
+            }
+        }
     }
 }
