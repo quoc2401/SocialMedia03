@@ -21,8 +21,7 @@ namespace SocialMedia03.WEB.Controllers
 
         public IActionResult Index()
         {
-            User currentUser = UserSvc.Get(3);
-            HttpContext.Session.SetString("currentUser", JsonConvert.SerializeObject(UserSvc.Get(3)));
+            User currentUser = UserSvc.Get(6);
             HttpContext.Session.SetInt32("currentUserId", currentUser.Id);
             HttpContext.Session.SetString("currentUserLastname", currentUser.Lastname);
             HttpContext.Session.SetString("currentUserFirstname", currentUser.Firstname);

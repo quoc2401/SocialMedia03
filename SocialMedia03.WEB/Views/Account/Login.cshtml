@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "_Base";
+}
+
+<div class="login">
+    <div class="container" style="height: 70vh;">
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center w-100" style="height: 100%;">
+            <div class="hide" style="width: 500px; max-width: 100%">
+                <img src="~/img/bg.png" class="bg-login" />
+            </div>
+
+            <div class="form-login">
+                        
+                <form action="" id="loginForm">
+                    <div class="alert alert-danger show-err" style="display: none;"></div>
+                    <div class="form-group text-start">
+                        <input type="text" id="email" name="email" placeholder="Email"  class="form-control"/>
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <input type="password" id="password" name="password" placeholder="Mật khẩu" class="form-control" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="b btn-login" value="Đăng nhập" />
+                    </div>
+                </form>
+
+                <p class="text-center my-2 text-secondary">Hoặc</p>
+                <a href="#">
+                    <div class="form-group">
+                        <button class="b btn-google text-white">
+                            <i class="fa-brands fa-google me-1"></i>
+                            Đăng nhập với Google
+                        </button>
+                    </div>
+                </a>
+
+                <a href="https://www.facebook.com/dialog/oauth?client_id=800114437619089&redirect_uri=http://localhost:8080/SharingHope/login-facebook&scope=email,public_profile,user_location,user_birthday,user_hometown">
+                    <div class="form-group">
+                        <button class="b btn-facebook text-white">
+                            <i class="fa-brands fa-facebook-f me-1"></i>
+                            Đăng nhập với Facebook
+                        </button>
+                    </div>
+                </a>
+
+                <div class="line"></div>
+
+                <div class="form-group">
+                    <button class="b btn-register text-white">
+                        <a href="/account/register">Tạo tài khoản mới</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/validate.js"></script>
+<script>
+    Validator({
+        form: '#loginForm',
+        formGroupSelector: '.form-group',
+        errSelector: '.err-validate',
+        rules: [
+            Validator.isRequired('#email'),
+            Validator.isEmail('#email'),
+            Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự')
+        ],
+        onSubmit: (data) => {
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/user/authenticate',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    Email: data.email,
+                    Password: data.password
+                }),
+                dataType: 'json',
+                success: function(data) {
+                    swal({
+                        title: "Đăng nhập thành công",
+                        icon: "success",
+                    })
+
+                    setTimeout(() => {
+                        window.location.replace("/");
+                    }, 1500)
+                }
+            }).fail((res) => {
+                $('.show-err').css("display", "block");
+                $('.show-err').text(res.responseJSON.message);
+            });
+        }
+    });
+</script>

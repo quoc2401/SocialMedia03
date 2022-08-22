@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SocialMedia03.DAL.Models
 {
@@ -17,6 +18,7 @@ namespace SocialMedia03.DAL.Models
         public int Id { get; set; }
         public string Uuid { get; set; } = null!;
         public string Email { get; set; } = null!;
+        [JsonIgnore]
         public string Password { get; set; } = null!;
         public string Firstname { get; set; } = null!;
         public string Lastname { get; set; } = null!;

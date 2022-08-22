@@ -1,0 +1,140 @@
+﻿@{
+    Layout = "_Base";
+}
+
+<div class="modal" style="background-color: #cfd9df !important">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="my-2">Đăng kí tài khoản️</h3>
+        </div>
+
+        <div class="modal-body ">
+            <div class="authentication register">
+                <form action="" class="form-register" enctype="multipart/form-data" id="form-register">
+                    <div class="form-group d-flex">
+                        <div class="text-start w-100 me-1">
+                            <input name="lastname" id="lastname" placeholder="Họ*" class="form-control-sm" />
+                            <div class="text-danger err-validate"></div>
+                        </div>
+                        <div class="text-start w-100" >
+                            <input name="firstname" id="firstname" placeholder="Tên*" class="form-control-sm" />
+                            <div class="text-danger err-validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-group text-start">
+                        <input name="email" placeholder="Email*" id="email" class="form-control-sm" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <input name="phone" placeholder="Số điện thoại*" id="phone" class="form-control-sm" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <label for="dateofbirth" id="dateofbirth" class="me-1 small">Ngày sinh<span class="text-danger">*</span></label>
+                        <input name="birthdate" type="date" id="dateofbirth" placeholder="Ngày sinh*" class="form-control-sm" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <input name="address" placeholder="Địa chỉ" class="form-control-sm" />
+                    </div>
+                    <div class="form-group d-flex">
+                        <input name="hometown" placeholder="Quê quán" class="form-control-sm me-1" />
+                        <input name="job" placeholder="Nghề nghiệp" class="form-control-sm" />
+                    </div>
+                    <div class="form-group text-start">
+                        <input type="password" name="password" placeholder="Mật khẩu*" id="password"  class="form-control-sm" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <input type="password" placeholder="Nhập lại mật khẩu*" id="password-confirm"  class="form-control-sm" />
+                        <div class="text-danger err-validate"></div>
+                    </div>
+                    <div class="form-group text-start">
+                        <label for="avatar" cssClass="me-1 small">Chọn ảnh đại diện</label>
+                        <input name="file" id="avatar" type="file" placeholder="" class="form-control-sm" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="b btn-register w-50">
+                            Đăng kí
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/validate.js"></script>
+<script>
+    Validator({
+        form: '#form-register',
+        formGroupSelector: '.form-group',
+        errSelector: '.err-validate',
+        rules: [
+            Validator.isRequired('#lastname'),
+            Validator.isRequired('#firstname'),
+            Validator.isRequired('#email'),
+            Validator.isEmail('#email'),
+            Validator.isDate('#dateofbirth'),
+            Validator.isRequired('#phone'),
+            Validator.isPhone('#phone'),
+            Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự'),
+            Validator.isRequired('#password-confirm'),
+            Validator.isConfirmed('#password-confirm', function () {
+                return document.querySelector('#form-register #password').value;
+            }, 'Mật khẩu nhập lại không chính xác')
+        ],
+        onSubmit: (data) => {
+            var formData = new FormData();
+            var fs = document.getElementById('uploadImage');
+            if(fs.files[0] !== undefined) {
+                var fileType = fs.files[0]['type'];
+                var validImageTypes = ['image/jpeg', 'image/png'];
+                if (!validImageTypes.includes(fileType)) {
+                    alert("Không thể nhận loại file này!");
+                }
+                else 
+                {
+                    for (const file of fs.files) {
+                        formData.append("file", file);
+                    }
+                }
+
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/user/register',
+                processData : false,
+                cache : false,
+                data: JSON.stringify({
+                    Email: data.email,
+                    Password: data.password,
+                    Firstname: data.firstname,
+                    Lastname: data.lastname,
+                    Birthday: data.birthday,
+                    Address: data.address,
+                    Hometown: data.hometown,
+                    Phone: data.phone,
+                    Avatar: formData,
+                }),
+                dataType: 'json',
+                success: function(data) {
+                    swal({
+                        title: "Đăng kí thành công",
+                        icon: "success",
+                    })
+
+                    setTimeout(() => {
+                        window.location.replace("/account/login");
+                    }, 1500)
+                }
+            }).fail((res) => {
+                swal({
+                    title: "Đăng kí thất bại",
+                    icon: "warning",
+                })
+            });
+        }
+    });
+</script>
