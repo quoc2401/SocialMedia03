@@ -1,4 +1,5 @@
 ﻿using SocialMedia03.Common.BLL;
+using SocialMedia03.Common.Req;
 using SocialMedia03.Common.Res;
 using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
@@ -38,9 +39,9 @@ namespace SocialMedia03.BLL
             return rs;
         }
 
-        public HashSet<Post> GetPost(int page, string kw)
+        public HashSet<Post> Get(int page, string kw)
         {
-            HashSet<Post> rs = _rep.GetPost(page, kw);
+            HashSet<Post> rs = _rep.Get(page, kw);
             foreach (var p in rs)
             {
                 p.User = UserSvc.Get(p.UserId);
@@ -51,5 +52,18 @@ namespace SocialMedia03.BLL
             return rs;
         }
 
+        public Post Create(PostRequest req, User creator)
+        {
+            Post p = new Post();
+            p.Content = req.Content;
+            p.Image = req.ImageUrl;
+            p.UserId = creator.Id;
+            p.User = creator;
+            p.Hashtag = req.Hashtag;
+            if (_rep.Create(p) == true)
+                return p;
+
+            return null;
+        }
     }
 }

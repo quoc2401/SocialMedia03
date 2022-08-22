@@ -55,7 +55,7 @@ namespace SocialMedia03.BLL
             react.CreatedDate = DateTime.Now;
             react.Type = 1;
 
-            return _rep.CreateReact(react);
+            return _rep.Create(react);
         }
 
         public bool DeleteReact(int? postId, int? commentId, int userId)
@@ -69,7 +69,7 @@ namespace SocialMedia03.BLL
                 react = _rep.GetReactComment((int)commentId, userId);
             }
 
-            return _rep.DeleteReact(react);
+            return _rep.Delete(react);
         }
     }
 }

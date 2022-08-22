@@ -5,6 +5,7 @@ namespace SocialMedia03.DAL.Models
 {
     public partial class User
     {
+        
         public User()
         {
             Comments = new HashSet<Comment>();
