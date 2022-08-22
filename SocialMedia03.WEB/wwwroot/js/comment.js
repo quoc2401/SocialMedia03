@@ -14,7 +14,7 @@ function addComment(currentPostId, formEl) {
         $(formEl).parents('.comment').find('.comment-loading').css("display", "block");
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-comment`,
+            url: `/api/create-comment`,
             data: JSON.stringify({
                 'content': commentContent,
                 'postId': currentPostId,
@@ -45,7 +45,7 @@ function createReact(currentPostId, element) {
 
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}/api/react/delete?postId=${currentPostId}`,
+            url: `/api/react/delete?postId=${currentPostId}`,
             dataType: 'json'
         });
     } else {
@@ -55,7 +55,7 @@ function createReact(currentPostId, element) {
 
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/react/add?postId=${currentPostId}`,
+            url: `/api/react/add?postId=${currentPostId}`,
             dataType: 'json'
         });
     }
@@ -78,7 +78,7 @@ function deleteComment(id) {
     }).then((isDeleted) => {
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}/api/delete-comment/${id}`,
+            url: `/api/delete-comment/${id}`,
             dataType: 'json',
             success: function () {
                 swal("Xóa bình luận thành công", {
@@ -115,7 +115,7 @@ function loadComment(postId) {
 
     $.ajax({
             type: 'get',
-            url: `${ctxPath}/api/comment?page=` + commentPage + '&postId=' + postId,
+            url: `/api/comment?page=` + commentPage + '&postId=' + postId,
             dataType: 'json',
             success: function (comments) {
                 currentPost.find('.comment-loading').css("display", "none");
@@ -182,14 +182,14 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="${ctxPath}/user/${comment.user.id}">
+                    <a href="/user/${comment.user.id}">
                         <img class="comment--avatar rounded-circle" src="${comment.user.avatar}" alt="avatar">
                     </a>
                 </div>
                 <div class="comment--item-content">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
-                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="${ctxPath}/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
+                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
                                 ${comment.user.id === postOwnerId ?
             `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>
@@ -267,7 +267,7 @@ function likedComment(commentItemId) {
 
         $.ajax({
             type: 'delete',
-            url: `${ctxPath}/api/delete-react-comment/${commentItemId}`,
+            url: `/api/delete-react-comment/${commentItemId}`,
             dataType: 'json'
         });
     } else {
@@ -281,7 +281,7 @@ function likedComment(commentItemId) {
 
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-react-comment/${commentItemId}`,
+            url: `/api/create-react-comment/${commentItemId}`,
             dataType: 'json'
         });
     }
@@ -302,7 +302,7 @@ function loadReplies(commentId, postId) {
 
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/get-replies?page=0&commentId=${commentId}`,
+        url: `/api/get-replies?page=0&commentId=${commentId}`,
         dataType: 'json',
         success: function (comments) {
             let loadedCommentIds = $('.comment--item').map(function () {
@@ -351,7 +351,7 @@ function addReply(currentCommentId, formEl, postId) {
         currentComment.find('#repliedComments').prepend(commentLoading);
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-comment`,
+            url: `/api/create-comment`,
             data: JSON.stringify({
                 'content': commentContent,
                 'postId': null,

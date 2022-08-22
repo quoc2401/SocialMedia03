@@ -31,7 +31,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-start">
                                         <div class="me-2">
-                                            <a href="${ctxPath}/user/${post.userId.id}">
+                                            <a href="/user/${post.userId.id}">
                                                 <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="">
                                             </a>
                                         </div>
@@ -39,7 +39,7 @@
                                         <div>
                                             <div class="nav nav-divider">
                                                 <h6 class="nav-item card-title mb-0">
-                                                    <a href="${ctxPath}/user/@Context.Session.GetInt32("currentUserId")">
+                                                    <a href="/user/@Context.Session.GetInt32("currentUserId")">
                                                         @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")    
                                                     </a>
                                                 </h6>

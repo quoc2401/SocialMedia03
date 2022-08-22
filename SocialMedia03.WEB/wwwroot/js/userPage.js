@@ -85,7 +85,7 @@ function reportUser(reportedUserId) {
     var reason = $('.modal-report-user').find(':selected').val();
     $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/report-user`,
+            url: `/api/report-user`,
             data: JSON.stringify({
                 'articleId': "",
                 'userId': reportedUserId,
