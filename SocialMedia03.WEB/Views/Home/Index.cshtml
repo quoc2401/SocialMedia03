@@ -3,14 +3,14 @@
     Layout = "_Base";
 }
 <div class="row g-3">
-    <div class="d-lg-block d-none col-lg-3">
-        @*<partial name="LeftSideBar" />*@
+    <div class="d-lg-block d-none col-lg-4 col-xl-3">
+        <partial name="LeftSideBar" />
     </div>
-    <div class="col-sm-12 col-md-12 col-lg-6 g-3">
+    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-6 g-3">
       <partial name="Feeds"/>
     </div>
-    <div class="d-lg-block d-none col-lg-3 sidebar-right">
-        @*<partial name="RightSideBar" />*@
+    <div class="d-none d-xl-block col-xl-3 sidebar-right">
+        <partial name="RightSideBar" />
     </div>
 </div>
 
