@@ -6,6 +6,7 @@ namespace SocialMedia03.DAL.Models
 {
     public partial class User
     {
+        
         public User()
         {
             Comments = new HashSet<Comment>();
@@ -16,9 +17,8 @@ namespace SocialMedia03.DAL.Models
         }
 
         public int Id { get; set; }
-        public string Uuid { get; set; } = null!;
+        public string? Uuid { get; set; } = null!;
         public string Email { get; set; } = null!;
-        [JsonIgnore]
         public string Password { get; set; } = null!;
         public string Firstname { get; set; } = null!;
         public string Lastname { get; set; } = null!;
@@ -28,7 +28,7 @@ namespace SocialMedia03.DAL.Models
         public string? Phone { get; set; }
         public string Avatar { get; set; } = null!;
         public DateTime CreatedDate { get; set; }
-        public string UserRole { get; set; } = null!;
+        public string? UserRole { get; set; } = null!;
         public bool? Enable { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }

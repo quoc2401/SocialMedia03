@@ -101,7 +101,7 @@ function loadFeeds(posts) {
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
@@ -185,7 +185,7 @@ function prependFeeds(post) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}/user/${post.user.id}">
+                                    <a href="/user/${post.user.id}">
                                         <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
@@ -193,7 +193,7 @@ function prependFeeds(post) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/${ctxPath}/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
+                                            <a href="/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
                                     </div>
@@ -233,7 +233,7 @@ function prependFeeds(post) {
                         `)}
                         
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">

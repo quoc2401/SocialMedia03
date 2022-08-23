@@ -39,6 +39,12 @@ namespace SocialMedia03.WEB
                 options.Cookie.Name = "SocialMedia03";
             });
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             var key = Encoding.ASCII.GetBytes(configRoot["AppSettings:Secret"]);
             services.AddAuthentication(x =>
             {

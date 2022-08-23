@@ -28,7 +28,7 @@ namespace SocialMedia03.DAL
             return base.Context.Set<React>().Where(r => r.CommentId == commentId).ToHashSet();
         }
 
-        public bool CreateReact(React r)
+        public bool Create(React r)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace SocialMedia03.DAL
 
         }
 
-        public bool DeleteReact(React r)
+        public bool Delete(React r)
         {
             if (r == null)
                 return true;

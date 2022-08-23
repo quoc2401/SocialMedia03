@@ -21,10 +21,11 @@ namespace SocialMedia03.WEB.Controllers
 
         public IActionResult Index()
         {
-            User currentUser = UserSvc.Get(6);
-            HttpContext.Session.SetInt32("currentUserId", currentUser.Id);
-            HttpContext.Session.SetString("currentUserLastname", currentUser.Lastname);
-            HttpContext.Session.SetString("currentUserFirstname", currentUser.Firstname);
+            if(HttpContext.Session.GetString("currentUserId") == null)
+            {
+                return Redirect("/account/login");
+            }
+
             return View();
         }
 

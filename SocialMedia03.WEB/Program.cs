@@ -1,7 +1,8 @@
 using SocialMedia03.WEB;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 var startup = new Startup(builder.Configuration);

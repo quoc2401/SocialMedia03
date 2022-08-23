@@ -3,7 +3,7 @@ a {
     color: #14191e;
 }
 
-.line {
+.line-of-post {
     padding-top: 16px;
     border-bottom: solid 1px #e1e1e1;
 }
@@ -124,14 +124,14 @@ a {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 10000;
-    display: none;
+    display: none !important;
     justify-content: center;
     align-items: center;
     transition: all linear 0.4s;
 }
 
 .modal.open {
-    display: flex;
+    display: flex !important;
 }
 
 .modal-container {

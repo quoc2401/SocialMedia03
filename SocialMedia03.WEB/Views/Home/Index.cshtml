@@ -24,9 +24,8 @@
 
 <script>
      $(function () {
-        currentUserId = @Context.Session.GetString("currentUserId");
         loadPosts();
-        //$("textarea").hashtags();
+        $("textarea").hashtags();
         console.log(currentUser);
         disableLoadMorePost = false;
         $('#userNotification').on("click", function () {

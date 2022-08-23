@@ -11,6 +11,9 @@ using System.Diagnostics;
 using SocialMedia03.DAL.Models;
 using AutoMapper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SocialMedia03.Common.Utils;
+using SocialMedia03.Common.Res;
 
 namespace SocialMedia03.WEB.Controllers.API
 {
@@ -33,10 +36,11 @@ namespace SocialMedia03.WEB.Controllers.API
 
 
             HttpContext.Session.SetInt32("currentUserId", user.Id);
-            HttpContext.Session.SetString("currentUserLastname", user.Lastname);
-            HttpContext.Session.SetString("currentUserFirstname", user.Firstname);
-            HttpContext.Session.SetString("currentUserEmail", user.Email);
-            HttpContext.Session.SetString("currentUserAvatar", user.Avatar);
+            HttpContext.Session.SetString("currentUserLastname", user.Lastname.Trim());
+            HttpContext.Session.SetString("currentUserFirstname", user.Firstname.Trim());
+            HttpContext.Session.SetString("currentUserEmail", user.Email.Trim());
+            HttpContext.Session.SetString("currentUserAvatar", user.Avatar.Trim());
+            HttpContext.Session.SetString("currentUserRole", user.UserRole.Trim());
 
             return Ok(new
             {
@@ -50,12 +54,11 @@ namespace SocialMedia03.WEB.Controllers.API
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserModel userModel)
+        public IActionResult Register([FromBody] User user)
         {
-            var user = mapper.Map<User>(userModel);
             try
             {
-                userSvc.RegisterNewUser(user, userModel.Password);
+                userSvc.RegisterNewUser(user, user.Password);
                 return Ok();
             }
             catch (Exception ex)

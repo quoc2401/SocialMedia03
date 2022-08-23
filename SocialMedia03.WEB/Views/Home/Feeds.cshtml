@@ -7,10 +7,10 @@
             <div class="create-post card card-body">
                 <div class="d-flex align-items-center mb-3">
                     <div>
-                        <a href="#"> <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt=""> </a>
+                        <a href="#"> <img class="avatar-img rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" alt=""> </a>
                     </div>
                     <div class="btn-post w-100 d-flex align-items-center btn-show--post">
-                        <span class="pe-4 border-0 text-secondary">Bạn đang nghĩ gì thế?</input>
+                        <span class="pe-4 border-0 text-secondary">Bạn đang nghĩ gì thế?</span>
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@
                                 <img class="card-img post--img" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="Post image" onclick="showFull(this)">
                        
 
-                                <div class="line"></div>
+                                <div class="line-of-post"></div>
 
                                 <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                     <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
@@ -148,7 +148,7 @@
                         </div>
                     </div>
 
-                    <div class="modal-body ">
+                    <div class="modal-body">
                         <div class="d-flex mb-3">
                             <div>
                                 <a href="#"> <img class="avatar-img rounded-circle" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt=""> </a>
@@ -170,7 +170,7 @@
                                         <p class="text-secondary mt-2">Nhấn để thêm ảnh</p>
                                     </div>
                                 </div>
-                                <input id="uploadImage" type='file' name='upload-image' class='upload-image' onchange="previewImage(this)" />
+                                <input id="uploadImage" accept="image/*" type='file' name='upload-image' class='upload-image' onchange="previewImage(this)" />
                             </label>
                         </div>
                     </div>
@@ -182,9 +182,9 @@
                 </div>
             </div>
 
-            <div id="modal01" class="modal align-items-center" onclick="this.style.display = 'none'">
+            <div id="modal01" class="modal align-items-center" onclick="$('#modal01').removeClass('open')">
                 <div class="modal--picture position-relative d-flex align-items-center justify-content-center">
-                    <img id="img01" style="max-width:100%; max-height:100vh;">
+                    <img id="img01" src="" style="max-width:100%; max-height:100vh;">
                 </div>
             </div>
-        </div>  
+        </div>

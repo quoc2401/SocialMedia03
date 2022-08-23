@@ -1,20 +1,16 @@
 a {
     text-decoration: none;
-    color: var(--white-color);
-}
-
-a:hover {
-    color: var(--white-color);
 }
 
 .login {
     background-color: #f0f2f5;
-    padding-top: 92px;
-    padding-bottom: 132px;
+    padding-top: 25px;
+    padding-bottom: 30px;
 }
 
 .b {
     transition: all 0.2s ease-in;
+    color: var(--white-color);
 }
 
 .b:hover {
@@ -116,6 +112,10 @@ a:hover {
     border-radius: 6px;
     font-weight: bold;
     padding: 0 16px;
+}
+
+.btn-register a {
+    color: var(--white-color);
 }
 
 .bg-login {

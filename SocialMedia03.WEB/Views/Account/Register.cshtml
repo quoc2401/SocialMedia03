@@ -2,7 +2,7 @@
     Layout = "_Base";
 }
 
-<div class="modal" style="background-color: #cfd9df !important">
+<div class="modal open" style="background-color: #cfd9df !important">
     <div class="modal-container">
         <div class="modal-header">
             <h3 class="my-2">Đăng kí tài khoản️</h3>
@@ -10,7 +10,8 @@
 
         <div class="modal-body ">
             <div class="authentication register">
-                <form action="" class="form-register" enctype="multipart/form-data" id="form-register">
+                <form class="form-register" enctype="multipart/form-data" id="form-register">
+                    <div class="alert alert-danger show-err" style="display: none;"></div>
                     <div class="form-group d-flex">
                         <div class="text-start w-100 me-1">
                             <input name="lastname" id="lastname" placeholder="Họ*" class="form-control-sm" />
@@ -30,7 +31,7 @@
                         <div class="text-danger err-validate"></div>
                     </div>
                     <div class="form-group text-start">
-                        <label for="dateofbirth" id="dateofbirth" class="me-1 small">Ngày sinh<span class="text-danger">*</span></label>
+                        <label for="dateofbirth" class="me-1 small">Ngày sinh<span class="text-danger">*</span></label>
                         <input name="birthdate" type="date" id="dateofbirth" placeholder="Ngày sinh*" class="form-control-sm" />
                         <div class="text-danger err-validate"></div>
                     </div>
@@ -50,7 +51,7 @@
                         <div class="text-danger err-validate"></div>
                     </div>
                     <div class="form-group text-start">
-                        <label for="avatar" cssClass="me-1 small">Chọn ảnh đại diện</label>
+                        <label for="avatar" class="me-1 small">Chọn ảnh đại diện</label>
                         <input name="file" id="avatar" type="file" placeholder="" class="form-control-sm" />
                     </div>
                     <div class="form-group">
@@ -64,77 +65,9 @@
     </div>
 </div>
 
+<div class="register-load justify-content-center align-items-center position-fixed" style="top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); z-index: 10001; display: none">
+    <div class="spinner-border text-muted"></div>
+</div>
+
 <script src="~/js/validate.js"></script>
-<script>
-    Validator({
-        form: '#form-register',
-        formGroupSelector: '.form-group',
-        errSelector: '.err-validate',
-        rules: [
-            Validator.isRequired('#lastname'),
-            Validator.isRequired('#firstname'),
-            Validator.isRequired('#email'),
-            Validator.isEmail('#email'),
-            Validator.isDate('#dateofbirth'),
-            Validator.isRequired('#phone'),
-            Validator.isPhone('#phone'),
-            Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự'),
-            Validator.isRequired('#password-confirm'),
-            Validator.isConfirmed('#password-confirm', function () {
-                return document.querySelector('#form-register #password').value;
-            }, 'Mật khẩu nhập lại không chính xác')
-        ],
-        onSubmit: (data) => {
-            var formData = new FormData();
-            var fs = document.getElementById('uploadImage');
-            if(fs.files[0] !== undefined) {
-                var fileType = fs.files[0]['type'];
-                var validImageTypes = ['image/jpeg', 'image/png'];
-                if (!validImageTypes.includes(fileType)) {
-                    alert("Không thể nhận loại file này!");
-                }
-                else 
-                {
-                    for (const file of fs.files) {
-                        formData.append("file", file);
-                    }
-                }
-
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: '/api/user/register',
-                processData : false,
-                cache : false,
-                data: JSON.stringify({
-                    Email: data.email,
-                    Password: data.password,
-                    Firstname: data.firstname,
-                    Lastname: data.lastname,
-                    Birthday: data.birthday,
-                    Address: data.address,
-                    Hometown: data.hometown,
-                    Phone: data.phone,
-                    Avatar: formData,
-                }),
-                dataType: 'json',
-                success: function(data) {
-                    swal({
-                        title: "Đăng kí thành công",
-                        icon: "success",
-                    })
-
-                    setTimeout(() => {
-                        window.location.replace("/account/login");
-                    }, 1500)
-                }
-            }).fail((res) => {
-                swal({
-                    title: "Đăng kí thất bại",
-                    icon: "warning",
-                })
-            });
-        }
-    });
-</script>
+<script src="~/js/register.js"></script>

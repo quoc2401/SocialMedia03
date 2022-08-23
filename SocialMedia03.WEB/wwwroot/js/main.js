@@ -182,7 +182,7 @@ function reportArticle(articleId, typeArticle) {
     if (typeArticle === 'POST') {
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/report-post`,
+            url: `/api/report-post`,
             data: JSON.stringify({
                 'articleId': articleId,
                 'userId': "",
@@ -202,7 +202,7 @@ function reportArticle(articleId, typeArticle) {
     } else {
         $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/report-auction`,
+            url: `/api/report-auction`,
             data: JSON.stringify({
                 'articleId': articleId,
                 'userId': "",

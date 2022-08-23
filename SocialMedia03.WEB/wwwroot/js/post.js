@@ -30,8 +30,8 @@ function previewImage(el) {
 };
 
 function showFull(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "flex";
+    $("#img01").attr("src", element.src)
+    $("#modal01").addClass('open');
 }
 
 function createPost() {
@@ -57,43 +57,42 @@ function createPost() {
                     formData.append("file", file);
                 }
                 $.ajax({
-                    type: 'post',
-                    url: `${ctxPath}/api/post-img`,
+                    type: 'POST',
+                    url: `/api/post/image-upload`,
                     data: formData,
-                    dataType : "json",
-                    processData : false,
-                    cache : false,
-                    contentType : false
+                    dataType: "json",
+                    processData: false,
+                    cache: false,
+                    contentType: false
                 })
-                .done(function(data){
+                .done(function(res){
 
                     $.ajax({
-                        type: 'post',
-                        url: `${ctxPath}/api/create-post`,
+                        type: 'POST',
+                        url: `/api/post/add`,
                         data: JSON.stringify({
                             'content':content,
                             'hashtag': findHashtags(content),
-                            'imgUrl':data.url
+                            'imageUrl':res.data
                         }),
                         dataType : 'json',
                         contentType : 'application/json',
-                        success: function (data) {
+                        success: function (post) {
                             $(loadingTop).css('display', 'none');
                             $('#statusContent').val(null);
                             $('.highlighter').html('');
                             $('uploadImage').val(null);
                             $('#uploadPreview').attr("src", "");
-                            prependFeeds(data);
+                            prependFeeds(post);
                         }
                     })
-                    .fail(function(){
+                        .fail(function (data) {
                         $(loadingTop).css('display', 'none');
                         $(feedContainer).prepend(errorHtml);
                     });
                 })
-                .fail(function(){
+                    .fail(function (data) {
                     $(loadingTop).css('display', 'none');
-                    $(feedContainer).prepend(errorHtml);
                 });
 
                 $('.modal-post').removeClass('open');
@@ -109,11 +108,11 @@ function createStatus() {
     var content = $('#statusContent').val();
     $.ajax({
             type: 'post',
-            url: `${ctxPath}/api/create-post`,
+            url: `/api/post/add`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
-                'imgUrl':''
+                'imageUrl':''
             }),
             dataType : 'json',
             contentType : 'application/json',
@@ -151,7 +150,7 @@ function deletePost(id, el) {
 
         $.ajax({
                 type: 'delete',
-                url: `${ctxPath}/api/delete-post/${id}`,
+                url: `/api/delete-post/${id}`,
                 dataType: 'json',
                 success: function () {
                     swal("Xóa bài viết thành công", {
@@ -213,7 +212,7 @@ function comfirmEditPost(id) {
                     }
                     $.ajax({
                         type: 'post',
-                        url: `${ctxPath}/api/post-img`,
+                        url: `/api/post-img`,
                         data: formData,
                         dataType : "json",
                         processData : false,
@@ -223,7 +222,7 @@ function comfirmEditPost(id) {
                     .done(function(data){
                         $.ajax({
                             type: 'put',
-                            url: `${ctxPath}/api/edit-post/${id}`,
+                            url: `/api/edit-post/${id}`,
                             data: JSON.stringify({
                                 'content':content,
                                 'hashtag': findHashtags(content),
@@ -258,7 +257,7 @@ function comfirmEditPost(id) {
         removeEditModal();
         $.ajax({
             type: 'put',
-            url: `${ctxPath}/api/edit-post/${id}`,
+            url: `/api/edit-post/${id}`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
@@ -294,7 +293,7 @@ function editStatus(id) {
     removeEditModal();
     $.ajax({
         type: 'put',
-        url: `${ctxPath}/api/edit-post/${id}`,
+        url: `/api/edit-post/${id}`,
         data: JSON.stringify({
             'content':content,
             'hashtag': findHashtags(content),
