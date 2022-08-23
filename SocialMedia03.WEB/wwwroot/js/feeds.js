@@ -101,7 +101,7 @@ function loadFeeds(posts) {
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
@@ -233,7 +233,7 @@ function prependFeeds(post) {
                         `)}
                         
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">

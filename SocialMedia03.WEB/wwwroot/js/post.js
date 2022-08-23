@@ -30,8 +30,8 @@ function previewImage(el) {
 };
 
 function showFull(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "flex";
+    $("#img01").attr("src", element.src)
+    $("#modal01").addClass('open');
 }
 
 function createPost() {

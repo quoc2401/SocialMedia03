@@ -1,6 +1,8 @@
 var ctxPath = '';
 var currentUserId = 0;
 
+var currentUser = {};
+
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 };

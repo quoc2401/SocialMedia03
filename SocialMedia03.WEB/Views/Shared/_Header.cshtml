@@ -30,7 +30,7 @@
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <li class="nav-item px-2">
-                        <a class="nav-link" href="#Home" id="homeMenu">
+                        <a class="nav-link" href="/" id="homeMenu">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
@@ -42,13 +42,14 @@
                         </a>
                     </li>
 
-                    <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                        <li class="nav-item px-2">
+                    @if (Context.Session.GetString("currentUserRole") == "ROLE_ADMIN") {
+                         <li class="nav-item px-2">
                             <a class="nav-link" href="/admin" id="chartMenu">
                                 <i class="fa-solid fa-chart-simple menu-icon"></i>
                                 Thống kê & báo cáo
                             </a>
                         </li>
+                    }
 
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="notifyMenu">
@@ -75,7 +76,7 @@
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
-                            <img src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="avatar" class="user-img me-2" />
+                            <img src="@Context.Session.GetString("currentUserAvatar")" alt="avatar" class="user-img me-2" />
                             @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")
                         </a>
 
@@ -87,7 +88,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#LogoutLink" onclick="FB.logout();">
+                                <a class="dropdown-item d-flex align-items-center" href="/account/logout" onclick="FB.logout();">
                                     <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                     Đăng xuất
                                 </a>
@@ -174,7 +175,7 @@
 
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="userAvatar" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="avatar" class="user-img" />
+                        <img id="userAvatar" src="@Context.Session.GetString("currentUserAvatar")" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                         <li class="dropdown-item">
@@ -187,7 +188,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#Logout" onclick="FB.logout();">
+                            <a class="dropdown-item d-flex align-items-center" href="/account/logout" onclick="FB.logout();">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                 Đăng xuất
                             </a>

@@ -20,13 +20,13 @@
 <script src="~/js/post.js"></script>
 <script src="~/js/comment.js"></script>
 <script src="~/js/feeds.js"></script>
+<script src="~/js/main.js"></script>
 
 <script>
      $(function () {
-        currentUserId = @Context.Session.GetInt32("currentUserId");
         loadPosts();
-        //$("textarea").hashtags();
-        console.log(currentUserId);
+        $("textarea").hashtags();
+        console.log(currentUser);
         disableLoadMorePost = false;
         $('#userNotification').on("click", function () {
             $('.notif-count').css('opacity', '0');
