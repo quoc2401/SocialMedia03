@@ -60,7 +60,7 @@ export function newChatBox(user) {
                     </div>
                     <div class="chat-box--send">
                         <form class="d-flex justify-content-between align-items-center position-relative form-chat">
-                            <input type="text" placeholder="Aa" class="form-control-sm chat-input" />
+                            <input type="text" placeholder="Aa" class="form-control chat-input" />
                             <button type="submit" class="btn-send">
                                 <i class="fa-solid fa-paper-plane p-2"></i>
                             </button>
