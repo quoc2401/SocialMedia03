@@ -24,7 +24,7 @@
 
 <script>
      $(function () {
-        UUID = '@Context.Session.GetString("currentUserUUID")';
+        UUID = '@Context.Session.GetString("UUID")';
         loadPosts();
         $("textarea").hashtags();
     });

@@ -1,6 +1,7 @@
 ﻿using SocialMedia03.Common.BLL;
 using SocialMedia03.Common.Req;
 using SocialMedia03.Common.Res;
+using SocialMedia03.Common.Utils;
 using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
 using System;
@@ -64,6 +65,29 @@ namespace SocialMedia03.BLL
                 return p;
 
             return null;
+        }
+
+        public Post Update(int currentPostId, PostReq req, User creator)
+        {
+            Post currentPost = this.Get(currentPostId);
+            currentPost.Content = req.Content;
+            currentPost.Hashtag = req.Hashtag;
+            if (currentPost.Image != req.ImageUrl && !String.IsNullOrEmpty(currentPost.Image))
+            {
+                var public_id = currentPost.Image.Substring(currentPost.Image.LastIndexOf("public_id=") + 10);
+                CloudinaryUtils.DeleteImage(public_id);
+                currentPost.Image = req.ImageUrl;
+            }
+            if (_rep.Update(currentPost) == true)
+                return currentPost;
+            return null;
+        }
+
+        public bool Delete(int postId)
+        {
+            Post p = this.Get(postId);
+
+            return _rep.Delete(p);
         }
     }
 }

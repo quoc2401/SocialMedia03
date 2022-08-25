@@ -4,6 +4,7 @@ using SocialMedia03.Common.DAL;
 using SocialMedia03.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace SocialMedia03.DAL
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e.StackTrace);
+                Debug.WriteLine(e.StackTrace);
                 return false;
             }
 
@@ -60,7 +61,7 @@ namespace SocialMedia03.DAL
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e.StackTrace);
+                Debug.WriteLine(e.StackTrace);
                 return false;
             }
         }

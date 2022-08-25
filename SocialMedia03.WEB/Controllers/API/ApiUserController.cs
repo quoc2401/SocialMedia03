@@ -35,8 +35,8 @@ namespace SocialMedia03.WEB.Controllers.API
                 return BadRequest(new { message = "Email or password is incorrect" });
 
             HttpContext.Session.SetString("currentUser", JsonConvert.SerializeObject(user));
-            HttpContext.Session.SetInt32("UUID", user.Id);
-            HttpContext.Session.SetString("currentUserUUID", user.Uuid);
+            HttpContext.Session.SetInt32("currentUserId", user.Id);
+            HttpContext.Session.SetString("UUID", user.Uuid);
             HttpContext.Session.SetString("currentUserLastname", user.Lastname.Trim());
             HttpContext.Session.SetString("currentUserFirstname", user.Firstname.Trim());
             HttpContext.Session.SetString("currentUserEmail", user.Email.Trim());

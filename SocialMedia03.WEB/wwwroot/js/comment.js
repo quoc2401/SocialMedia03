@@ -133,7 +133,6 @@ function loadComment(postId) {
                     
                 let othersComment = comments.filter(c => c.user.id !== UUID
                     && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
-                console.log(loadedCommentIds);
                 
                 $(commentedComment).append(`${(userComment).map((comment, index) => {
                     return commentItem(comment, postId);
@@ -267,7 +266,7 @@ function likedComment(commentItemId) {
 
         $.ajax({
             type: 'delete',
-            url: `/api/delete-react-comment/${commentItemId}`,
+            url: `/api/react/delete?commentId=${commentItemId}`,
             dataType: 'json'
         });
     } else {
@@ -281,7 +280,7 @@ function likedComment(commentItemId) {
 
         $.ajax({
             type: 'post',
-            url: `/api/create-react-comment/${commentItemId}`,
+            url: `/api/react/add?commentId=${commentItemId}`,
             dataType: 'json'
         });
     }

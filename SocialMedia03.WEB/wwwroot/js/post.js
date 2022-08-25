@@ -150,7 +150,7 @@ function deletePost(id, el) {
 
         $.ajax({
                 type: 'delete',
-                url: `/api/delete-post/${id}`,
+                url: `/api/post/delete/${id}`,
                 dataType: 'json',
                 success: function () {
                     swal("Xóa bài viết thành công", {
@@ -171,7 +171,7 @@ function editPost(id, el) {
     
     var content = $(clickedPost).find('.post--content').text();
     var imgSrc = $(clickedPost).find('.post--img').prop('src');
-    if (imgSrc.toLowerCase().indexOf('https://') === -1 )
+    if (imgSrc.indexOf('https://') === -1 || imgSrc.indexOf('localhost') >= 1)
         imgSrc = '';
     modalEditPost(id, content.trim(), imgSrc, "post");
     $("textarea").hashtags();
@@ -187,8 +187,8 @@ function comfirmEditPost(id) {
     
     var content = $('#editingStatusContent').val();
     var imgSrc = $('#editPreview').prop('src');
-    
-    if (imgSrc.toLowerCase().indexOf('https://') === -1 ) {
+
+    if (imgSrc.toLowerCase().indexOf('https://') === -1 || imgSrc.indexOf('localhost') >= 1) {
     
         var formData = new FormData();
         var fs = document.getElementById('editImage');
@@ -212,21 +212,21 @@ function comfirmEditPost(id) {
                     }
                     $.ajax({
                         type: 'post',
-                        url: `/api/post-img`,
+                        url: `/api/post/image-upload`,
                         data: formData,
                         dataType : "json",
                         processData : false,
                         cache : false,
                         contentType : false
                     })
-                    .done(function(data){
+                    .done(function(res){
                         $.ajax({
-                            type: 'put',
-                            url: `/api/edit-post/${id}`,
+                            type: 'PUT',
+                            url: `/api/post/edit/${id}`,
                             data: JSON.stringify({
                                 'content':content,
                                 'hashtag': findHashtags(content),
-                                'imgUrl':data.url
+                                'imageUrl':res.data
                             }),
                             dataType : 'json',
                             contentType : 'application/json',
@@ -257,11 +257,11 @@ function comfirmEditPost(id) {
         removeEditModal();
         $.ajax({
             type: 'put',
-            url: `/api/edit-post/${id}`,
+            url: `/api/post/edit/${id}`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
-                'imgUrl':imgSrc.toLowerCase()
+                'imageUrl':imgSrc.toLowerCase()
             }),
             dataType : 'json',
             contentType : 'application/json',
@@ -293,11 +293,11 @@ function editStatus(id) {
     removeEditModal();
     $.ajax({
         type: 'put',
-        url: `/api/edit-post/${id}`,
+        url: `/api/post/edit/${id}`,
         data: JSON.stringify({
             'content':content,
             'hashtag': findHashtags(content),
-            'imgUrl':''
+            'imageUrl':''
         }),
         dataType : 'json',
         contentType : 'application/json',
