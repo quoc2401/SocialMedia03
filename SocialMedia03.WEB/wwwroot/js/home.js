@@ -38,6 +38,10 @@ function loadPosts() {
                 disableLoadMorePost = true;
                 return;
             }
+            data = data.sort(function (a, b) {
+                return new Date(b.createdDate) - new Date(a.createdDate);
+            });
+
             postPage++;
             loadFeeds(data);
         }

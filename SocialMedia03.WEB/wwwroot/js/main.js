@@ -1,7 +1,15 @@
 var ctxPath = '';
-var currentUserId = 0;
+var UUID = "";
 
 var currentUser = {};
+$(function () {
+    //getNotifs();
+    disableLoadMorePost = false;
+    $('#userNotification').on("click", function () {
+        $('.notif-count').css('opacity', '0');
+    });
+});
+
 
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));

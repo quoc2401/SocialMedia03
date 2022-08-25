@@ -21,7 +21,7 @@ namespace SocialMedia03.WEB.Controllers
 
         public IActionResult Index()
         {
-            if(HttpContext.Session.GetString("currentUserId") == null)
+            if(HttpContext.Session.GetString("UUID") == null)
             {
                 return Redirect("/account/login");
             }

@@ -31,7 +31,7 @@ namespace SocialMedia03.WEB.Controllers.API
         {
 
             int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
-                : HttpContext.Session.GetInt32("currentUserId"));
+                 : HttpContext.Session.GetInt32("currentUserId"));
 
             ReactSvc.CreateReact(postId, commentId, currentUserId);
         }

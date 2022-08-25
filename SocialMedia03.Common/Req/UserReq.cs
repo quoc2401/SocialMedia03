@@ -1,6 +1,6 @@
 ﻿namespace SocialMedia03.WEB.Models
 {
-    public class UserModel
+    public class UserReq
     {
         public string? Uuid { get; set; } = null!;
         public string Email { get; set; } = null!;

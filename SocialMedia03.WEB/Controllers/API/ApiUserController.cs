@@ -27,15 +27,16 @@ namespace SocialMedia03.WEB.Controllers.API
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserModel userModel)
+        public IActionResult Authenticate([FromBody] UserReq userModel)
         {
             User user = userSvc.Authenticate(userModel.Email, userModel.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Email or password is incorrect" });
 
-
+            HttpContext.Session.SetString("currentUser", JsonConvert.SerializeObject(user));
             HttpContext.Session.SetInt32("currentUserId", user.Id);
+            HttpContext.Session.SetString("UUID", user.Uuid);
             HttpContext.Session.SetString("currentUserLastname", user.Lastname.Trim());
             HttpContext.Session.SetString("currentUserFirstname", user.Firstname.Trim());
             HttpContext.Session.SetString("currentUserEmail", user.Email.Trim());
