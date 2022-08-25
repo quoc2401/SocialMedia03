@@ -1,7 +1,4 @@
-﻿$(function () {
-    $('header.navbar-light').css("display", "none");
-})
-
+﻿
 Validator({
     form: '#loginForm',
     formGroupSelector: '.form-group',
