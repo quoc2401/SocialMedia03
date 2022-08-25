@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialMedia03.Common.Res;
+using System;
 using System.Collections.Generic;
 
 namespace SocialMedia03.DAL.Models
@@ -17,5 +18,7 @@ namespace SocialMedia03.DAL.Models
         public virtual Post? TargetPost { get; set; }
         public virtual User? TargetUser { get; set; }
         public virtual User User { get; set; } = null!;
+
+        
     }
 }
