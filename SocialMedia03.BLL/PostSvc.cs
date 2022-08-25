@@ -52,7 +52,7 @@ namespace SocialMedia03.BLL
             return rs;
         }
 
-        public Post Create(PostRequest req, User creator)
+        public Post Create(PostReq req, User creator)
         {
             Post p = new Post();
             p.Content = req.Content;

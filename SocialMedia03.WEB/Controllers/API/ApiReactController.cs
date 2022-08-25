@@ -30,10 +30,10 @@ namespace SocialMedia03.WEB.Controllers.API
         public void CreateReact(int? postId, int? commentId)
         {
 
-            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
-                : HttpContext.Session.GetInt32("currentUserId"));
+            int UUID = (int)(HttpContext.Session.GetInt32("UUID") == null ? 0
+                : HttpContext.Session.GetInt32("UUID"));
 
-            ReactSvc.CreateReact(postId, commentId, currentUserId);
+            ReactSvc.CreateReact(postId, commentId, UUID);
         }
 
         // PUT api/react/5
@@ -46,10 +46,10 @@ namespace SocialMedia03.WEB.Controllers.API
         [HttpDelete("delete")]
         public void Delete(int? postId, int? commentId)
         {
-            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
-                : HttpContext.Session.GetInt32("currentUserId"));
+            int UUID = (int)(HttpContext.Session.GetInt32("UUID") == null ? 0
+                : HttpContext.Session.GetInt32("UUID"));
 
-            ReactSvc.DeleteReact(postId, commentId, currentUserId);
+            ReactSvc.DeleteReact(postId, commentId, UUID);
         }
     }
 }

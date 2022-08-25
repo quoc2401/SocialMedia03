@@ -16,7 +16,7 @@ namespace SocialMedia03.DAL.Models
         public string Content { get; set; } = null!;
         public int UserId { get; set; }
         public int? PostId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int? ParentId { get; set; }
 
         public virtual Comment? Parent { get; set; }

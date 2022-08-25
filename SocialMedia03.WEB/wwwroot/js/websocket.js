@@ -1,7 +1,7 @@
 /* global pushSocket */
 var pushSocket;
 $(function () {
-    pushSocket = new WebSocket(`ws://localhost:8080/SharingHope/notification/${currentUserId}`);
+    pushSocket = new WebSocket(`ws://localhost:8080/SharingHope/notification/${UUID}`);
     
     pushSocket.onmessage = function (event) {
         if (event.data === 'update_notif')

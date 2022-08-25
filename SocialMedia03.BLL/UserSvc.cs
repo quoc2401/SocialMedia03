@@ -39,7 +39,7 @@ namespace SocialMedia03.BLL
             user.UserRole = "ROLE_USER";
             user.Enable = true;
             user.CreatedDate = DateTime.Now;
-            if(user.Avatar == null)
+            if(user.Avatar == "" || user.Avatar == null)
             {
                 user.Avatar = "https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png";
             }

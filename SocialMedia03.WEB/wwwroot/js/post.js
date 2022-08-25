@@ -232,7 +232,7 @@ function comfirmEditPost(id) {
                             contentType : 'application/json',
                             success: function (data2) {
                                 $(clickedPost).html(clickedPostHtml);
-                                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
+                                $(clickedPost).find("#timeFromNow").text(moment(data2.createdDate).fromNow());
                                 $(clickedPost).find('.post--content').text(data2.content);
                                 $(clickedPost).find('.post--img').attr('src', data2.image);
                                 $(clickedPost).find('.post--img').css('display', 'block');
@@ -267,7 +267,7 @@ function comfirmEditPost(id) {
             contentType : 'application/json',
             success: function (data2) {
                 $(clickedPost).html(clickedPostHtml);
-                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
+                $(clickedPost).find("#timeFromNow").text(moment(data2.createdDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
                 customHashtag(`#post${id}`);
@@ -303,7 +303,7 @@ function editStatus(id) {
         contentType : 'application/json',
         success: function (data) {
             $(clickedPost).html(clickedPostHtml);
-            $(clickedPost).find("#timeFromNow").text(moment(data.postedDate).fromNow());
+            $(clickedPost).find("#timeFromNow").text(moment(data.createdDate).fromNow());
             $(clickedPost).find('.post--content').text(data.content);
             $(clickedPost).find('.post--img').css('display', 'none');
             $(clickedPost).find('.post--img').attr('src', '');

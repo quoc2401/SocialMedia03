@@ -14,7 +14,7 @@ function addComment(currentPostId, formEl) {
         $(formEl).parents('.comment').find('.comment-loading').css("display", "block");
         $.ajax({
             type: 'post',
-            url: `/api/create-comment`,
+            url: `/api/comment/add`,
             data: JSON.stringify({
                 'content': commentContent,
                 'postId': currentPostId,
@@ -128,10 +128,10 @@ function loadComment(postId) {
                     return new Date(b.createdDate) - new Date(a.createdDate);
                 });
 
-                let userComment = comments.filter(c => c.user.id === currentUserId
+                let userComment = comments.filter(c => c.user.id === UUID
                     && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                     
-                let othersComment = comments.filter(c => c.user.id !== currentUserId
+                let othersComment = comments.filter(c => c.user.id !== UUID
                     && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 console.log(loadedCommentIds);
                 
@@ -182,15 +182,15 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="/user/${comment.user.id}">
+                    <a href="/user/${comment.user.uuid}">
                         <img class="comment--avatar rounded-circle" src="${comment.user.avatar}" alt="avatar">
                     </a>
                 </div>
                 <div class="comment--item-content">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
-                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
-                                ${comment.user.id === postOwnerId ?
+                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.uuid}">${comment.user.lastname} ${comment.user.firstname}
+                                ${comment.user.uuid === postOwnerId ?
             `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>
                             <small class="comment-date">${moment(comment.createdDate).fromNow()}</small>
@@ -210,14 +210,14 @@ function commentItem(comment, postId) {
                       <div class="d-flex justify-content-end me-2">
                             ${reactSetLength === 0 ? `
                                 <div class="comment-like comment-like${comment.id}" onclick="likedComment(${comment.id})">Thích</div>` : (
-            (comment.reacts).some((react) => react.user.id === currentUserId) ?
+            (comment.reacts).some((react) => react.user.uuid === UUID) ?
             `<div class="comment-like comment-like${comment.id} liked" onclick="likedComment(${comment.id})">Ðã Thích</div>` :
             `<div class="comment-like comment-like${comment.id}" onclick="likedComment(${comment.id})">Thích</div>`
             )}
 
 
                             <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
-                            ${(currentUserId === comment.user.id || currentUserId === postOwnerId) ?
+                            ${(UUID === comment.user.uuid || UUID === postOwnerId) ?
             `<div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
                   </div>
@@ -309,12 +309,12 @@ function loadReplies(commentId, postId) {
                 return $(this).attr('id');
             }).get();
 
-                let userComment = comments.filter(c => c.user.id === currentUserId
+                let userComment = comments.filter(c => c.user.id === UUID
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 userComment.sort(function (a, b) {
                     return new Date(b.createdDate) - new Date(a.createdDate);
                 });
-                let othersComment = comments.filter(c => c.user.id !== currentUserId
+                let othersComment = comments.filter(c => c.user.id !== UUID
                         && jQuery.inArray(`commentItem${c.id}`, loadedCommentIds) === -1);
                 othersComment.sort(function (a, b) {
                     return new Date(b.createdDate) - new Date(a.createdDate);

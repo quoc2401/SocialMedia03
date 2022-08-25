@@ -22,7 +22,10 @@ namespace SocialMedia03.BLL
 
         public override Comment Get(int id)
         {
-            return _rep.Get(id);
+            Comment c = _rep.Get(id);
+            c.User = UserSvc.Get(c.UserId);
+            c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+            return c;
         }
 
         public HashSet<Comment> GetCommentsByPost(int postId, int? page) 

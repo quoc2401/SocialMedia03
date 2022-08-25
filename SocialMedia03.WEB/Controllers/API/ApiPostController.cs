@@ -39,7 +39,7 @@ namespace SocialMedia03.WEB.Controllers.API
 
         // POST api/post/add
         [HttpPost("add")]
-        public IActionResult Post([FromBody]PostRequest req)
+        public IActionResult Post([FromBody]PostReq req)
         {
 
             User currentUser = new User();
