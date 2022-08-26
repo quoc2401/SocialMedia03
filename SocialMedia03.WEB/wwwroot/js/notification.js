@@ -8,19 +8,19 @@ function getNotifs() {
     
     $.ajax({
         type: 'get',
-        url: `/api/get-notifs?page=${notifPage}`,
+        url: `/api/notif?page=${notifPage}`,
         dataType: 'json',
         success: function (data) {
             if(data.length === 0)
                 disableLoadMoreNotif = true;
             
             data.sort(function(a, b) {
-                return b.last_modified - a.last_modified;
+                return b.lastModified - a.lastModified;
             });
             
             var count = 0;
             $.each(data, function(index, notif) {
-                if (notif.is_read === false)
+                if (notif.isRead === false)
                     count++;
             });
             if (count > 0) {
@@ -42,26 +42,24 @@ function getNotifs() {
 function notifItem(notif) {
     let typeMsg = notif.type === 'REACT_POST' ? (`thích bài viết của bạn`):
             notif.type === 'COMMENT_POST' ? `bình luận về bài viết của bạn`:
-            notif.type === 'REACT_COMMENT' ? `thích bình luận của bạn`:
-            notif.type === 'REPLY_COMMENT' ? `trả lời bình luận của bạn`: `tham gia đấu giá bài viết của bạn`;
+            notif.type === 'REACT_COMMENT' ? `thích bình luận của bạn`:`trả lời bình luận của bạn`;
     let imgNotifType = notif.type === 'REACT_POST' ? `${imgNotifIcon.REACT_POST}`:
             notif.type === 'COMMENT_POST' ? `${imgNotifIcon.COMMENT_POST}`:
-            notif.type === 'REACT_COMMENT' ? `${imgNotifIcon.REACT_COMMENT}`:
-            notif.type === 'REPLY_COMMENT' ? `${imgNotifIcon.COMMENT_POST}`: `${imgNotifIcon.JOIN_AUCTION}`;
-    var li = `  <li  class="dropdown-item d-flex align-items-center notif-loading w-100 ${notif.is_read && `is-read-notify`}">
+            notif.type === 'REACT_COMMENT' ? `${imgNotifIcon.REACT_COMMENT}`:`${imgNotifIcon.COMMENT_POST}`;
+    var li = `  <li  class="dropdown-item d-flex align-items-center notif-loading w-100 ${notif.isRead && `is-read-notify`}">
                     <div class="notif-item" onclick="notifRedirect(${notif.targetId}, '${notif.notifId}', '${notif.type}')">
                         <div class="position-relative">
-                            <img class="user-img" src="${notif.last_modified_avatar}" alt="image">
+                            <img class="user-img" src="${notif.lastModifiedAvatar}" alt="image">
                             ${imgNotifType}
                         </div>
                         <div class="notif-item--message">
                             <span class="mb-1 message">  
-                                ${notif.count > 1 ? `<strong>${notif.last_modified_name}</strong> và ${notif.count - 1} người khác`: 
-                                `<strong>${notif.last_modified_name}</strong>`} đã ${typeMsg}
+                                ${notif.count > 1 ? `<strong>${notif.lastModifiedName}</strong> và ${notif.count - 1} người khác`: 
+                                `<strong>${notif.lastModifiedName}</strong>`} đã ${typeMsg}
                             </span>
-                            <span class="notif-time ${notif.is_read && `is-read-notify`}">${moment(notif.last_modified).fromNow()}</span>
+                            <span class="notif-time ${notif.isRead && `is-read-notify`}">${moment(notif.lastModified).fromNow()}</span>
                         </div>
-                        <div class="notif-dot" ${notif.is_read && `style="display:none;"`}>
+                        <div class="notif-dot" ${notif.isRead && `style="display:none;"`}>
                             <i class="fa fa-circle" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -71,7 +69,7 @@ function notifItem(notif) {
 
 function notifRedirect(targetId, notifId, type) {
     if (type === 'REACT_POST' || type === 'COMMENT_POST')
-        window.location = `/posts/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
+        window.location = `/post/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
     else if (type === 'REACT_COMMENT' || type === 'REPLY_COMMENT') {
         $.ajax({
             type: 'get',
@@ -98,7 +96,7 @@ function loadCommentNotifRef(commentId) {
             loadParents(data, postId);
         }
     }).done(function() {
-        let currentPost = $(`#post${postId}`);
+        let currentPost = $(`#post-${postId}`);
         let count = currentPost.find('#commentedComment').children('.comment--item').length;
         currentPost.find('#showedCommentLength').text(count);
     });

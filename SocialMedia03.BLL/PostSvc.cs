@@ -6,6 +6,7 @@ using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +25,25 @@ namespace SocialMedia03.BLL
             CommentSvc = new CommentSvc();
         }
 
-        public override Post Get(int id)
+        public Post Get(int id)
         {
-            return _rep.Get(id);
+            try
+            {
+                Post p = _rep.Get(id);
+                if (p != null)
+                {
+                    p.User = UserSvc.Get(p.UserId);
+                    p.Reacts = ReactSvc.GetReactsByPost(p.Id);
+                    p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
+                }
+
+                return p;
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+           
         }
 
         public HashSet<Post> GetAll()

@@ -109,7 +109,7 @@ function showComment(element, postId) {
 }
 
 function loadComment(postId) {
-    let currentPost = $('#post' + postId);
+    let currentPost = $('#post-' + postId);
     let commentPage = currentPost.find('#commentPage').val();
     var commentedComment = currentPost.find('#commentedComment');
 

@@ -44,7 +44,7 @@ function loadFeeds(posts) {
             }
             listUserReact += `<p class="user-liked">và ${post.reacts.length - 10} người khác...</p>`;
         }
-        var html = `<div class="post" id="post${post.id}">     
+        var html = `<div class="post" id="post-${post.id}">     
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
@@ -180,7 +180,7 @@ function customHashtag(element) {
 function prependFeeds(post) {
     const feedContainer = $('#feeds-container');
     var userAvatar = $("#userAvatar").attr("src");
-    const html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
+    const html = `<div class="post" id="post-${post.id}">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">

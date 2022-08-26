@@ -194,7 +194,10 @@
 
 <script src="~/js/notification.js"></script>
 <script>
-    
+    $(function () {
+        UUID = '@Context.Session.GetString("UUID")';
+        getNotifs();
+    });
 </script>
 @*<script src="~/js/websocket.js"></script>*@
 

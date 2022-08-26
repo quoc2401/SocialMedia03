@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SocialMedia03.WEB.Models;
 
 namespace SocialMedia03.BLL
 {
@@ -31,20 +32,18 @@ namespace SocialMedia03.BLL
             }
         }
 
-        public bool RegisterNewUser(User user, string password)
+        public bool RegisterNewUser(UserReq req)
         {
+            User u = new User(req);
             Guid uuid = Guid.NewGuid();
-            user.Uuid = uuid.ToString();
-            user.Password = BC.EnhancedHashPassword(password);
-            user.UserRole = "ROLE_USER";
-            user.Enable = true;
-            user.CreatedDate = DateTime.Now;
-            if(user.Avatar == "" || user.Avatar == null)
+            u.Uuid = uuid.ToString();
+            u.UserRole = "ROLE_USER";
+            if(String.IsNullOrEmpty(u.Avatar))
             {
-                user.Avatar = "https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png";
+                u.Avatar = "https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png";
             }
 
-            return _rep.RegisterNewUser(user);
+            return _rep.RegisterNewUser(u);
         }
     }
 }

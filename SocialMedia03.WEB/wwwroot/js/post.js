@@ -182,7 +182,7 @@ function comfirmEditPost(id) {
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                                 `; 
-    var clickedPost = $(`#post${id}`);
+    var clickedPost = $(`#post-${id}`);
     var clickedPostHtml = $(clickedPost).html();
     
     var content = $('#editingStatusContent').val();
@@ -236,7 +236,7 @@ function comfirmEditPost(id) {
                                 $(clickedPost).find('.post--content').text(data2.content);
                                 $(clickedPost).find('.post--img').attr('src', data2.image);
                                 $(clickedPost).find('.post--img').css('display', 'block');
-                                customHashtag(`#post${id}`);
+                                customHashtag(`#post-${id}`);
                             }
                         })
                         .fail(function(){
@@ -270,7 +270,7 @@ function comfirmEditPost(id) {
                 $(clickedPost).find("#timeFromNow").text(moment(data2.createdDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
-                customHashtag(`#post${id}`);
+                customHashtag(`#post-${id}`);
             }
         })
         .fail(function(){
@@ -285,7 +285,7 @@ function editStatus(id) {
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                                 `; 
-    var clickedPost = $(`#post${id}`);
+    var clickedPost = $(`#post-${id}`);
     var clickedPostHtml = $(clickedPost).html();
     var content = $('#editingStatusContent').val();
     
@@ -307,7 +307,7 @@ function editStatus(id) {
             $(clickedPost).find('.post--content').text(data.content);
             $(clickedPost).find('.post--img').css('display', 'none');
             $(clickedPost).find('.post--img').attr('src', '');
-            customHashtag(`#post${id}`);
+            customHashtag(`#post-${id}`);
         }
     })
     .fail(function(){

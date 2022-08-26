@@ -11,6 +11,7 @@ namespace SocialMedia03.Common
         //size config
         public static readonly int POST_PAGE_SIZE = 20;
         public static readonly int COMMENT_PAGE_SIZE = 10;
+        public static readonly int NOTIF_PAGE_SIZE = 10;
 
         //cloudinary config
         public static readonly string CLOUDINARY_NAME = "quoc2401";
