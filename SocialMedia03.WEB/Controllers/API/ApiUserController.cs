@@ -55,15 +55,16 @@ namespace SocialMedia03.WEB.Controllers.API
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] User user)
+        public IActionResult Register([FromBody]UserReq req)
         {
             try
             {
-                userSvc.RegisterNewUser(user, user.Password);
+                userSvc.RegisterNewUser(req);
                 return Ok();
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
         }

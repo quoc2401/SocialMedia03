@@ -17,7 +17,7 @@ namespace SocialMedia03.DAL.Models
         public int Id { get; set; }
         public string Content { get; set; } = null!;
         public string? Image { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
         public int UserId { get; set; }
         public string? Hashtag { get; set; }
 
@@ -26,7 +26,6 @@ namespace SocialMedia03.DAL.Models
         public virtual ICollection<Notif> Notifs { get; set; }
         public virtual ICollection<React> Reacts { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
-
         [NotMapped]
         public virtual int CommentSetLength { get; set; } = 0;
     }

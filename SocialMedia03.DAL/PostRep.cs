@@ -14,9 +14,9 @@ namespace SocialMedia03.DAL
 {
     public class PostRep : GenericRep<smdbContext, Post>
     {
-        public override Post Get(int id)
+        public Post Get(int id)
         {
-            return base.Context.Set<Post>().Where(p => p.Id == id).SingleOrDefault();
+            return base.Context.Set<Post>().Where(p => p.Id == id).FirstOrDefault();
            
         }
 

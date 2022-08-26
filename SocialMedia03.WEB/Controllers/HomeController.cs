@@ -9,8 +9,8 @@ namespace SocialMedia03.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private PostSvc PostSvc = new PostSvc();
-        private UserSvc UserSvc = new UserSvc();
+        private PostSvc postSvc = new PostSvc();
+        private UserSvc userSvc = new UserSvc();
 
         private readonly ILogger<HomeController> _logger;
 
@@ -25,7 +25,6 @@ namespace SocialMedia03.WEB.Controllers
             {
                 return Redirect("/account/login");
             }
-
             return View();
         }
 

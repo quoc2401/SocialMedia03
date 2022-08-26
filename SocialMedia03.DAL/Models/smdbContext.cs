@@ -65,7 +65,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Comment_Post");
 
                 entity.HasOne(d => d.User)
@@ -106,7 +105,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Notifs)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Notif_Post");
 
                 entity.HasOne(d => d.User)
@@ -146,6 +144,7 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Post_User");
             });
 
@@ -182,7 +181,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Reacts)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_React_Post");
 
                 entity.HasOne(d => d.User)
@@ -225,7 +223,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.TargetPost)
                     .WithMany(p => p.Reports)
                     .HasForeignKey(d => d.TargetPostId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Report_Post");
 
                 entity.HasOne(d => d.TargetUser)

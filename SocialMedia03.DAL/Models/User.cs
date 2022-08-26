@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SocialMedia03.WEB.Models;
+using System;
 using System.Collections.Generic;
+using BC = BCrypt.Net.BCrypt;
 
 namespace SocialMedia03.DAL.Models
 {
@@ -15,6 +17,19 @@ namespace SocialMedia03.DAL.Models
             ReportUsers = new HashSet<Report>();
         }
 
+        public User(UserReq req)
+        {
+            Email = req.Email;
+            Firstname = req.Firstname;
+            Lastname = req.Lastname;
+            Birthday = req.Birthday;
+            Password = BC.EnhancedHashPassword(req.Password);
+            Address = req.Address;
+            Hometown = req.Hometown;
+            Phone = req.Phone;
+            Avatar = req.Avatar;
+        }
+
         public int Id { get; set; }
         public string Uuid { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -26,7 +41,7 @@ namespace SocialMedia03.DAL.Models
         public string? Hometown { get; set; }
         public string? Phone { get; set; }
         public string? Avatar { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
         public string UserRole { get; set; } = null!;
         public bool? Enable { get; set; }
 

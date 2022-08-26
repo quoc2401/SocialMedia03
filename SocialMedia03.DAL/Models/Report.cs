@@ -12,7 +12,7 @@ namespace SocialMedia03.DAL.Models
         public string Reason { get; set; } = null!;
         public string? Details { get; set; }
         public bool? IsSolve { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
 
         public virtual Post? TargetPost { get; set; }
         public virtual User? TargetUser { get; set; }
