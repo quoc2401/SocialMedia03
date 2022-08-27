@@ -45,5 +45,15 @@ namespace SocialMedia03.BLL
 
             return _rep.RegisterNewUser(u);
         }
+
+        public User GetUserByPost(int postId)
+        {
+            return _rep.GetUserByPost(postId);
+        }
+
+        public User getUserByComment(int commentId)
+        {
+            return _rep.getUserByComment(commentId);
+        }
     }
 }

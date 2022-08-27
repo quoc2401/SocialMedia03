@@ -35,6 +35,7 @@ namespace SocialMedia03.BLL
             {
                 c.User = UserSvc.Get(c.UserId);
                 c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+                c.CommentSetLength = _rep.CountReplies(c.Id);
             }
 
             return rs;
