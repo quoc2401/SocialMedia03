@@ -15,7 +15,6 @@ namespace SocialMedia03.WEB.Controllers
         public IActionResult PostPage([FromRoute]int postId, [FromQuery]int? notif_id,
             [FromQuery] string? notif_type, [FromQuery(Name="ref")] string? refer)
         {
-            Debug.WriteLine(notif_id);
             if (refer.Equals("notif") && notif_id != null)
                 notifSvc.readNotif((int)notif_id);
 

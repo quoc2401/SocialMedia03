@@ -41,5 +41,10 @@ namespace SocialMedia03.DAL
         {
             return base.Context.Set<Comment>().Where(c => c.PostId == postId).Count();
         }
+
+        public int CountReplies(int commentId)
+        {
+            return base.Context.Set<Comment>().Where(c => c.ParentId == commentId).Count();
+        }
     }
 }

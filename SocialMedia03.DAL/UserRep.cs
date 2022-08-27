@@ -4,6 +4,7 @@ using SocialMedia03.Common.DAL;
 using SocialMedia03.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,24 @@ namespace SocialMedia03.DAL
         public override User Get(int id)
         {
             return base.Context.Set<User>().Where(p => p.Id == id).SingleOrDefault();
+        }
+
+        public User GetUserByPost(int postId)
+        {
+            var query = from user in Context.Users
+                        join post in Context.Posts on user.Id equals post.UserId
+                        where post.Id == postId
+                        select user;
+            return query.FirstOrDefault<User>();
+        }
+
+        public User getUserByComment(int commentId)
+        {
+            var query = from user in Context.Users
+                        join comment in Context.Comments on user.Id equals comment.UserId
+                        where comment.Id == commentId
+                        select user;
+            return query.FirstOrDefault<User>();
         }
 
         public User GetUserByEmail(string email)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia03.BLL;
+using SocialMedia03.DAL.Models;
+using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 #pragma warning disable CS8629 // Nullable value type may be null.
@@ -33,7 +35,11 @@ namespace SocialMedia03.WEB.Controllers.API
             int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
                  : HttpContext.Session.GetInt32("currentUserId"));
 
-            ReactSvc.CreateReact(postId, commentId, currentUserId);
+            User owner = ReactSvc.CreateReact(postId, commentId, currentUserId);
+            if (owner != null)
+            {
+                NotificationCenter.SendMessage("update_notif", owner.Uuid.Trim());
+            }
         }
 
         // PUT api/react/5

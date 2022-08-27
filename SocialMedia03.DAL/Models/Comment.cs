@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CloudinaryDotNet.Actions;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia03.DAL.Models
 {
@@ -25,5 +27,8 @@ namespace SocialMedia03.DAL.Models
         public virtual ICollection<Comment> InverseParent { get; set; }
         public virtual ICollection<Notif> Notifs { get; set; }
         public virtual ICollection<React> Reacts { get; set; }
+
+        [NotMapped]
+        public virtual int CommentSetLength { get; set; } = 0;
     }
 }

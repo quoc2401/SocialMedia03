@@ -108,11 +108,11 @@
 
                         <div class="comment">
                             <div class="d-flex align-items-center my-2">
-                                <div class="me-2">
-                                    <a href="#">
-                                        <img class="comment--avatar rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" alt="">
-                                    </a>
-                                </div>
+                            <div class="me-2">
+                                <a href="/user/@Context.Session.GetInt32("currentUserId")">
+                                    <img class="comment--avatar rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" alt="">
+                                </a>
+                            </div>
                                 <form class="w-100" onsubmit="addComment(@Model.Id, this)" id="commentForm">
                                     <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
                                 </form>

@@ -46,7 +46,7 @@ namespace SocialMedia03.BLL
             return rs;
         }
 
-        public bool CreateReact(int? postId, int? commentId, int userId)
+        public User CreateReact(int? postId, int? commentId, int userId)
         {
             React react = new React();
             react.PostId = postId;
@@ -54,8 +54,16 @@ namespace SocialMedia03.BLL
             react.CommentId = commentId;
             react.CreatedDate = DateTime.Now;
             react.Type = 1;
-
-            return _rep.Create(react);
+            if (_rep.Create(react)) 
+            {
+                if (postId != null)
+                {
+                    return UserSvc.GetUserByPost((int)postId);
+                }
+                else
+                    return UserSvc.getUserByComment((int)commentId);
+            }
+            return null;
         }
 
         public bool DeleteReact(int? postId, int? commentId, int userId)
