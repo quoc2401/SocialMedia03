@@ -9,11 +9,10 @@ Validator({
         Validator.minLength('#password', 6, 'Mật khẩu phải có tối thiểu 6 kí tự')
     ],
     onSubmit: (data) => {
-
         $.ajax({
             type: 'POST',
             url: '/api/user/authenticate',
-            contentType: 'application/json; charset=utf-8',
+            contentType: 'application/json',
             data: JSON.stringify({
                 Email: data.email,
                 Password: data.password
@@ -30,6 +29,7 @@ Validator({
                 }, 1500)
             }
         }).fail((res) => {
+            console.log(res);
             $('.show-err').css("display", "block");
             $('.show-err').text(res.responseJSON.message);
         });

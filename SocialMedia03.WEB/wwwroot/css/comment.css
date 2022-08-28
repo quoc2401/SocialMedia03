@@ -45,7 +45,7 @@
 
 .child-have-reply .comment--item::after {
     content: '';
-    width: 1.5px;
+    width: 2px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -60,11 +60,11 @@
 
 .reply-comments .comment--item .point:before {
     content: '';
-    width: 1.5px;
+    width: 2px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
-    top: -92px;
+    top: -86px;
     left: -26px;
 }
 
@@ -94,7 +94,7 @@
 
 .commentFormReply .point-to-formReply::before {
     content: '';
-    width: 1.5px;
+    width: 2px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -116,11 +116,11 @@
 
 .btn-load-reply-comments .point-to-showMore::before {
     content: '';
-    width: 1.5px;
+    width: 2px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
-    top: -34px;
+    top: -32px;
     left: -2px;
 }
 
@@ -161,7 +161,7 @@
     font-weight: bold;
     color: #999;
     cursor: pointer;
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
 .comment-delete {
@@ -170,9 +170,26 @@
     color: #999;
     cursor: pointer;
 }
+
+.comment-edit {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
 .comment--item-content{
     margin-right: 4px;
     position: relative;
+}
+
+.cancel-edit-comment {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    float: right;
 }
 
 .comment-content {
@@ -240,4 +257,16 @@
     width: 100%;
     padding: 10px;
     background-color: #fff;
+}
+
+.form-edit-comment {
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    border: 1px solid #c7cacb;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #fbfafa;
+    padding: 4px;
 }

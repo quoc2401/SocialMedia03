@@ -23,7 +23,6 @@ namespace SocialMedia03.WEB.Controllers.API
     public class ApiUserController : ControllerBase
     {
         private UserSvc userSvc = new UserSvc();
-        private IMapper mapper;
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
