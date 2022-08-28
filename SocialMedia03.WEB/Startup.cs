@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using SocialMedia03.BLL;
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SocialMedia03.WEB
 {
@@ -30,7 +31,11 @@ namespace SocialMedia03.WEB
             });
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddDistributedMemoryCache();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
             services.AddSession(options =>
             {
                 options.IdleTimeout = new TimeSpan(1, 0, 0);

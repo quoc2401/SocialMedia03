@@ -17,7 +17,6 @@
         }, 'Mật khẩu nhập lại không chính xác')
     ],
     onSubmit: (data) => {
-        console.log(data);
         var formData = new FormData();
         var fs = document.getElementById('avatar');
         if (fs.files[0] === undefined) {
@@ -82,6 +81,7 @@ function createUser(data, res) {
             }, 1500)
         }
     }).fail((res) => {
+        console.log(res);
         $('.register-load').css("display", "none");
         $('.show-err').css("display", "block");
         $('.show-err').text(res.responseJSON.message);

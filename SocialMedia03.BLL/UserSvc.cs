@@ -22,7 +22,7 @@ namespace SocialMedia03.BLL
         public User Authenticate(string email, string password)
         {
             User user = _rep.GetUserByEmail(email.Trim());
-            if (user != null && BC.EnhancedVerify(password.Trim(), user.Password.Trim()) == true)
+            if (user != null && BC.Verify(password.Trim(), user.Password.Trim()) == true)
             {
                 return user;
             } 
@@ -38,6 +38,7 @@ namespace SocialMedia03.BLL
             Guid uuid = Guid.NewGuid();
             u.Uuid = uuid.ToString();
             u.UserRole = "ROLE_USER";
+            u.CreatedDate = DateTime.Now;
             if(String.IsNullOrEmpty(u.Avatar))
             {
                 u.Avatar = "https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png";
