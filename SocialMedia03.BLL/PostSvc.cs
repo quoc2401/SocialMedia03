@@ -106,5 +106,10 @@ namespace SocialMedia03.BLL
 
             return _rep.Delete(p);
         }
+
+        public Post FindPostByComment(int commentId)
+        {
+            return _rep.FindPostByComment(commentId);
+        }
     }
 }

@@ -27,6 +27,9 @@ namespace SocialMedia03.BLL
             Comment c = _rep.Get(id);
             c.User = UserSvc.Get(c.UserId);
             c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+            c.CommentSetLength = _rep.CountReplies(c.Id);
+            if (c.ParentId != null)
+                c.Parent = this.Get((int)c.ParentId);
             return c;
         }
 
@@ -77,21 +80,21 @@ namespace SocialMedia03.BLL
                 c.CreatedDate = DateTime.Now;
                 c.UserId = creator.Id;
                 c.User = creator;
-                if (req.PostId != null)
+                c.PostId = req.PostId;
+                c.ParentId = req.CommentId;
+                if (_rep.Create(c) == true)
                 {
-                    c.PostId = req.PostId;
-                    if (_rep.Create(c) == true)
+                    if (c.PostId != null)
                     {
-                        return c;
+                        c.Post = new Post();
+                        c.Post.User = UserSvc.GetUserByPost((int)c.PostId);
                     }
-                }
-                else
-                {
-                    c.ParentId = req.CommentId;
-                    if (_rep.Create(c) == true)
+                    else
                     {
-                        return c;
+                        c.Parent = new Comment();
+                        c.Parent.User = UserSvc.getUserByComment((int)c.ParentId);
                     }
+                    return c;
                 }
             }
             catch (Exception ex)

@@ -24,7 +24,7 @@ namespace SocialMedia03.DAL
         {
             HashSet<Comment> rs = new HashSet<Comment>();
 
-            int size = configs.POST_PAGE_SIZE;
+            int size = configs.COMMENT_PAGE_SIZE;
             if (page > 0)
             {
                 int start = ((int)page - 1) * size;

@@ -73,15 +73,12 @@ function notifRedirect(targetId, notifId, type) {
     else if (type === 'REACT_COMMENT' || type === 'REPLY_COMMENT') {
         $.ajax({
             type: 'get',
-            url:`/api/find-post/${targetId}`,
+            url:`/api/post/find?commentId=${targetId}`,
             dataType: 'json',
             success: function (data) {
-                window.location = `/posts/${data.id}?comment_id=${targetId}&notif_id=${notifId}&notif_type=${type}&ref=notif`;
+                window.location = `/post/${data.id}?comment_id=${targetId}&notif_id=${notifId}&notif_type=${type}&ref=notif`;
             }
         });
-    }
-    else {
-        window.location = `/auctions/${targetId}?notif_id=${notifId}&notif_type=${type}&ref=notif`;
     }
 }
 
@@ -90,7 +87,7 @@ function loadCommentNotifRef(commentId) {
     
     $.ajax({
         type: 'get',
-        url: `/api/get-comment/${commentId}`,
+        url: `/api/comment/${commentId}`,
         dataType: 'json',
         success: function (data) {
             loadParents(data, postId);
@@ -104,12 +101,24 @@ function loadCommentNotifRef(commentId) {
 }
 
 function loadParents(comment, postId) {
-    if (comment.parentId !== null) {
-        loadParents(comment.parentId);
-        $(`#commentItem${comment.parentId.id}`).find('#repliedComments').append(commentItem(comment, postId));
+    if (comment.parent !== null) {
+        loadParents(comment.parent, postId);
+        $(`#repliedComments${comment.parent.id}`).append(commentItem(comment, postId));
+
+        let loadedCommentCount = $(`#repliedComments${comment.parent.id}`).children().length;
+        if (comment.parent.commentSetLength <= loadedCommentCount)
+            $(`#loadReply${comment.parent.id}`).css('display', 'none');
+        else {
+
+            let count = $(`#countReply${comment.parent.id}`).text();
+            count --;
+            $(`#countReply${comment.parent.id}`).text(count);
+        }
     }
     else {
         $('#commentedComment').append(commentItem(comment, postId));
+        if (comment.commentSetLength <= 1)
+            $(`#loadReply${comment.id}`).css('display','none');
     }
     
     setTimeout(function() {
