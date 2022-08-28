@@ -97,5 +97,11 @@ namespace SocialMedia03.WEB.Controllers.API
 
             return Ok(res);
         }
+
+        [HttpGet("find")]
+        public IActionResult FindPost([FromQuery]int commentId)
+        {
+            return Ok(postSvc.FindPostByComment(commentId));
+        }
     }
 }

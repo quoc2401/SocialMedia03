@@ -93,5 +93,18 @@ namespace SocialMedia03.DAL
                 return false;
             }
         }
+
+        public Post FindPostByComment(int commentId)
+        {
+            int postId;
+            Comment comment = Context.Comments.Where(c => c.Id == commentId).SingleOrDefault();
+            Post result;
+
+            if (comment.PostId == null && comment.ParentId != null)
+                result = FindPostByComment((int)comment.ParentId);
+            else
+                result = Context.Posts.Where(p => p.Id == comment.PostId).SingleOrDefault(); ;
+            return result;
+        }
     }
 }

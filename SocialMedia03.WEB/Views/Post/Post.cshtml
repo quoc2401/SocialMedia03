@@ -87,11 +87,11 @@
 
                                         if (hasUser)
                                         {
-                                            @:<div class="heart-like-button liked"></div>
+                                                    @:<div class="heart-like-button liked"></div>
                                         }
                                         else
                                         {
-                                            @:<div class="heart-like-button"></div>
+                                                    @:<div class="heart-like-button"></div>
                                         }
                                     
                                     }
@@ -123,15 +123,16 @@
                             <div id="commentedComment" class="flex">
                             
                             </div>
-                            
+                            <param name="commentPage" id="commentPage" value="1"/>
                             <!--show more comment-->
                             <div class="show-more-comment">
-                                <param name="commentPage" id="commentPage" value="1"/>
                                 <span class="showMore" onclick="loadComment(@Model.Id)">Xem thêm bình luận</span>
                                 <span>
                                     <span id="showedCommentLength"></span>/<span id="commentSetLength">@Model.CommentSetLength</span>
                                 </span>
                             </div>
+                           
+                                
                         </div>
                     </div>
                 </div>

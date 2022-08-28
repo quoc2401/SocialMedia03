@@ -28,9 +28,9 @@ namespace SocialMedia03.WEB.Controllers.API
 
         // GET api/comment/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(CommentSvc.Get(id));
         }
 
         // POST api/comment/add
@@ -43,8 +43,13 @@ namespace SocialMedia03.WEB.Controllers.API
                 currentUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("currentUser"));
                 Comment res = CommentSvc.Create(req, currentUser);
                 if (res != null)
+                {
+                    if (res.Post != null && res.Post.User != null)
+                        NotificationCenter.SendMessage("update_notif", res.Post.User.Uuid.Trim());
+                    else if (res.Parent != null && res.Parent.User != null)
+                        NotificationCenter.SendMessage("update_notif", res.Parent.User.Uuid.Trim());
                     return Ok(res);
-
+                }
             }
 
             return StatusCode(500);

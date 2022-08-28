@@ -235,9 +235,9 @@ function commentItem(comment, postId) {
                             <input name="commentContent" type="text" placeholder="Thêm bình luận" class="add-comment" />
                         </form>
                     </div>
-               
-                        <div id="repliedComments">
-                        
+
+                        <div class="repliedComments" id="repliedComments${comment.id}">
+
                         </div>
 
                         <param id="replyPage" value="1"/>
@@ -246,7 +246,7 @@ function commentItem(comment, postId) {
                     <div class="btn-load-reply-comments" id="loadReply${comment.id}" onclick="loadReplies(${comment.id}, ${postId})">
                             <div class="point-to-showMore"></div>
                             <i class="fa-solid fa-reply me-2"></i>
-                            <span>Xem <span class="count-reply">${subLength}</span> phản hồi</span>
+                            <span>Xem <span class="count-reply" id="countReply${comment.id}">${subLength}</span> phản hồi</span>
                 `:``}
                 </div>
             </div>`;
@@ -298,7 +298,7 @@ function showFormReply(commentItemId) {
 
 function loadReplies(commentId, postId) {
     let currentComment = $('#commentItem' + commentId);
-    var repliedComment = currentComment.find('#repliedComments');
+    var repliedComment = currentComment.find(`#repliedComments${commentId}`);
 
     $.ajax({
         type: 'get',
@@ -348,7 +348,7 @@ function addReply(currentCommentId, formEl, postId) {
     let currentComment = $(`#commentItem${currentCommentId}`);
 
     if (!isBlank(commentContent)) {
-        currentComment.find('#repliedComments').prepend(commentLoading);
+        currentComment.find(`#repliedComments${comment.id}`).prepend(commentLoading);
         $.ajax({
             type: 'post',
             url: `/api/comment/add`,
@@ -362,7 +362,7 @@ function addReply(currentCommentId, formEl, postId) {
             success: function (data) {
                 currentComment.find('.comment-loading').remove();
 
-                currentComment.find('#repliedComments').prepend(commentItem(data, postId));
+                currentComment.find(`#repliedComments${comment.id}`).prepend(commentItem(data, postId));
 
                 currentComment.find('input[name=commentContent]').val("");
             }
