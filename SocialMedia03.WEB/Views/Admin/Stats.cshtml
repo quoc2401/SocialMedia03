@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SocialMedia03.Common.Res.StatsRes
+@{
     Layout = "/Views/Admin/_AdminBase.cshtml";
 }
 <div class="chart-content container-fluid pb-4">
@@ -15,12 +16,19 @@
                                 <label for="month" class="me-1 small">Tháng</label>
                                 <select type="number" class="form-control me-2 mb-2" name="month" style="width: 200px" id="month">
                                     <option value="0">Tất cả</option>
+                                    @for (var i = 1; i < 12; i++)
+                                    {
+                                        <option value="@i">Tháng @i</option>
+                                    }
                                 </select>
                             </div>
                             <div class="form-group text-start">
-                                <label for="month" class="me-1 small">Năm</label>
+                                <label for="year" class="me-1 small">Năm</label>
                                 <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="year">
-                                        <option value="${i}">${i}</option>
+                                    @for (var i = @DateTime.Now.Year; i >= 2001; i--)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -45,8 +53,8 @@
                     <div class="float-end">
                         <i class="mdi mdi-account-multiple widget-icon"></i>
                     </div>
-                    <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Người dùng</h5>
-                    <h3 class="mt-3 mb-3">+ ${userCount}</h3>
+                    <h5 class="text-muted fw-normal mt-0" title="Number of Customers"> Số người dùng mới </h5>
+                    <h3 class="mt-3 mb-3">+ @Model.CountUser</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -71,7 +79,7 @@
                         <i class="mdi mdi-cart-plus widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Số bài viết</h5>
-                    <h3 class="mt-3 mb-3">+ ${postCount}</h3>
+                    <h3 class="mt-3 mb-3">+ @Model.CountPost</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -98,7 +106,7 @@
                         <i class="mdi mdi-currency-usd widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Số bài đấu giá</h5>
-                    <h3 class="mt-3 mb-3">+ ${auctionCount}</h3>
+                    <h3 class="mt-3 mb-3">+ 123</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -118,12 +126,12 @@
 
         <div class="col-sm-12 col-md-6">
             <div class="card widget-flat">
-                <div class="card-body">
+                <div class="card-body" >
                     <div class="float-end">
                         <i class="mdi mdi-pulse widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Growth">Báo cáo người dùng</h5>
-                    <h3 class="mt-3 mb-3">+ ${reportUserCount}</h3>
+                    <h3 class="mt-3 mb-3">+ 123</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -149,7 +157,7 @@
                         <i class="mdi mdi-currency-usd widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Số lượt thích</h5>
-                    <h3 class="mt-3 mb-3">+ ${reactCount}</h3>
+                    <h3 class="mt-3 mb-3">@Model.CountReact</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -174,7 +182,7 @@
                         <i class="mdi mdi-pulse widget-icon"></i>
                     </div>
                     <h5 class="text-muted fw-normal mt-0" title="Growth">Số lượt bình luận</h5>
-                    <h3 class="mt-3 mb-3">+ ${commentCount}</h3>
+                    <h3 class="mt-3 mb-3">+ @Model.CountComment</h3>
                     <p class="mb-0 text-muted">
                         <span class="mx-2" style="color: #32e37f"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         <span class="text-nowrap">
@@ -205,8 +213,8 @@
 
 <script>
    $(function () {
-       let labels = ["Người dùng", "Bài viết", "Bài đấu giá"];
-       let data = [${userCount}, ${postCount}, ${auctionCount}];
+       let labels = ["Người dùng", "Bài viết"];
+       let data = [@Model.CountUser, @Model.CountPost];
        
        chart(labels, data);
    });

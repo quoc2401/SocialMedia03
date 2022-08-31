@@ -75,5 +75,16 @@ namespace SocialMedia03.DAL
         {
             return base.Context.Set<React>().Where(r => r.CommentId == commentId && r.UserId == userId).SingleOrDefault();
         }
+        public int CountReact(int month, int year)
+        {
+            int count;
+            if (year == 0)
+                count = Context.Reacts.Count();
+            else if (month >= 1 && month <= 12)
+                count = Context.Reacts.Where(u => u.CreatedDate.Month == month && u.CreatedDate.Year == year).Count();
+            else
+                count = Context.Reacts.Where(u => u.CreatedDate.Year == year).Count();
+            return count;
+        }
     }
 }

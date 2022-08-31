@@ -106,5 +106,16 @@ namespace SocialMedia03.DAL
                 result = Context.Posts.Where(p => p.Id == comment.PostId).SingleOrDefault(); ;
             return result;
         }
+        public int CountPost(int month, int year)
+        {
+            int count;
+            if (year == 0)
+                count = Context.Posts.Count();
+            else if (month >= 1 && month <= 12)
+                count = Context.Posts.Where(u => u.CreatedDate.Month == month && u.CreatedDate.Year == year).Count();
+            else
+                count = Context.Posts.Where(u => u.CreatedDate.Year == year).Count();
+            return count;
+        }
     }
 }
