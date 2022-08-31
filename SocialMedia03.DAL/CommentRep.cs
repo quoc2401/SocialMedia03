@@ -121,5 +121,16 @@ namespace SocialMedia03.DAL
                 return false;
             }
         }
+        public int CountComment(int month, int year)
+        {
+            int count;
+            if (year == 0)
+                count = Context.Comments.Count();
+            else if (month >= 1 && month <= 12)
+                count = Context.Comments.Where(u => u.CreatedDate.Month == month && u.CreatedDate.Year == year).Count();
+            else
+                count = Context.Comments.Where(u => u.CreatedDate.Year == year).Count();
+            return count;
+        }
     }
 }
