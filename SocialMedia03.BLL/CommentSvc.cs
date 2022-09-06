@@ -66,7 +66,7 @@ namespace SocialMedia03.BLL
 
         public bool Delete(int id)
         {
-            Comment c = this.Get(id);
+            Comment c = _rep.Get(id);
 
             return _rep.Delete(c);
         }

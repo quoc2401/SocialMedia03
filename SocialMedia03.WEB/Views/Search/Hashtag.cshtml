@@ -29,14 +29,11 @@
         <img id="img01" style="max-width:100%; max-height:100vh;">
     </div>
 </div>
-<script src="~/js/search.js"></script>
 <script src="~/js/feeds.js"></script>
 <script src="~/js/comment.js"></script>
 <script src="~/js/post.js"></script>
 <script>
             window.onload = function () {
-                //$('.content').hide();
-                UUID = '${sessionScope.currentUser.id}';
                 postPage = 1;
                 disableLoadMorePost = false;
                 $('#userNotification').on("click", function () {

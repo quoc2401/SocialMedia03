@@ -8,6 +8,7 @@ namespace SocialMedia03.WEB.Controllers
     public class AdminController : Controller
     {
         private AdminService adminService = new AdminService();
+        private UserSvc userSvc = new UserSvc();
 
         [Route("")]
         public IActionResult Stats([FromQuery]int? month=0,[FromQuery]int? year=0)
@@ -26,6 +27,12 @@ namespace SocialMedia03.WEB.Controllers
         public IActionResult UserReports()
         {
             return View("Reports");
+        }
+
+        [Route("user")]
+        public IActionResult User([FromQuery] string? kw)
+        {
+            return View("User", userSvc.SearchByUser(kw, 0, 0));
         }
     }
 }

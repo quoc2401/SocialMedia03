@@ -348,7 +348,7 @@ function addReply(currentCommentId, formEl, postId) {
     let currentComment = $(`#commentItem${currentCommentId}`);
 
     if (!isBlank(commentContent)) {
-        currentComment.find(`#repliedComments${comment.id}`).prepend(commentLoading);
+        currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentLoading);
         $.ajax({
             type: 'post',
             url: `/api/comment/add`,
@@ -362,7 +362,7 @@ function addReply(currentCommentId, formEl, postId) {
             success: function (data) {
                 currentComment.find('.comment-loading').remove();
 
-                currentComment.find(`#repliedComments${comment.id}`).prepend(commentItem(data, postId));
+                currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
 
                 currentComment.find('input[name=commentContent]').val("");
             }

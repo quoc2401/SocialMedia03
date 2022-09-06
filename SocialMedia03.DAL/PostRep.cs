@@ -81,7 +81,7 @@ namespace SocialMedia03.DAL
                 return true;
             try
             {
-                base.Context.Entry(p).State = EntityState.Deleted;
+                base.Context.Database.ExecuteSqlRaw("Delete Post Where id={0}", p.Id);
 
                 base.Context.SaveChanges();
 
@@ -117,5 +117,30 @@ namespace SocialMedia03.DAL
                 count = Context.Posts.Where(u => u.CreatedDate.Year == year).Count();
             return count;
         }
+
+       
+
+        public List<Post> SearchByHashtag(string hashtag, int page)
+        {
+            List<Post> rs = new List<Post>();
+            int size = configs.POST_PAGE_SIZE;
+            if (hashtag == null)
+                hashtag = "";
+
+            if (page > 0)
+            {
+                int start = (page - 1) * size;
+
+                rs = base.Context.Set<Post>().Where(p => p.Hashtag.Contains(hashtag+" ")).AsEnumerable().Skip(start).Take(size).ToList();
+            }
+            else
+            {
+                rs = base.Context.Set<Post>().Where(p => p.Hashtag.Contains(hashtag)).ToList();
+            }
+
+            return rs;
+        }
+
+
     }
 }

@@ -54,7 +54,7 @@ namespace SocialMedia03.WEB.Controllers.API
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]UserReq req)
+        public IActionResult Register([FromBody] UserReq req)
         {
             try
             {
@@ -67,5 +67,26 @@ namespace SocialMedia03.WEB.Controllers.API
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [AllowAnonymous]
+        [HttpDelete("delete/{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                if (HttpContext.Session.GetString("currentUserRole") == "ROLE_ADMIN")
+                { 
+                    userSvc.Delete(id);
+                    return StatusCode(204);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return BadRequest(new { message = ex.Message });
+            }
+            return StatusCode(500);
+        }
+
     }
 }

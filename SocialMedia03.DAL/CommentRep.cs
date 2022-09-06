@@ -73,9 +73,10 @@ namespace SocialMedia03.DAL
         {
             if (c == null)
                 return true;
+
             try
             {
-                base.Context.Entry(c).State = EntityState.Deleted;
+                base.Context.Database.ExecuteSqlRaw("Delete Comment Where id={0}", c.Id);
 
                 base.Context.SaveChanges();
 
@@ -86,6 +87,9 @@ namespace SocialMedia03.DAL
                 Debug.WriteLine(e.StackTrace);
                 return false;
             }
+
+
+            return true;
         }
 
         public bool Create(Comment c)

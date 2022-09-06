@@ -17,7 +17,7 @@ namespace SocialMedia03.DAL.Models
         public int Id { get; set; }
         public string Content { get; set; } = null!;
         public string? Image { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int UserId { get; set; }
         public string? Hashtag { get; set; }
 
