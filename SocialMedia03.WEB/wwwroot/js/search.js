@@ -18,7 +18,7 @@ function hashTagSearch() {
 
     $.ajax({
         type: 'get',
-        url: `/api/posts?hashtag=${hashtag}&page=${postPage}`,
+        url: `/api/post/hashtag?hashtag=${hashtag}&page=${postPage}`,
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
@@ -41,7 +41,6 @@ function hashTagSearch() {
 function topSearch() {
     personSearch(topSearchPerson);
     contentSearch(topSearchPost);
-    auctionSearch(topSearchAuction);
 }
 
 function contentSearch(limit) {
@@ -49,7 +48,7 @@ function contentSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `/api/posts?kw=${kw}&page=${postPage}`;
+    let url = `/api/post/feeds?kw=${kw}&page=${postPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -81,7 +80,7 @@ function personSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `/api/users?kw=${kw}&page=${personPage}`;
+    let url = `/api/post/user?kw=${kw}&page=${personPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -216,11 +215,11 @@ function loadUserSearch(users) {
                             </div>
                             <div class="person-search-item-name">
                                 <h6 class="mb-0">
-                                    <a href="/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
+                                    <a href="/user/${u.uuid}">${u.lastname + ' ' + u.firstname}</a>
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow btn-follow${u.id}" onclick="follow('${u.id}')">
+                        <div class="btn-follow btn-follow${u.uuid}" onclick="follow('${u.uuid}')">
                             <div class="line1"></div>
                             <div class="line2"></div>
                         </div>

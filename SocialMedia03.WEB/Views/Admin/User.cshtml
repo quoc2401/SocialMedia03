@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SocialMedia03.DAL.Models.User>
+
+@{
+    Layout = "/Views/Admin/_AdminBase.cshtml";
+}
+<div class="report-content container-fluid">
+    <button class="button-menu-mobile open-left" onclick="openSideBar()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <form class="d-flex">
+                        <div class="d-flex flex-column flex-lg-row">
+                            <input type="text" placeholder="Tìm kiếm..." name="kw" class="form-control me-2" />
+                        </div>
+                        <button type="submit" class="input-group-text bg-primary border-primary text-white mb-2 load-report" style="cursor: pointer;">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </form>
+                </div>
+                <h5 class="page-title">Quản lý người dùng</h5>
+            </div>
+        </div>
+    </div>
+
+    <table class="w-100 table-report">
+        <thead>
+            <tr>
+                <th>UUID</th>
+                <th>Họ và tên</th>
+                <th>Ngày tạo</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th><i class="fa-solid fa-circle-exclamation" style="color: red; font-size: 18px; background-color: #fff; border-radius: 50%"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model)
+            {
+                <tr class="report-item" id="userItem-@u.Id">
+                    <td>
+                        <a href="/user/@u.Uuid">
+                            @u.Uuid
+                        </a>
+                    </td>
+                    <td>@u.Lastname @u.Firstname</td>
+                    <td>@u.CreatedDate</td>
+                    <td> @u.Email </td>
+                    <td> @u.Phone </td>
+                    
+                    <td>
+                        
+                     <button class="btn-solve" onclick="deleteUser(@u.Id)">Xoá</button>
+                      
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>    
