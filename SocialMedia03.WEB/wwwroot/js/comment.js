@@ -181,14 +181,14 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="/user/${comment.user.uuid}">
+                    <a href="/user/${comment.user.id}">
                         <img class="comment--avatar rounded-circle" src="${comment.user.avatar}" alt="avatar">
                     </a>
                 </div>
                 <div class="comment--item-content comment--item-content${comment.id}">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
-                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.uuid}">${comment.user.lastname} ${comment.user.firstname}
+                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
                                 ${comment.user.uuid === postOwnerId ?
                             `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>
@@ -217,7 +217,7 @@ function commentItem(comment, postId) {
 
                             <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
                             ${(UUID === comment.user.uuid || UUID === postOwnerId) ?
-                        `<div class="comment-edit" onclick="showEditComment(${comment.id}, this, ${postId})">Sửa</div>
+                        `<div class="comment-edit" onclick="showEditComment(${comment.id}, ${postId})">Sửa</div>
                         <div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
                   </div>
@@ -379,9 +379,9 @@ function formEditComment(commentId, postId) {
             </div>`
 }
 
-function showEditComment(commentId) {
+function showEditComment(commentId, postId) {
     const currentComment = $(`.comment--item-content${commentId}`).html();
-    $(`.comment--item-content${commentId}`).html(formEditComment(commentId));
+    $(`.comment--item-content${commentId}`).html(formEditComment(commentId, postId));
     $(`.cancel-edit-comment${commentId}`).on('click', function () {
         $(`.comment--item-content${commentId}`).empty();
         $(`.comment--item-content${commentId}`).append(currentComment);

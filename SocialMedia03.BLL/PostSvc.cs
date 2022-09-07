@@ -144,5 +144,18 @@ namespace SocialMedia03.BLL
             return posts;
         }
 
+        public HashSet<Post> GetPostByUser(int userId, int page)
+        {
+            HashSet<Post> rs = _rep.GetPostByUser(userId, page);
+            foreach (var p in rs)
+            {
+                p.User = UserSvc.Get(p.UserId);
+                p.Reacts = ReactSvc.GetReactsByPost(p.Id);
+                p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
+            }
+
+            return rs;
+        }
+
     }
 }

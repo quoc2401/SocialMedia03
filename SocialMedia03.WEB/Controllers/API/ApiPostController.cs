@@ -119,5 +119,11 @@ namespace SocialMedia03.WEB.Controllers.API
         {
             return Ok(userSvc.SearchByUser(kw, page, (int)limit));
         }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetUserPosts([FromRoute] int userId,[FromQuery] int page)
+        {
+            return Ok(postSvc.GetPostByUser(userId, page));
+        }
     }
 }

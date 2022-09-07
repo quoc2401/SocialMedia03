@@ -1,7 +1,7 @@
 var personPage = 1;
-let topSearchPerson = 3;
-let topSearchPost = 10;
-let topSearchAuction = 10;
+var topSearchPerson = 3;
+var topSearchPost = 10;
+var topSearchAuction = 10;
 
 function searchSubmit() {
     event.preventDefault();
@@ -144,7 +144,6 @@ function searchFilter(filter) {
     window.scrollTo(0, 0);
     disableLoadMorePost = false;
     removeSearchResult();
-    auctionPage = 1;
     personPage = 1;
     postPage = 1;
     let url = new URL(window.location.toString());
@@ -155,7 +154,6 @@ function searchFilter(filter) {
         disableLoadMorePost = true;
         $('.post-search').css('display', 'block');
         $('.person-search').css('display', 'block');
-        $('.auction-search').css('display', 'block');
         topSearch();
        
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/top';
@@ -167,7 +165,6 @@ function searchFilter(filter) {
         personSearch();
         $('.person-search').css('display', 'block');
         $('.post-search').css('display', 'none');
-        $('.auction-search').css('display', 'none');
         
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/people';
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
@@ -185,23 +182,11 @@ function searchFilter(filter) {
         
         window.history.replaceState('', 'SharingHope', newUrl);
     }
-    else {
-        auctionSearch();
-        $('.person-search').css('display', 'none');
-        $('.post-search').css('display', 'none');
-        $('.auction-search').css('display', 'block');
-        
-        let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/auctions';
-        let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
-        
-        window.history.replaceState('', 'SharingHope', newUrl);
-    }
 }
 
 function removeSearchResult() {
     $('#feeds-container').empty();
     $('#personsContainer').empty();
-    $('.auction-container').empty();
 }
 
 function loadUserSearch(users) {

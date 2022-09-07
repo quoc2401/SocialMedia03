@@ -22,7 +22,7 @@ namespace SocialMedia03.DAL.Models
             Firstname = req.Firstname;
             Lastname = req.Lastname;
             Birthday = req.Birthday;
-            Password = BC.EnhancedHashPassword(req.Password);
+            Password = BC.HashPassword(req.Password);
             Address = req.Address;
             Hometown = req.Hometown;
             Phone = req.Phone;

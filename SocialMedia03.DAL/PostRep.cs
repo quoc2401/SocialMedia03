@@ -106,6 +106,7 @@ namespace SocialMedia03.DAL
                 result = Context.Posts.Where(p => p.Id == comment.PostId).SingleOrDefault(); ;
             return result;
         }
+
         public int CountPost(int month, int year)
         {
             int count;
@@ -141,6 +142,23 @@ namespace SocialMedia03.DAL
             return rs;
         }
 
+        public HashSet<Post> GetPostByUser(int userId, int page)
+        {
+            HashSet<Post> rs = new HashSet<Post>();
+            int size = configs.POST_PAGE_SIZE;
 
+            if (page > 0)
+            {
+                int start = (page - 1) * size;
+
+                rs = base.Context.Set<Post>().Where(p => p.UserId == userId).AsEnumerable().Skip(start).Take(size).ToHashSet();
+            }
+            else
+            {
+                rs = base.Context.Set<Post>().Where(p => p.UserId == userId).ToHashSet();
+            }
+
+            return rs;
+        }
     }
 }

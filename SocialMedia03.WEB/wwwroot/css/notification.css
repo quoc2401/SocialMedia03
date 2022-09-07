@@ -1,6 +1,6 @@
 .notif-loading {
     width: 100%;
-    padding: 0px;
+    padding: 0px !important;
     background-color: #fff;
     cursor: pointer;
 }
