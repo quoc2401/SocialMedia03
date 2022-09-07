@@ -217,7 +217,7 @@ function commentItem(comment, postId) {
 
                             <div class="comment-reply" onclick="showFormReply(${comment.id})">Phản hồi</div>
                             ${(UUID === comment.user.uuid || UUID === postOwnerId) ?
-                        `<div class="comment-edit" onclick="showEditComment(${comment.id}, this, ${postId})">Sửa</div>
+                        `<div class="comment-edit" onclick="showEditComment(${comment.id}, ${postId})">Sửa</div>
                         <div class="comment-delete" onclick="deleteComment(${comment.id})">Xóa</div>` : ``}
                       </div>
                   </div>
@@ -348,7 +348,7 @@ function addReply(currentCommentId, formEl, postId) {
     let currentComment = $(`#commentItem${currentCommentId}`);
 
     if (!isBlank(commentContent)) {
-        currentComment.find(`#repliedComments${comment.id}`).prepend(commentLoading);
+        currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentLoading);
         $.ajax({
             type: 'post',
             url: `/api/comment/add`,
@@ -362,7 +362,7 @@ function addReply(currentCommentId, formEl, postId) {
             success: function (data) {
                 currentComment.find('.comment-loading').remove();
 
-                currentComment.find(`#repliedComments${comment.id}`).prepend(commentItem(data, postId));
+                currentComment.find(`#repliedComments${currentCommentId}`).prepend(commentItem(data, postId));
 
                 currentComment.find('input[name=commentContent]').val("");
             }
@@ -379,9 +379,9 @@ function formEditComment(commentId, postId) {
             </div>`
 }
 
-function showEditComment(commentId) {
+function showEditComment(commentId, postId) {
     const currentComment = $(`.comment--item-content${commentId}`).html();
-    $(`.comment--item-content${commentId}`).html(formEditComment(commentId));
+    $(`.comment--item-content${commentId}`).html(formEditComment(commentId, postId));
     $(`.cancel-edit-comment${commentId}`).on('click', function () {
         $(`.comment--item-content${commentId}`).empty();
         $(`.comment--item-content${commentId}`).append(currentComment);

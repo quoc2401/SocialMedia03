@@ -23,7 +23,7 @@ namespace SocialMedia03.BLL
         public User Authenticate(string email, string password)
         {
             User user = _rep.GetUserByEmail(email.Trim());
-            if (user != null && BC.Verify(password.Trim(), user.Password.Trim(), true))
+            if (user != null && BC.Verify(password.Trim(), user.Password.Trim()))
             {
                 return user;
             } 
