@@ -181,14 +181,14 @@ function commentItem(comment, postId) {
                 <div class="point-to-child"></div>
                 <div class="d-flex point position-relative">
                     <div class="me-2" style="z-index: 1;">
-                    <a href="/user/${comment.user.uuid}">
+                    <a href="/user/${comment.user.id}">
                         <img class="comment--avatar rounded-circle" src="${comment.user.avatar}" alt="avatar">
                     </a>
                 </div>
                 <div class="comment--item-content comment--item-content${comment.id}">
                     <div class="bg-light comment-content comment-content${comment.id}">
                         <div class="d-flex justify-content-start align-items-center">
-                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.uuid}">${comment.user.lastname} ${comment.user.firstname}
+                            <h6 class="mb-1 me-2 d-flex align-items-center"><a href="/user/${comment.user.id}">${comment.user.lastname} ${comment.user.firstname}
                                 ${comment.user.uuid === postOwnerId ?
                             `<span class="author-post"><i class="fa-solid fa-circle-check"></i></span>` : ``}
                             </a></h6>

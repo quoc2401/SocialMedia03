@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using SocialMedia03.Common;
 using SocialMedia03.Common.DAL;
 using SocialMedia03.DAL.Models;
 using System;
@@ -57,5 +58,60 @@ namespace SocialMedia03.DAL
                 return false;
             }
         }
+
+        public int CountUser(int month, int year)
+        {
+            int count;
+            if (year == 0)
+                count = Context.Users.Count();
+            else if (month >= 1 && month <= 12)
+                count = Context.Users.Where(u => u.CreatedDate.Month == month && u.CreatedDate.Year == year).Count();
+            else
+                count = Context.Users.Where(u => u.CreatedDate.Year == year).Count();
+            return count;
+        }
+
+        public List<User> SearchByUser(string kw, int page, int limit)
+        {
+            List<User> rs = new List<User>();
+            int size = limit == 0 ? configs.POST_PAGE_SIZE : limit;
+            if (kw == null)
+                kw = "";
+
+            if (page > 0)
+            {
+                int start = (page - 1) * size;
+
+                rs = base.Context.Set<User>().Where(u => u.Firstname.Contains(kw) || u.Lastname.Contains(kw)).AsEnumerable().Skip(start).Take(size).ToList();
+            }
+            else
+            {
+                rs = base.Context.Set<User>().Where(u => u.Firstname.Contains(kw) || u.Lastname.Contains(kw)).ToList();
+            }
+
+            return rs;
+        }
+
+        public bool Delete(User u)
+        {
+            if (u == null)
+                return true;
+            try
+            {
+                base.Context.Database.ExecuteSqlRaw("Delete dbo.[User] Where id={0}", u.Id);
+
+                base.Context.SaveChanges();
+
+                return true;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

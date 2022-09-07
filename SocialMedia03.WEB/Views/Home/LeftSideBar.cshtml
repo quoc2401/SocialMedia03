@@ -19,7 +19,7 @@
                 <div class="person-search-item justify-content-between px-3 pt-3">
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="person-search-item-image">
-                            <a href="#">
+                            <a href="@Context.Session.GetString("currentUserId")">
                                 <img class="avatar-search rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" style="width: 50px; height: 50px" alt="avatar" />
                             </a>
                         </div>
@@ -38,7 +38,7 @@
                 <div class="person-search-item justify-content-between px-3 pt-3">
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="person-search-item-image">
-                            <a href="#">
+                            <a href="@Context.Session.GetString("currentUserId")">
                                 <img class="avatar-search rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" style="width: 50px; height: 50px" alt="avatar" />
                             </a>
                         </div>

@@ -186,7 +186,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Reacts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_React_User");
             });
 

@@ -53,3 +53,28 @@ function solveReportAuction(auctionId) {
     deleteAuction(auctionId);
     $(element).parents('.report-item').remove();
 }
+
+function deleteUser(id) {
+    swal({
+        title: "Bạn có chắc xóa người dùng này?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((isDeleted) => {
+        if (isDeleted)
+            $.ajax({
+                type: 'delete',
+                url: `/api/user/delete/${id}`,
+                dataType: 'json',
+                success: function () {
+                    swal("Xóa người dùng thành công", {
+                        icon: "success"
+                    });
+                    $(`#userItem-${id}`).remove();
+                }
+            })
+                .fail(function () {
+                });
+
+    });
+}

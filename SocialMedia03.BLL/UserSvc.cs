@@ -57,5 +57,20 @@ namespace SocialMedia03.BLL
         {
             return _rep.getUserByComment(commentId);
         }
+
+        public List<User> SearchByUser(string kw, int page, int limit)
+        {
+            var users = _rep.SearchByUser(kw, page, limit).ToList();
+          
+
+            return users;
+        }
+
+        public bool Delete(int id)
+        {
+            User u = _rep.Get(id);
+            Debug.WriteLine(u.Uuid);
+            return _rep.Delete(u);
+        }
     }
 }

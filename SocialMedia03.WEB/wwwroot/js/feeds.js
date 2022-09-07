@@ -50,7 +50,7 @@ function loadFeeds(posts) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="/user/${post.user.uuid}">
+                                    <a href="/user/${post.user.id}">
                                         <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
@@ -58,7 +58,7 @@ function loadFeeds(posts) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/user/${post.user.uuid}">${post.user.lastname} ${post.user.firstname}</a>
+                                            <a href="/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.createdDate).fromNow()}</span>
                                     </div>
@@ -185,7 +185,7 @@ function prependFeeds(post) {
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="/user/${post.user.uuid}">
+                                    <a href="/user/${post.user.id}">
                                         <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
@@ -193,7 +193,7 @@ function prependFeeds(post) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/user/${post.user.uuid}">${post.user.lastname} ${post.user.firstname}</a>
+                                            <a href="/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
                                         <span class="ms-2 nav-item small text-secondary">${moment(post.createdDate).fromNow()}</span>
                                     </div>

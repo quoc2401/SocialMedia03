@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocialMedia03.BLL;
@@ -102,6 +103,27 @@ namespace SocialMedia03.WEB.Controllers.API
         public IActionResult FindPost([FromQuery]int commentId)
         {
             return Ok(postSvc.FindPostByComment(commentId));
+        }
+
+
+        [HttpGet("hashtag")]
+        public IActionResult SearchHashtag([FromQuery] string hashtag, [FromQuery] int page)
+        {
+
+            return Ok(postSvc.SearchByHashtag(hashtag, page));
+        }
+
+
+        [Route("user")]
+        public IActionResult SearchUser([FromQuery] string? kw, int page, int? limit = 0)
+        {
+            return Ok(userSvc.SearchByUser(kw, page, (int)limit));
+        }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetUserPosts([FromRoute] int userId,[FromQuery] int page)
+        {
+            return Ok(postSvc.GetPostByUser(userId, page));
         }
     }
 }

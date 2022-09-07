@@ -174,7 +174,7 @@
                             <span id="email">@Context.Session.GetString("currentUserEmail")</span>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#Userpagelink">
+                            <a class="dropdown-item d-flex align-items-center" href="/user/@Context.Session.GetInt32("currentUserId")">
                                 <i class="fa-solid fa-user me-2"></i>
                                 Trang cá nhân
                             </a>
@@ -193,6 +193,7 @@
 </header>
 
 <script src="~/js/notification.js"></script>
+<script src="~/js/search.js"></script>
 <script>
     $(function () {
         UUID = '@Context.Session.GetString("UUID")';

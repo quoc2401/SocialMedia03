@@ -73,9 +73,10 @@ namespace SocialMedia03.DAL
         {
             if (c == null)
                 return true;
+
             try
             {
-                base.Context.Entry(c).State = EntityState.Deleted;
+                base.Context.Database.ExecuteSqlRaw("Delete Comment Where id={0}", c.Id);
 
                 base.Context.SaveChanges();
 
@@ -86,6 +87,9 @@ namespace SocialMedia03.DAL
                 Debug.WriteLine(e.StackTrace);
                 return false;
             }
+
+
+            return true;
         }
 
         public bool Create(Comment c)
@@ -120,6 +124,17 @@ namespace SocialMedia03.DAL
                 Debug.WriteLine(e.StackTrace);
                 return false;
             }
+        }
+        public int CountComment(int month, int year)
+        {
+            int count;
+            if (year == 0)
+                count = Context.Comments.Count();
+            else if (month >= 1 && month <= 12)
+                count = Context.Comments.Where(u => u.CreatedDate.Month == month && u.CreatedDate.Year == year).Count();
+            else
+                count = Context.Comments.Where(u => u.CreatedDate.Year == year).Count();
+            return count;
         }
     }
 }

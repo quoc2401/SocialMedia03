@@ -78,6 +78,8 @@ namespace SocialMedia03.BLL
             p.UserId = creator.Id;
             p.User = creator;
             p.Hashtag = req.Hashtag;
+            Debug.WriteLine(p.CreatedDate);
+
             if (_rep.Create(p) == true)
                 return p;
 
@@ -111,5 +113,49 @@ namespace SocialMedia03.BLL
         {
             return _rep.FindPostByComment(commentId);
         }
+
+        public HashSet<Post> SearchByContent(string kw, int page)
+        {
+            var p = _rep.Get(page, kw);
+           
+            return p;
+        }
+
+        public List<Post> SearchByHashtag(string hashtag, int page)
+        {
+            var posts = _rep.SearchByHashtag(hashtag, page).ToList();
+            try
+            {
+                posts.ForEach(p =>
+                {
+                    p.User = UserSvc.Get(p.UserId);
+                    p.Reacts = ReactSvc.GetReactsByPost(p.Id);
+                    p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
+                });
+               
+              
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+
+            return posts;
+        }
+
+        public HashSet<Post> GetPostByUser(int userId, int page)
+        {
+            HashSet<Post> rs = _rep.GetPostByUser(userId, page);
+            foreach (var p in rs)
+            {
+                p.User = UserSvc.Get(p.UserId);
+                p.Reacts = ReactSvc.GetReactsByPost(p.Id);
+                p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
+            }
+
+            return rs;
+        }
+
     }
 }
