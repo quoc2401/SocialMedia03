@@ -5,7 +5,12 @@ using SocialMedia03.BLL;
 using SocialMedia03.Common.Req;
 using SocialMedia03.Common.Res;
 using SocialMedia03.Common.Utils;
+using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
+using System;
+using System.ComponentModel.Design;
+using System.Drawing;
+using System.Security.Cryptography;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +21,7 @@ namespace SocialMedia03.WEB.Controllers.API
     public class ApiPostController : ControllerBase
     {
         private readonly ILogger _logger;
+        private ReportSvc reportSvc = new ReportSvc();
 
         private PostSvc postSvc = new PostSvc();
 
@@ -39,7 +45,7 @@ namespace SocialMedia03.WEB.Controllers.API
 
         // POST api/post/add
         [HttpPost("add")]
-        public IActionResult Post([FromBody]PostRequest req)
+        public IActionResult Post([FromBody] PostRequest req)
         {
 
             User currentUser = new User();
@@ -80,6 +86,17 @@ namespace SocialMedia03.WEB.Controllers.API
             res.Code = "200";
 
             return Ok(res);
+        }
+
+
+        
+        [HttpPost("create-report")]
+        public void CreateReport(int tID, int pID, string reason, string details)
+        {
+            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
+            : HttpContext.Session.GetInt32("currentUserId"));
+
+            reportSvc.CreateReport(currentUserId, tID, pID, reason, details);
         }
     }
 }

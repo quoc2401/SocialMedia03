@@ -7,24 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SocialMedia03.BLL;
+using SocialMedia03.DAL.Models;
 
 
 namespace SocialMedia03.WEB.Controllers
 {
-    public class ReportController : ControllerBase
+    public class ReportController : Controller
     {
         private ReportSvc reportSvc;
         public ReportController()
         {
             reportSvc = new ReportSvc();
         }
-        [HttpPost("create-report")]
-        public IActionResult CreateReport([FromBody] ReportRequest reportReq)
-        {
-            var res = reportSvc.CreateReport(reportReq);
-            return Ok(res);
-        }
-        
+
 
     }
 }

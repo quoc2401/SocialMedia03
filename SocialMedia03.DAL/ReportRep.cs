@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia03.Common.Res;
+using Microsoft.Data.SqlClient;
 
 namespace SocialMedia03.DAL
 {
@@ -17,33 +18,47 @@ namespace SocialMedia03.DAL
         { }
 
         //override
-        public override Report Get(int id)
+        public List<Report> GetReport()
         {
-            var res = All.FirstOrDefault(i => i.TargetUserId == id);
-            return res;
+            List<Report> res = new List<Report>();
+            res = base.Context.Set<Report>().ToList<Report>();
+            
+            return res; 
         }
-        
-        public SingleRes CreateReport(Report report)
+
+
+        public bool Create(React r)
         {
-            SingleRes res = new SingleRes();
-            using (var context = new smdbContext())
+            try
             {
-                using (var tran = context.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        var p = context.Reports.Add(report);
-                        context.SaveChanges();
-                        tran.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        res.SetError(ex.StackTrace);
-                    }
-                }
+                base.Context.Entry(r).State = r.Id == 0 ?
+                    EntityState.Added : EntityState.Modified;
+                base.Context.SaveChanges();
+
+                return true;
             }
-            return res;
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+                return false;
+            }
+
+        }
+        public bool CreateReport(Report report)
+        {
+            try
+            {
+                base.Context.Entry(report).State = report.Id == 0 ?
+                    EntityState.Added : EntityState.Modified;
+                base.Context.SaveChanges();
+
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
 
