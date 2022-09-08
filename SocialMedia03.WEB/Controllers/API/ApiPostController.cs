@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocialMedia03.BLL;
@@ -11,6 +12,7 @@ using System;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -45,7 +47,7 @@ namespace SocialMedia03.WEB.Controllers.API
 
         // POST api/post/add
         [HttpPost("add")]
-        public IActionResult Post([FromBody] PostRequest req)
+        public IActionResult Post([FromBody]PostReq req)
         {
 
             User currentUser = new User();
@@ -62,15 +64,30 @@ namespace SocialMedia03.WEB.Controllers.API
         }
 
         // PUT api/posts/edit/5
-        [HttpPut("edit/{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("edit/{postId}")]
+        public IActionResult Put([FromBody]PostReq req, [FromRoute]int postId)
         {
+            User currentUser = new User();
+            if (HttpContext.Session.GetString("currentUser") != null)
+            {
+                currentUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("currentUser"));
+                Post res = postSvc.Update(postId, req, currentUser);
+                if (res != null)
+                    return Ok(res);
+                else 
+                    return StatusCode(500);
+            }
+
+            return StatusCode(500);
         }
 
-        // DELETE api/posts/delete/5
-        [HttpDelete("delete/{id}")]
-        public void Delete(int id)
+        // DELETE api/post/delete/5
+        [HttpDelete("delete/{postId}")]
+        public IActionResult Delete([FromRoute]int postId)
         {
+            if(postSvc.Delete(postId))
+                return StatusCode(204);
+            return StatusCode(500);
         }
 
         [HttpPost("image-upload")]
@@ -97,6 +114,33 @@ namespace SocialMedia03.WEB.Controllers.API
             : HttpContext.Session.GetInt32("currentUserId"));
 
             reportSvc.CreateReport(currentUserId, tID, pID, reason, details);
+        }
+        
+        [HttpGet("find")]
+        public IActionResult FindPost([FromQuery]int commentId)
+        {
+            return Ok(postSvc.FindPostByComment(commentId));
+        }
+
+
+        [HttpGet("hashtag")]
+        public IActionResult SearchHashtag([FromQuery] string hashtag, [FromQuery] int page)
+        {
+
+            return Ok(postSvc.SearchByHashtag(hashtag, page));
+        }
+
+
+        [Route("user")]
+        public IActionResult SearchUser([FromQuery] string? kw, int page, int? limit = 0)
+        {
+            return Ok(userSvc.SearchByUser(kw, page, (int)limit));
+        }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetUserPosts([FromRoute] int userId,[FromQuery] int page)
+        {
+            return Ok(postSvc.GetPostByUser(userId, page));
         }
     }
 }

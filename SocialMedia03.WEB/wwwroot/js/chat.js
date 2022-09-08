@@ -1,17 +1,18 @@
 
-function updateScrollbar() {
-    const messages = $('.message-container');
-  messages.animate({
-      scrollTop: messages.get(0).scrollHeight
-  });
-}
+function chatFormatDate(timestamp) {
+    const date = new Date(timestamp);
+    const formatter = dayjs(date);
+    const now = new Date();
 
-function openChatBox() {
-    $('#chat-box').css("display", "block");
-    updateScrollbar();
-}
+    if (dayjs().isSame(formatter, "date"))
+        return formatter.format("h:mm A");
 
-function closeChatBox() {
-    $('#chat-box').css("display", "none");
+    if (dayjs().isSame(formatter, "week"))
+        return formatter.format("ddd h:mm A");
+
+    if (now.getFullYear() === date.getFullYear())
+        return formatter.format("MMM DD h:mm A");
+
+    return formatter.format("DD MMM YYYY h:mm A");
 }
 

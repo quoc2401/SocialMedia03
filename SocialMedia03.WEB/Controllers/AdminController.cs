@@ -10,11 +10,14 @@ namespace SocialMedia03.WEB.Controllers
     public class AdminController : Controller
     {
         private ReportSvc reportSvc = new ReportSvc();
+        private AdminService adminService = new AdminService();
+        private UserSvc userSvc = new UserSvc();
 
         [Route("")]
-        public IActionResult Stats()
+        public IActionResult Stats([FromQuery]int? month=0,[FromQuery]int? year=0)
         {
-            return View("Stats");
+
+            return View("Stats", adminService.CountStats((int)month, (int)year));
         }
 
         [Route("post-reports")]
@@ -36,6 +39,10 @@ namespace SocialMedia03.WEB.Controllers
             return View("Reports", reportUserList);
         }
 
-        
+        [Route("user")]
+        public IActionResult User([FromQuery] string? kw)
+        {
+            return View("User", userSvc.SearchByUser(kw, 0, 0));
+        }
     }
 }

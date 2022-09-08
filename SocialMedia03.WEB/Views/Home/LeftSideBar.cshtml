@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+  <div class="row g-3">
+    <div class="col-12">
+        <div class="card auction-card" style="max-height: 100%; min-height: 88vh">
+            <div class="card-header pb-0 pt-4 border-0">
+                <h5 class="card-title mb-0">Theo dõi</h5>
+            </div>
+
+            <div class="card-body px-0 pb-4 pt-2 auction-side--item">
+
+                <div class="text-center mt-3 sideleft-loading" style="display: none">
+                    <div class="spinner-border text-muted"></div>
+                </div>
+
+                <div class="person-search-item justify-content-between px-3 pt-3">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="person-search-item-image">
+                            <a href="@Context.Session.GetString("currentUserId")">
+                                <img class="avatar-search rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" style="width: 50px; height: 50px" alt="avatar" />
+                            </a>
+                        </div>
+                        <div class="person-search-item-name">
+                            <h6 class="mb-0 py-1 side-right">
+                                <a href="#">@Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")</a>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="btn-follow" onclick="follow(11)">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                    </div>
+                </div>
+
+                <div class="person-search-item justify-content-between px-3 pt-3">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="person-search-item-image">
+                            <a href="@Context.Session.GetString("currentUserId")">
+                                <img class="avatar-search rounded-circle" src="@Context.Session.GetString("currentUserAvatar")" style="width: 50px; height: 50px" alt="avatar" />
+                            </a>
+                        </div>
+                        <div class="person-search-item-name">
+                            <h6 class="mb-0 py-1 side-right">
+                                <a href="#">@Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")</a>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="btn-follow" onclick="follow(11)">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        //loadSideBarLeft();
+    });
+
+    function follow(userId) {
+        $('.btn-follow').addClass('active');
+        console.log("You followed User: " + userId);
+    }
+</script>

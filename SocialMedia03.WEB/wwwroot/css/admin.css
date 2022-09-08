@@ -1,5 +1,4 @@
 .admin-wrap {
-    padding: 66px 0 0;
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -65,7 +64,6 @@ ul {
 
 .page-title-box .page-title-right {
     float: right;
-    margin-top: 20px;
 }
 
 .page-title-box .page-title {
@@ -78,7 +76,7 @@ ul {
 }
 
 .card {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .footer-admin {

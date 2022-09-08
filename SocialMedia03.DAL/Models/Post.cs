@@ -21,11 +21,11 @@ namespace SocialMedia03.DAL.Models
         public int UserId { get; set; }
         public string? Hashtag { get; set; }
 
+        public virtual User User { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Notif> Notifs { get; set; }
         public virtual ICollection<React> Reacts { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
-        public virtual User User {get; set; }
         [NotMapped]
         public virtual int CommentSetLength { get; set; } = 0;
     }

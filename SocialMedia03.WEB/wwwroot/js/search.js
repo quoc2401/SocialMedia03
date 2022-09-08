@@ -1,15 +1,15 @@
 var personPage = 1;
-let topSearchPerson = 3;
-let topSearchPost = 10;
-let topSearchAuction = 10;
+var topSearchPerson = 3;
+var topSearchPost = 10;
+var topSearchAuction = 10;
 
 function searchSubmit() {
     event.preventDefault();
     var inputVal = $('input[name="kw"]').val();
     if (inputVal.trim().charAt(0) === "#")
-        window.location = `${ctxPath}/hashtag/${inputVal.slice(1)}`;
+        window.location = `/hashtag/${inputVal.slice(1)}`;
     else
-        window.location = `${ctxPath}/search/top?kw=${inputVal}`;
+        window.location = `/search/top?kw=${inputVal}`;
 }
 
 function hashTagSearch() {
@@ -18,7 +18,7 @@ function hashTagSearch() {
 
     $.ajax({
         type: 'get',
-        url: `${ctxPath}/api/posts?hashtag=${hashtag}&page=${postPage}`,
+        url: `/api/post/hashtag?hashtag=${hashtag}&page=${postPage}`,
         dataType: 'json',
         success: function (data) {
             $(loadingBottom).css("display", "none");
@@ -41,7 +41,6 @@ function hashTagSearch() {
 function topSearch() {
     personSearch(topSearchPerson);
     contentSearch(topSearchPost);
-    auctionSearch(topSearchAuction);
 }
 
 function contentSearch(limit) {
@@ -49,7 +48,7 @@ function contentSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `${ctxPath}/api/posts?kw=${kw}&page=${postPage}`;
+    let url = `/api/post/feeds?kw=${kw}&page=${postPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -81,7 +80,7 @@ function personSearch(limit) {
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
     
-    let url = `${ctxPath}/api/users?kw=${kw}&page=${personPage}`;
+    let url = `/api/post/user?kw=${kw}&page=${personPage}`;
     if (limit !== undefined)
         url += `&limit=${limit}`;
     
@@ -114,7 +113,7 @@ function auctionSearch(limit) {
     $(loadingBottom).css("display", "block");
     let locate = window.location.toString();
     let kw = locate.slice(locate.indexOf('kw=') + 3);
-    let url = `${ctxPath}/api/auctions`;
+    let url = `/api/auctions`;
     let bool = (limit !== undefined);
     
     $.ajax({
@@ -145,7 +144,6 @@ function searchFilter(filter) {
     window.scrollTo(0, 0);
     disableLoadMorePost = false;
     removeSearchResult();
-    auctionPage = 1;
     personPage = 1;
     postPage = 1;
     let url = new URL(window.location.toString());
@@ -156,7 +154,6 @@ function searchFilter(filter) {
         disableLoadMorePost = true;
         $('.post-search').css('display', 'block');
         $('.person-search').css('display', 'block');
-        $('.auction-search').css('display', 'block');
         topSearch();
        
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/top';
@@ -168,7 +165,6 @@ function searchFilter(filter) {
         personSearch();
         $('.person-search').css('display', 'block');
         $('.post-search').css('display', 'none');
-        $('.auction-search').css('display', 'none');
         
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/people';
         let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
@@ -186,23 +182,11 @@ function searchFilter(filter) {
         
         window.history.replaceState('', 'SharingHope', newUrl);
     }
-    else {
-        auctionSearch();
-        $('.person-search').css('display', 'none');
-        $('.post-search').css('display', 'none');
-        $('.auction-search').css('display', 'block');
-        
-        let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/auctions';
-        let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
-        
-        window.history.replaceState('', 'SharingHope', newUrl);
-    }
 }
 
 function removeSearchResult() {
     $('#feeds-container').empty();
     $('#personsContainer').empty();
-    $('.auction-container').empty();
 }
 
 function loadUserSearch(users) {
@@ -216,11 +200,11 @@ function loadUserSearch(users) {
                             </div>
                             <div class="person-search-item-name">
                                 <h6 class="mb-0">
-                                    <a href="${ctxPath}/user/${u.id}">${u.lastname + ' ' + u.firstname}</a>
+                                    <a href="/user/${u.uuid}">${u.lastname + ' ' + u.firstname}</a>
                                 </h6>
                             </div>
                         </div>
-                        <div class="btn-follow btn-follow${u.id}" onclick="follow('${u.id}')">
+                        <div class="btn-follow btn-follow${u.uuid}" onclick="follow('${u.uuid}')">
                             <div class="line1"></div>
                             <div class="line2"></div>
                         </div>

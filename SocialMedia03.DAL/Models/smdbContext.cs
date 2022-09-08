@@ -28,7 +28,7 @@ namespace SocialMedia03.DAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=MYCOMPUTER;Initial Catalog=smdb;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=CONGSANG\\SANG;Initial Catalog=smdb;Integrated Security=True");
             }
         }
 
@@ -53,7 +53,9 @@ namespace SocialMedia03.DAL.Models
 
                 entity.Property(e => e.PostId).HasColumnName("post_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasDefaultValueSql("((7))");
 
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
@@ -138,6 +140,12 @@ namespace SocialMedia03.DAL.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Post_User");
             });
 
             modelBuilder.Entity<React>(entity =>
@@ -161,7 +169,9 @@ namespace SocialMedia03.DAL.Models
                     .HasColumnName("type")
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasDefaultValueSql("((7))");
 
                 entity.HasOne(d => d.Comment)
                     .WithMany(p => p.Reacts)
@@ -176,7 +186,6 @@ namespace SocialMedia03.DAL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Reacts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_React_User");
             });
 
@@ -230,6 +239,12 @@ namespace SocialMedia03.DAL.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
+
+                entity.HasIndex(e => e.Email, "Unique_Key_Email")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Uuid, "Unique_Key_UUID")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 

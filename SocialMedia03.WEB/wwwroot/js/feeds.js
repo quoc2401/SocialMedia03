@@ -15,9 +15,9 @@ $(window).scroll(function () {
         if ((windowHeight + scrollTop) >= documentHeight - 10) {
             var loca = window.location.pathname;
             if (!disableLoadMorePost) {
-                if(window.location === `${ctxPath}/`)
+                if(window.location === `/`)
                     loadPosts(postPage);
-                if(loca.includes(`${ctxPath}/hashtag/`))
+                if(loca.includes(`/hashtag/`))
                     hashTagSearch();
                 if(loca.includes('/search/posts'))
                     contentSearch();
@@ -30,6 +30,7 @@ $(window).scroll(function () {
 });
 
 function loadFeeds(posts) {
+
     var userAvatar = $("#userAvatar").attr("src");
     $.each(posts, function (index, post) {
         let listUserReact;
@@ -43,13 +44,13 @@ function loadFeeds(posts) {
             }
             listUserReact += `<p class="user-liked">và ${post.reacts.length - 10} người khác...</p>`;
         }
-        var html = `<div class="post" id="post${post.id}">     
+        var html = `<div class="post" id="post-${post.id}">     
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}/user/${post.user.id}">
+                                    <a href="/user/${post.user.id}">
                                         <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
@@ -57,9 +58,9 @@ function loadFeeds(posts) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="${ctxPath}/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
+                                            <a href="/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
-                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.postedDate).fromNow()}</span>
+                                        <span class="ms-2 nav-item small text-secondary" id="timeFromNow">${moment(post.createdDate).fromNow()}</span>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@ function loadFeeds(posts) {
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                                    ${(currentUserId === post.user.id) ?
+                                    ${(UUID === post.user.uuid) ?
                                             `<li>
                                                 <a class="dropdown-item" href="#" onclick="editPost(${post.id}, this)">
                                                     Chỉnh sửa bài viết
@@ -94,14 +95,14 @@ function loadFeeds(posts) {
                         <p class="post--content mb-3 content--hashtag post-${post.id}">
                             ${post.content}
                         </p>
-        
-                        ${(post.image === '') ?`
+
+                        ${ isBlank(post.image) ?`
                         <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
                         `:(`
                         <img class="card-img post--img" src="${post.image}" alt="Post image" onclick="showFull(this)">
                         `)}
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
@@ -110,7 +111,7 @@ function loadFeeds(posts) {
                                     ${((post.reacts).length === 0) ? (
                                             `<div class="heart-like-button"></div>`
                                             ) : (
-                                        ((post.reacts).some((react) => react.user.id === currentUserId)) ?
+                                        ((post.reacts).some((react) => react.user.uuid === UUID)) ?
                                                 `<div class="heart-like-button liked"></div>`
                                                 : `<div class="heart-like-button"></div>`
                                             )
@@ -144,10 +145,9 @@ function loadFeeds(posts) {
                             <div id="commentedComment" class="flex">
                                 
                             </div>
-                            
+                            <param id="commentPage" value="1"/>
                             <!--show more comment-->
                             <div class="show-more-comment">
-                                <param id="commentPage" value="1"/>
                                 <span class="showMore" onclick="loadComment(${post.id})">Xem thêm bình luận</span>
                                 <span>
                                     <span id="showedCommentLength"></span>/<span id="commentSetLength">${post.commentSetLength}</span>
@@ -156,7 +156,7 @@ function loadFeeds(posts) {
                         </div>
                     </div>
                 </div>
-                <param id="post${post.id}OwnerId" value="${post.user.id}"/>
+                <param id="post${post.id}OwnerId" value="${post.user.uuid}"/>
             </div>
             `;
 
@@ -179,13 +179,13 @@ function customHashtag(element) {
 function prependFeeds(post) {
     const feedContainer = $('#feeds-container');
     var userAvatar = $("#userAvatar").attr("src");
-    const html = `<div class="post" id="post${post.id}">      <!--Phan nay fecth du lieu de render-->
+    const html = `<div class="post" id="post-${post.id}">      <!--Phan nay fecth du lieu de render-->
                 <div class="card post--item">
                     <div class="card-header border-0 pb-0 pt-3">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-start">
                                 <div class="me-2">
-                                    <a href="${ctxPath}/user/${post.user.id}">
+                                    <a href="/user/${post.user.id}">
                                         <img class="avatar-img rounded-circle" src="${post.user.avatar}" alt="">
                                     </a>
                                 </div>
@@ -193,9 +193,9 @@ function prependFeeds(post) {
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0">
-                                            <a href="/${ctxPath}/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
+                                            <a href="/user/${post.user.id}">${post.user.lastname} ${post.user.firstname}</a>
                                         </h6>
-                                        <span class="ms-2 nav-item small text-secondary">${moment(post.postedDate).fromNow()}</span>
+                                        <span class="ms-2 nav-item small text-secondary">${moment(post.createdDate).fromNow()}</span>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@ function prependFeeds(post) {
                         `)}
                         
 
-                        <div class="line"></div>
+                        <div class="line-of-post"></div>
 
                         <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                             <div class="post--action-like w-100 d-flex justify-content-center align-items-center">
@@ -289,16 +289,16 @@ function prependFeeds(post) {
 function loadAuctionFeeds(auctions, container) {
     var userAvatar = $("#userAvatar").attr("src");
     $.each(auctions, function (index, auction) {
-        let userAuction = auction.bidSet.filter(b => b.user.id === currentUserId);
+        let userAuction = auction.bidSet.filter(b => b.user.id === UUID);
         let html = `
-            ${(auction.user.id === currentUserId) ? `
+            ${(auction.user.id === UUID) ? `
                 <div class="post auction-post-${auction.id}">
                     <div class="card post--item">
                         <div class="card-header border-0 pb-0 pt-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}/user/${auction.user.id}">
+                                        <a href="/user/${auction.user.id}">
                                             <img class="avatar-img rounded-circle" src="${auction.user.avatar}" alt="">
                                         </a>
                                     </div>
@@ -306,7 +306,7 @@ function loadAuctionFeeds(auctions, container) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
+                                                <a href="/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
                                             </h6>
                                             <span id="auction-timeFromNow" class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                             <div class="text-center ms-4 auction-del-loading-${auction.id}" style="display: none">
@@ -407,7 +407,7 @@ function loadAuctionFeeds(auctions, container) {
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-start">
                                     <div class="me-2">
-                                        <a href="${ctxPath}/user/${auction.user.id}">
+                                        <a href="/user/${auction.user.id}">
                                             <c:url value="/resources/img/non-avatar.png" var="a" />
                                             <img class="avatar-img rounded-circle" src="${auction.user.avatar}" alt="">
                                         </a>
@@ -416,7 +416,7 @@ function loadAuctionFeeds(auctions, container) {
                                     <div>
                                         <div class="nav nav-divider">
                                             <h6 class="nav-item card-title mb-0">
-                                                <a href="${ctxPath}/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
+                                                <a href="/user/${auction.user.id}">${auction.user.lastname} ${auction.user.firstname}</a>
                                             </h6>
                                             <span class="ms-2 nav-item small text-secondary">${moment(auction.auctionDate).fromNow()}</span>
                                         </div>
@@ -456,7 +456,7 @@ function loadAuctionFeeds(auctions, container) {
                             <div class="post--action py-2 d-flex flex-nowrap align-items-center justify-content-between">
                                 <div class="post--action-comment w-100 d-flex justify-content-center align-items-center">
                                     ${auction.endDate > Date.now() ?
-                                    `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                                    `${(auction.bidSet.some(b => b.user.id === UUID)) ?
                                             `<div class="auction--action-hover" onclick="deleteBid(${auction.id}, this, ${auction.startingPrice})">
                                                 <div class="text-center me-1 bid-loading-${auction.id}" style="display: none">
                                                     <div class="spinner-border text-muted"></div>
@@ -482,18 +482,18 @@ function loadAuctionFeeds(auctions, container) {
                             
                             <div class="auction-user-join d-block">
                             ${auction.endDate > Date.now() ?
-                            `${(auction.bidSet.some(b => b.user.id === currentUserId)) ?
+                            `${(auction.bidSet.some(b => b.user.id === UUID)) ?
                                     `${userAuction && `
                                             <div class="d-flex comment--item py-2">
                                                 <div class="me-2">
-                                                    <a href="${ctxPath}/user/${auction.user.id}">
+                                                    <a href="/user/${auction.user.id}">
                                                         <img class="comment--avatar rounded-circle" src="${userAuction[0].user.avatar}" alt="avatar">
                                                     </a>
                                                 </div>
                                                  <div class="comment--item-content">
                                                   <div class="bg-light comment-content">
                                                       <div class="d-flex justify-content-start">
-                                                          <h6 class="mb-1 me-2"><a href="${ctxPath}/user/${auction.user.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
+                                                          <h6 class="mb-1 me-2"><a href="/user/${auction.user.id}">${userAuction[0].user.lastname} ${userAuction[0].user.firstname}</a></h6>
                                                           <small>${moment(userAuction[0].bidDate).fromNow()}</small>
                                                       </div>
                                                       <p class="small mb-0">

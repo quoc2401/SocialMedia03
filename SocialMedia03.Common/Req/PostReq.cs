@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SocialMedia03.Common.Req
 {
     [Serializable]
-    public class PostRequest
+    public class PostReq
     {
         public string Content { get; set; }
         public string Hashtag { get; set; }

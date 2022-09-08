@@ -35,5 +35,10 @@ namespace SocialMedia03.Common.Utils
 
             return uploadResult.JsonObj;
         }
+
+        public static void DeleteImage(String public_id)
+        {
+            Cloudinary.DeleteResources(public_id);
+        }
     }
 }

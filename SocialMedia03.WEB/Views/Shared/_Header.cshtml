@@ -30,7 +30,7 @@
 
                 <ul class="navbar-nav navbar-nav-scroll ms-auto">
                     <li class="nav-item px-2">
-                        <a class="nav-link" href="#Home" id="homeMenu">
+                        <a class="nav-link" href="/" id="homeMenu">
                             <i class="fa-solid fa-house menu-icon"></i>
                             Trang chủ
                         </a>
@@ -42,13 +42,14 @@
                         </a>
                     </li>
 
-                    <!--Link này dành cho admin đăng nhập mới hiển thị-->
-                        <li class="nav-item px-2">
+                    @if (Context.Session.GetString("currentUserRole") == "ROLE_ADMIN") {
+                         <li class="nav-item px-2">
                             <a class="nav-link" href="/admin" id="chartMenu">
                                 <i class="fa-solid fa-chart-simple menu-icon"></i>
                                 Thống kê & báo cáo
                             </a>
                         </li>
+                    }
 
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="notifyMenu">
@@ -75,7 +76,7 @@
                     </li>
                     <li class="d-lg-none d-block nav-item px-2">
                         <a class="nav-link d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="userMenu">
-                            <img src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="avatar" class="user-img me-2" />
+                            <img src="@Context.Session.GetString("currentUserAvatar")" alt="avatar" class="user-img me-2" />
                             @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")
                         </a>
 
@@ -87,7 +88,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#LogoutLink" onclick="FB.logout();">
+                                <a class="dropdown-item d-flex align-items-center" href="/account/logout" onclick="FB.logout();">
                                     <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                     Đăng xuất
                                 </a>
@@ -110,39 +111,25 @@
                             </div>
                         </li>
                         <li class="px-3 my-2">
-                            <form class="form-search position-relative" action="javascript:;">
-                                <input class="form-control ps-5 bg-light w-100" type="search" placeholder="Tìm kiếm trên Messenger" aria-label="Search">
-                                <button class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
-                                        style="outline: none; border: none; border-radius: 50%" type="submit">
+                            <div class="form-search position-relative">
+                                <input id="search-chat" class="form-control ps-5 bg-light w-100" type="text"
+                                       placeholder="Tìm kiếm trên Messenger" aria-label="Search" oninput="searchUserForChat(this)">
+                                <div class="bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" 
+                                     style="outline: none; border: none; border-radius: 50%">
                                     <i class="fa-solid fa-magnifying-glass text-secondary"></i>
-                                </button>
-                            </form>
+                                </div>
+                            </div>
                         </li>
 
                         <div class="position-relative" style="min-height: 80vh">
+                            <li  class="justify-content-center
+                                 align-items-center text-center py-4 search-userchat-loading">
+                                <div class="spinner-border text-muted"></div>
+                            </li>
+                            <div class="p-2 list-user-search" style="display: none">
+
+                            </div>
                             <div class="p-2 list-user-chat">
-                                <li class="dropdown-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
-                                        <div class="d-flex align-items-center">
-                                            <img class="chat-menu-avatar rounded-circle me-2" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="">
-                                            <div>
-                                                <p class="chat-side">Username</p>
-                                            </div>
-                                        </div>
-                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
-                                    </div>
-                                </li>
-                                <li class="dropdown-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-1 chat--item" onclick="openChatBox()">
-                                        <div class="d-flex align-items-center">
-                                            <img class="chat-menu-avatar rounded-circle me-2" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="">
-                                            <div>
-                                                <p class="chat-side">Username</p>
-                                            </div>
-                                        </div>
-                                        <i class="fa-brands fa-facebook-messenger go-chat"></i>
-                                    </div>
-                                </li>
 
                             </div>
                         </div>
@@ -174,20 +161,26 @@
 
                 <div class="dropdown">
                     <a href="#" id="userAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="userAvatar" src="https://res.cloudinary.com/quoc2401/image/upload/v1660531040/fzqctr92wxwvkd2yxj7t.jpg" alt="avatar" class="user-img" />
+                        <img id="userAvatar" src="@Context.Session.GetString("currentUserAvatar")" alt="avatar" class="user-img" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                        <li class="dropdown-item">
-                            <span>Xin chào @Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname") </span>
+                        <li class="py-2 px-3 d-none" style="white-space: nowrap">
+                            <span id="user-id">@Context.Session.GetInt32("currentUserId")</span>
+                        </li>
+                        <li class="dropdown-item" style="white-space: nowrap">
+                            <span id="fullname">@Context.Session.GetString("currentUserLastname") @Context.Session.GetString("currentUserFirstname")</span>
+                        </li>
+                        <li class="py-2 px-3 w-100" style="white-space: nowrap">
+                            <span id="email">@Context.Session.GetString("currentUserEmail")</span>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#Userpagelink">
+                            <a class="dropdown-item d-flex align-items-center" href="/user/@Context.Session.GetInt32("currentUserId")">
                                 <i class="fa-solid fa-user me-2"></i>
                                 Trang cá nhân
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#Logout" onclick="FB.logout();">
+                            <a class="dropdown-item d-flex align-items-center" href="/account/logout" onclick="FB.logout();">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
                                 Đăng xuất
                             </a>
@@ -200,11 +193,12 @@
 </header>
 
 <script src="~/js/notification.js"></script>
+<script src="~/js/search.js"></script>
 <script>
     $(function () {
-        //getNotifs();
-        //currentUserId = '${sessionScope.currentUser.getId()}';
+        UUID = '@Context.Session.GetString("UUID")';
+        getNotifs();
     });
 </script>
-@*<script src="~/js/websocket.js"></script>*@
+<script src="~/js/websocket.js"></script>
 

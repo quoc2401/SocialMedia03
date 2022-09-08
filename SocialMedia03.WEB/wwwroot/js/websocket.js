@@ -1,23 +1,26 @@
 /* global pushSocket */
-var pushSocket;
+var ws;
 $(function () {
-    pushSocket = new WebSocket(`ws://localhost:8080/SharingHope/notification/${currentUserId}`);
+    ws = new WebSocket(`wss://localhost:7155/ws/${UUID}`);
     
-    pushSocket.onmessage = function (event) {
-        if (event.data === 'update_notif')
-            
+    ws.onmessage = function (event) {
+        if (event.data === 'update_notif') {
             $('.list-notification').empty();
             notifPage = 1;
             getNotifs();
+        }
+        else
+            console.log(event.data);
     };
     
-    pushSocket.onopen = function (event) {
+    ws.onopen = function (event) {
         //send empty message to initialize socket connnection
-        pushSocket.send("");
+        ws.send("");
     };
 
-    pushSocket.onclose = function (event) {
-        console.log("Socket Closed by Server");
+    ws.onclose = function (event) {
+        ws.send(UUID);
+        console.log(event.data);
     };
 });
 

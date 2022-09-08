@@ -30,8 +30,8 @@ function previewImage(el) {
 };
 
 function showFull(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "flex";
+    $("#img01").attr("src", element.src)
+    $("#modal01").addClass('open');
 }
 
 function createPost() {
@@ -150,7 +150,7 @@ function deletePost(id, el) {
 
         $.ajax({
                 type: 'delete',
-                url: `${ctxPath}/api/delete-post/${id}`,
+                url: `/api/post/delete/${id}`,
                 dataType: 'json',
                 success: function () {
                     swal("Xóa bài viết thành công", {
@@ -171,7 +171,7 @@ function editPost(id, el) {
     
     var content = $(clickedPost).find('.post--content').text();
     var imgSrc = $(clickedPost).find('.post--img').prop('src');
-    if (imgSrc.toLowerCase().indexOf('https://') === -1 )
+    if (imgSrc.indexOf('https://') === -1 || imgSrc.indexOf('localhost') >= 1)
         imgSrc = '';
     modalEditPost(id, content.trim(), imgSrc, "post");
     $("textarea").hashtags();
@@ -182,13 +182,13 @@ function comfirmEditPost(id) {
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                                 `; 
-    var clickedPost = $(`#post${id}`);
+    var clickedPost = $(`#post-${id}`);
     var clickedPostHtml = $(clickedPost).html();
     
     var content = $('#editingStatusContent').val();
     var imgSrc = $('#editPreview').prop('src');
-    
-    if (imgSrc.toLowerCase().indexOf('https://') === -1 ) {
+
+    if (imgSrc.toLowerCase().indexOf('https://') === -1 || imgSrc.indexOf('localhost') >= 1) {
     
         var formData = new FormData();
         var fs = document.getElementById('editImage');
@@ -212,31 +212,31 @@ function comfirmEditPost(id) {
                     }
                     $.ajax({
                         type: 'post',
-                        url: `${ctxPath}/api/post-img`,
+                        url: `/api/post/image-upload`,
                         data: formData,
                         dataType : "json",
                         processData : false,
                         cache : false,
                         contentType : false
                     })
-                    .done(function(data){
+                    .done(function(res){
                         $.ajax({
-                            type: 'put',
-                            url: `${ctxPath}/api/edit-post/${id}`,
+                            type: 'PUT',
+                            url: `/api/post/edit/${id}`,
                             data: JSON.stringify({
                                 'content':content,
                                 'hashtag': findHashtags(content),
-                                'imgUrl':data.url
+                                'imageUrl':res.data
                             }),
                             dataType : 'json',
                             contentType : 'application/json',
                             success: function (data2) {
                                 $(clickedPost).html(clickedPostHtml);
-                                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
+                                $(clickedPost).find("#timeFromNow").text(moment(data2.createdDate).fromNow());
                                 $(clickedPost).find('.post--content').text(data2.content);
                                 $(clickedPost).find('.post--img').attr('src', data2.image);
                                 $(clickedPost).find('.post--img').css('display', 'block');
-                                customHashtag(`#post${id}`);
+                                customHashtag(`#post-${id}`);
                             }
                         })
                         .fail(function(){
@@ -257,20 +257,20 @@ function comfirmEditPost(id) {
         removeEditModal();
         $.ajax({
             type: 'put',
-            url: `${ctxPath}/api/edit-post/${id}`,
+            url: `/api/post/edit/${id}`,
             data: JSON.stringify({
                 'content':content,
                 'hashtag': findHashtags(content),
-                'imgUrl':imgSrc.toLowerCase()
+                'imageUrl':imgSrc.toLowerCase()
             }),
             dataType : 'json',
             contentType : 'application/json',
             success: function (data2) {
                 $(clickedPost).html(clickedPostHtml);
-                $(clickedPost).find("#timeFromNow").text(moment(data2.postedDate).fromNow());
+                $(clickedPost).find("#timeFromNow").text(moment(data2.createdDate).fromNow());
                 $(clickedPost).find('.post--content').text(data2.content);
                 $(clickedPost).find('.post--img').attr('src', data2.image);
-                customHashtag(`#post${id}`);
+                customHashtag(`#post-${id}`);
             }
         })
         .fail(function(){
@@ -285,7 +285,7 @@ function editStatus(id) {
                                             <div class="spinner-border text-muted"></div>
                                         </div>
                                                 `; 
-    var clickedPost = $(`#post${id}`);
+    var clickedPost = $(`#post-${id}`);
     var clickedPostHtml = $(clickedPost).html();
     var content = $('#editingStatusContent').val();
     
@@ -293,21 +293,21 @@ function editStatus(id) {
     removeEditModal();
     $.ajax({
         type: 'put',
-        url: `${ctxPath}/api/edit-post/${id}`,
+        url: `/api/post/edit/${id}`,
         data: JSON.stringify({
             'content':content,
             'hashtag': findHashtags(content),
-            'imgUrl':''
+            'imageUrl':''
         }),
         dataType : 'json',
         contentType : 'application/json',
         success: function (data) {
             $(clickedPost).html(clickedPostHtml);
-            $(clickedPost).find("#timeFromNow").text(moment(data.postedDate).fromNow());
+            $(clickedPost).find("#timeFromNow").text(moment(data.createdDate).fromNow());
             $(clickedPost).find('.post--content').text(data.content);
             $(clickedPost).find('.post--img').css('display', 'none');
             $(clickedPost).find('.post--img').attr('src', '');
-            customHashtag(`#post${id}`);
+            customHashtag(`#post-${id}`);
         }
     })
     .fail(function(){

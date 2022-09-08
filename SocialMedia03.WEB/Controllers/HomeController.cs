@@ -9,8 +9,8 @@ namespace SocialMedia03.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private PostSvc PostSvc = new PostSvc();
-        private UserSvc UserSvc = new UserSvc();
+        private PostSvc postSvc = new PostSvc();
+        private UserSvc userSvc = new UserSvc();
 
         private readonly ILogger<HomeController> _logger;
 
@@ -21,12 +21,10 @@ namespace SocialMedia03.WEB.Controllers
 
         public IActionResult Index()
         {
-            User currentUser = UserSvc.Get(3);
-           
-            HttpContext.Session.SetString("currentUser", JsonConvert.SerializeObject(currentUser));
-            HttpContext.Session.SetInt32("currentUserId", currentUser.Id);
-            HttpContext.Session.SetString("currentUserLastname", currentUser.Lastname);
-            HttpContext.Session.SetString("currentUserFirstname", currentUser.Firstname);
+            if(HttpContext.Session.GetString("UUID") == null)
+            {
+                return Redirect("/account/login");
+            }
             return View();
         }
 
