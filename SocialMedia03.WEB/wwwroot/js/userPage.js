@@ -35,11 +35,11 @@ function loadUserPosts(userId) {
     });
 }
 
-function closeReportUser () {
+function closeReportUser() {
     $('.modal-report-user').removeClass('open');
 }
 
-function openReportUser () {
+function openReportUser() {
     $('.modal-report-user').addClass('open');
 }
 
@@ -47,11 +47,12 @@ function reportUser(reportedUserId) {
     var reason = $('.modal-report-user').find(':selected').val();
     $.ajax({
             type: 'post',
-            url: `/api/report-user`,
+            url: `/api/user/report-user`,
             data: JSON.stringify({
-                'articleId': "",
+                'postId': null,
                 'userId': reportedUserId,
-                'reason': reason
+                'reason': reason,
+                'details': ''
             }),
             contentType: 'application/json',
             success: function () {

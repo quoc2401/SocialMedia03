@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="dropdown">
                                 <a href="#" class="text-secondary px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis"></i>
@@ -47,7 +47,7 @@
                                     } else
                                     {
                                         <li>
-                                            <a class="dropdown-item" href="#">Báo cáo</a>
+                                                <a class="dropdown-item" href="#" onclick="modalArticleReport(@Model.Id, 'POST')">Báo cáo</a>
                                         </li>
                                     }
                                 </ul>
@@ -64,7 +64,7 @@
                         {
                             <img class="card-img post--img" src="@Model.Image" alt="aaaaaaaaaa" onclick="showFull(this)">
                         }
-                        else
+                        
                         {
                             <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
                         }

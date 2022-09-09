@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialMedia03.Common.Res;
+using System;
 using System.Collections.Generic;
 
 namespace SocialMedia03.DAL.Models
@@ -12,10 +13,12 @@ namespace SocialMedia03.DAL.Models
         public string Reason { get; set; } = null!;
         public string? Details { get; set; }
         public bool? IsSolve { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public virtual Post? TargetPost { get; set; }
         public virtual User? TargetUser { get; set; }
         public virtual User User { get; set; } = null!;
+
+        
     }
 }

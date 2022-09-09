@@ -6,7 +6,12 @@ using SocialMedia03.BLL;
 using SocialMedia03.Common.Req;
 using SocialMedia03.Common.Res;
 using SocialMedia03.Common.Utils;
+using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
+using System;
+using System.ComponentModel.Design;
+using System.Drawing;
+using System.Security.Cryptography;
 using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,6 +23,7 @@ namespace SocialMedia03.WEB.Controllers.API
     public class ApiPostController : ControllerBase
     {
         private readonly ILogger _logger;
+        private ReportSvc reportSvc = new ReportSvc();
 
         private PostSvc postSvc = new PostSvc();
 
@@ -99,6 +105,17 @@ namespace SocialMedia03.WEB.Controllers.API
             return Ok(res);
         }
 
+        
+        // api/post/create-report
+        [HttpPost("create-report")]
+        public void CreateReport([FromBody] ReportReq req)
+        {
+            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
+            : HttpContext.Session.GetInt32("currentUserId"));
+
+            reportSvc.CreateReport(currentUserId, req);
+        }
+        
         [HttpGet("find")]
         public IActionResult FindPost([FromQuery]int commentId)
         {

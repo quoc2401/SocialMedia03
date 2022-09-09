@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia03.BLL", "Social
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia03.WEB", "SocialMedia03.WEB\SocialMedia03.WEB.csproj", "{63F211F5-8BCE-443E-AB05-E0EFA25D53AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia03.DAL", "SocialMedia03.DAL\SocialMedia03.DAL.csproj", "{EF5492B0-825F-429C-BF71-4AA799AD7BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia03.DAL", "SocialMedia03.DAL\SocialMedia03.DAL.csproj", "{EF5492B0-825F-429C-BF71-4AA799AD7BF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
