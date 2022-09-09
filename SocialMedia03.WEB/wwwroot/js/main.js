@@ -186,15 +186,16 @@ function removeReportArticle() {
 
 function reportArticle(articleId, typeArticle) {
     var reason = $('.modal-report-article').find(':selected').val();
-    console.log(typeArticle);
+    console.log(articleId);
     if (typeArticle === 'POST') {
         $.ajax({
             type: 'post',
-            url: `/api/report-post`,
+            url: `/api/post/create-report`,
             data: JSON.stringify({
-                'articleId': articleId,
-                'userId': "",
-                'reason': reason
+                'PostId': articleId,
+                'UserId': null,
+                'Reason': reason,
+                'Details': null
             }),
             contentType: 'application/json',
             success: function () {
@@ -207,27 +208,7 @@ function reportArticle(articleId, typeArticle) {
                 icon: "error"
             });
         });
-    } else {
-        $.ajax({
-            type: 'post',
-            url: `/api/report-auction`,
-            data: JSON.stringify({
-                'articleId': articleId,
-                'userId': "",
-                'reason': reason
-            }),
-            contentType: 'application/json',
-            success: function () {
-                swal("Báo cáo bài viết này thành công", {
-                    icon: "success"
-                });
-            }    
-        }).fail(function () {
-            swal("Có lỗi xảy ra!", {
-                icon: "error"
-            });
-        });
-    }
+    } 
 
     removeReportArticle();
 }

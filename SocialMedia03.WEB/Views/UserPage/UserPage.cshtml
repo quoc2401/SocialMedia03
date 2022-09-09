@@ -1,4 +1,5 @@
 ﻿
+
 @{
     ViewBag.Title = "Trang cá nhân";
     Layout = "_Base";
@@ -16,7 +17,7 @@
                             class="cover-img "
                             />
                 </div>
-
+                        
                 <div class="user-avatar d-flex flex-lg-row flex-column align-items-center justify-content-between w-100">
                     <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center position-relative">
                         <img src="@info.Avatar" alt="avatar" class="user-avatar-img" />
@@ -24,7 +25,7 @@
                             <h1 class="user-profile-name">@info.Lastname @info.Firstname</h1>
                         </div>
                     </div>
-
+                                        
                     <div class="d-flex justify-content-center align-items-center">
                         @if (@info.Id == Context.Session.GetInt32("currentUserId"))
                         {
@@ -40,15 +41,35 @@
                                 Báo cáo người dùng
                             </div>
                         }
+                        <div class="modal modal-report-user">
+                            <div class="modal-container" style="min-height: auto !important;">
+                                <div class="modal-header">
+                                    <h5 class="my-2">Báo cáo người dùng</h5>
+                                    <div class="modal--close modal--close-report-user" onclick="closeReportUser()">
+                                        <i class="fa-solid fa-xmark p-2"></i>
+                                    </div>
+                                </div>
+
+                                <div class="modal-body ">
+                                    <form>
+                                        <select class="form-control">
+                                            <option value="PAY">Đấu giá nhưng không thanh toán</option>
+                                            <option value="WORDS">Dùng từ ngữ không đúng đắn</option>
+                                        </select>
+
+                                        <button type="button" class="btn btn-danger mt-3 ml-auto" onclick="reportUser(@info.Id)">Gửi báo cáo</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
                 </div>
             </div>
-
-            <div class="user-menu">
-                <div class="user-menu--item active userPost" id="userPost" onclick="">
-                    <div class="user-menu--hover">
-                        Bài viết 
-                    </div>
+        </div>
+        <div class="user-menu">
+            <div class="user-menu--item active userPost" id="userPost">
+                <div class="user-menu--hover">
+                    Bài viết
                 </div>
             </div>
         </div>
@@ -112,6 +133,29 @@
         </div>
     </div>
 </div>
+
+<!--
+            <div class="modal modal-report-user">
+                <div class="modal-container" style="min-height: auto !important;">
+                    <div class="modal-header">
+                        <h5 class="my-2">Báo cáo người dùng</h5>
+                        <div class="modal--close modal--close-report-user" onclick="closeReportUser()">
+                            <i class="fa-solid fa-xmark p-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="modal-body ">
+                        <form>
+                            <select class="form-control">
+                                <option value="PAY">Đấu giá nhưng không thanh toán</option>
+                                <option value="WORDS">Dùng từ ngữ không đúng đắn</option>
+                            </select>
+
+                            <button type="button" class="btn btn-danger mt-3 ml-auto" onclick="reportUser(@info.Id)">Gửi báo cáo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="~/js/main.js"></script>

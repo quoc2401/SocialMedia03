@@ -6,6 +6,7 @@ namespace SocialMedia03.WEB.Controllers
     [Route("user")]
     public class UserPageController : Controller
     {
+
         private UserSvc userSvc = new UserSvc();
 
         [Route("{userId}")]

@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocialMedia03.Common.Utils;
 using SocialMedia03.Common.Res;
+using SocialMedia03.Common.Req;
 
 namespace SocialMedia03.WEB.Controllers.API
 {
@@ -22,6 +23,7 @@ namespace SocialMedia03.WEB.Controllers.API
     [ApiController]
     public class ApiUserController : ControllerBase
     {
+        private ReportSvc reportSvc = new ReportSvc();
         private UserSvc userSvc = new UserSvc();
 
         [AllowAnonymous]
@@ -88,5 +90,15 @@ namespace SocialMedia03.WEB.Controllers.API
             return StatusCode(500);
         }
 
+        // api/user/report-user
+        [AllowAnonymous]
+        [HttpPost("report-user")]
+        public void CreateReport([FromBody] ReportReq req)
+        {
+            int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
+            : HttpContext.Session.GetInt32("currentUserId"));
+
+            reportSvc.CreateReport(currentUserId, req);
+        }
     }
 }

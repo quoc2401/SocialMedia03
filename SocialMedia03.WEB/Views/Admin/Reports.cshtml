@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<SocialMedia03.DAL.Models.Report>
-@*model SocialMedia03.WEB.Controllers.ReportController*@
+@*@model SocialMedia03.DAL.Models.Report*@
 
 @{
     Layout = "/Views/Admin/_AdminBase.cshtml";
@@ -42,34 +42,39 @@
     <table class="w-100 table-report">
         <thead>
             <tr>
+            
                 @*<th>Model. == "Báo cáo bài viết" ? "Id bài viết" : reportType == "Báo cáo bài đấu giá" ? "Id bài đấu giá" : "Id người dùng"}</th>*@
-                <th>ID</th>
-                <th>ID người báo cáo</th>
-                <th>ID người bị tố cáo</th>
-                <th>ID bài viết bị tố cáo</th>
-                <th>Ngày báo cáo</th>
-                <th>Lí do</th>
-            </tr>
-            <tr>
-                |||||||
+                <th style="text-align:center; border-right:1px solid white">ID</th>
+                <th style="text-align:center; border-right:1px solid white">ID người báo cáo</th>
+                @if (Model.First().TargetUserId != null)
+                {
+                    <th style="text-align:center; border-right:1px solid white">ID người bị tố cáo</th>
+                } else {
+                    <th style="text-align:center; border-right:1px solid white">ID bài viết bị tố cáo</th>
+                }
+                <th style="text-align:center; border-right:1px solid white">Ngày báo cáo</th>
+                <th style="text-align:center; border-right:1px solid white">Lí do</th>
+                <th style="text-align:center">|||||||</th>
             </tr>
         </thead>
-        @foreach (var r in Model) {
         <tbody>
+        @foreach (var r in Model)
+        {
             <tr>
-                <td>@r.Id </td>
-                <td>@r.UserId </td>
-                <td>@r.TargetUserId </td>
-                <td>@r.TargetPostId</td>
-                <td>@r.CreatedDate</td>
-                <td>@r.Reason</td>
+                <td style="text-align:center">@r.Id </td>
+                <td style="text-align:center">@r.UserId </td>   
+                @if (r.TargetUserId != null) { 
+                        <td style="text-align:center">@r.TargetUserId </td>
+                } else {
+                    <td style ="text-align:center">@r.TargetPostId</td>
+                }
+                <td style="text-align:center">@r.CreatedDate</td>
+                <td style="text-align:center">@r.Reason</td>
+                <td style="text-align:center"><button class="btn-solve" onclick="">Xử lí</button></td>
             </tr>  
-            <tr>
-                <button class="btn-solve" onclick="">Xử lí</button>
-            </tr>
-                
+        }  
         </tbody>
-        }
+      
     </table>
 </div>
 

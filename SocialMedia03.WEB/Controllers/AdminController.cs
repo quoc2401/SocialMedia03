@@ -24,7 +24,7 @@ namespace SocialMedia03.WEB.Controllers
         public IActionResult PostReports()
         {
             List<Report> reportPostList = new List<Report>();
-            reportPostList = reportSvc.GetReport();
+            reportPostList = reportSvc.GetPostReport();
 
             return View("Reports", reportPostList);
             
@@ -34,7 +34,7 @@ namespace SocialMedia03.WEB.Controllers
         public IActionResult UserReports()
         {
             List<Report> reportUserList = new List<Report>();
-            reportUserList = reportSvc.GetReport();
+            reportUserList = reportSvc.GetUserReport();
 
             return View("Reports", reportUserList);
         }

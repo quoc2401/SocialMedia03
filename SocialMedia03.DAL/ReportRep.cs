@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia03.Common.Res;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace SocialMedia03.DAL
 {
@@ -18,32 +19,23 @@ namespace SocialMedia03.DAL
         { }
 
         //override
-        public List<Report> GetReport()
+        public List<Report> GetPostReport()
         {
             List<Report> res = new List<Report>();
-            res = base.Context.Set<Report>().ToList<Report>();
-            
+            res = base.Context.Set<Report>().Where(report => report.TargetPostId != null).ToList<Report>();
             return res; 
         }
 
-
-        public bool Create(React r)
+        public List<Report> GetUserReport()
         {
-            try
-            {
-                base.Context.Entry(r).State = r.Id == 0 ?
-                    EntityState.Added : EntityState.Modified;
-                base.Context.SaveChanges();
+            List<Report> res = new List<Report>();
 
-                return true;
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.StackTrace);
-                return false;
-            }
+            res = base.Context.Set<Report>().Where(report => report.TargetUserId != null).ToList<Report>();
 
+            return res;
         }
+        // 
+
         public bool CreateReport(Report report)
         {
             try

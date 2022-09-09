@@ -25,28 +25,36 @@ namespace SocialMedia03.BLL
         }
 
         
-        public bool CreateReport(int uID, int tID, int pID, string reason, string details)
+        public bool CreateReport(int uID, ReportReq req)
         {
             Report report = new Report();
 
 
-            report.Id = uID;
-            report.TargetUserId = tID;
-            report.TargetPostId = pID;
-            report.Reason = reason;
-            report.Details = details;
+            report.UserId = uID;
+            report.TargetUserId = req.UserId;
+            report.TargetPostId = req.PostId;
+            report.Reason = req.Reason;
             report.IsSolve = false;
             
             return _rep.CreateReport(report);
         }
 
-        public List<Report> GetReport()
+        public List<Report> GetPostReport()
         {
-            List<Report> reportList = new List<Report>();
-            reportList = _rep.GetReport();
+            List<Report> reportPostList = new List<Report>();
 
-            return reportList;
+            reportPostList = _rep.GetPostReport();
+
+            return reportPostList;
         }
 
+        public List<Report> GetUserReport()
+        {
+            List<Report> reportUserList = new List<Report>();
+
+            reportUserList = _rep.GetUserReport();
+
+            return reportUserList;
+        }
     }
 }

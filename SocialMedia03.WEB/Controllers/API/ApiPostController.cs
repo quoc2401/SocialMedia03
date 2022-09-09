@@ -105,15 +105,15 @@ namespace SocialMedia03.WEB.Controllers.API
             return Ok(res);
         }
 
-
         
+        // api/post/create-report
         [HttpPost("create-report")]
-        public void CreateReport(int tID, int pID, string reason, string details)
+        public void CreateReport([FromBody] ReportReq req)
         {
             int currentUserId = (int)(HttpContext.Session.GetInt32("currentUserId") == null ? 0
             : HttpContext.Session.GetInt32("currentUserId"));
 
-            reportSvc.CreateReport(currentUserId, tID, pID, reason, details);
+            reportSvc.CreateReport(currentUserId, req);
         }
         
         [HttpGet("find")]
