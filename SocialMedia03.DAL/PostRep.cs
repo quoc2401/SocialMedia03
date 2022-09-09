@@ -87,8 +87,10 @@ namespace SocialMedia03.DAL
 
                 return true;
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
+                if (e is DbUpdateException)
+                    return true;
                 Debug.WriteLine(e.StackTrace);
                 return false;
             }

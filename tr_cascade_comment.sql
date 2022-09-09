@@ -22,23 +22,32 @@ GO
 -- Description:	cascade delete comment
 -- =============================================
 CREATE TRIGGER dbo.tr_cascade_comment
-   ON dbo.Comment 
+   ON [dbo].[Comment] 
    INSTEAD OF DELETE
-AS 
+AS
 BEGIN
-	BEGIN TRANSACTION
-	--DELETE reply
-		DELETE Comment
-		WHERE parent_id IN (SELECT id FROM deleted)
-	--DELETE react
-		DELETE React
-		WHERE comment_id IN (SELECT id FROM deleted)
-	--DELETE notif
-		DELETE Notif
-		WHERE comment_id IN (SELECT id FROM deleted)
-	--DELETE itselft after delete all fk
-		DELETE Comment
-		WHERE id IN (SELECT id FROM deleted)
-	COMMIT TRANSACTION
+	DECLARE @deletions table (id int not null);
+
+    WITH IDs as (
+       select id from deleted
+       union all
+       select c.id
+       from Comment c
+              inner join
+            IDs i
+              on
+                 c.parent_id = i.id
+    )
+	INSERT INTO @deletions(id)
+	SELECT id FROM IDs
+
+	DELETE React
+	WHERE comment_id in (select id from @deletions)
+
+	DELETE Notif
+	WHERE comment_id in (select id from @deletions)
+
+    DELETE FROM Comment
+    WHERE id in (select id from @deletions)
 END
 GO
