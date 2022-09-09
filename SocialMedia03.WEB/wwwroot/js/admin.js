@@ -49,11 +49,6 @@ function solveReportPost(postId, element) {
     $(element).parents('.report-item').remove();
 }
 
-function solveReportAuction(auctionId) {
-    deleteAuction(auctionId);
-    $(element).parents('.report-item').remove();
-}
-
 function deleteUser(id) {
     swal({
         title: "Bạn có chắc xóa người dùng này?",

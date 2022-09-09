@@ -157,7 +157,7 @@ function searchFilter(filter) {
         topSearch();
        
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/top';
-        let newUrl = 'http://' + window.location.host.toString() + newPathname + '?kw=' + kw;
+        let newUrl = 'https://' + window.location.host.toString() + newPathname + '?kw=' + kw;
         
         window.history.replaceState('', 'SharingHope', newUrl);
     }
@@ -167,7 +167,7 @@ function searchFilter(filter) {
         $('.post-search').css('display', 'none');
         
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/people';
-        let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
+        let newUrl = 'https://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         window.history.replaceState('', 'SharingHope', newUrl);
     }
@@ -178,7 +178,7 @@ function searchFilter(filter) {
         $('.auction-search').css('display', 'none');
         
         let newPathname = pathname.slice(0, pathname.indexOf('/search') + 7) + '/posts';
-        let newUrl = 'http://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
+        let newUrl = 'https://' +  window.location.host.toString() + newPathname + '?kw=' + kw;
         
         window.history.replaceState('', 'SharingHope', newUrl);
     }

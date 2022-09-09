@@ -70,7 +70,9 @@
                 }
                 <td style="text-align:center">@r.CreatedDate</td>
                 <td style="text-align:center">@r.Reason</td>
-                <td style="text-align:center"><button class="btn-solve" onclick="">Xử lí</button></td>
+                <td style="text-align:center">
+                    <button class="btn-solve" onclick="solveReportPost(@r.TargetPostId, this)">Xử lí</button>
+                </td>
             </tr>  
         }  
         </tbody>

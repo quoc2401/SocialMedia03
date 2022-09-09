@@ -21,7 +21,7 @@ namespace SocialMedia03.DAL.Models
             Email = req.Email;
             Firstname = req.Firstname;
             Lastname = req.Lastname;
-            Birthday = req.Birthday;
+            Birthday = (DateTime)req.Birthday;
             Password = BC.HashPassword(req.Password);
             Address = req.Address;
             Hometown = req.Hometown;
