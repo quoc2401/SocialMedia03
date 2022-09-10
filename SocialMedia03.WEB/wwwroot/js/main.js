@@ -186,7 +186,6 @@ function removeReportArticle() {
 
 function reportArticle(articleId, typeArticle) {
     var reason = $('.modal-report-article').find(':selected').val();
-    console.log(articleId);
     if (typeArticle === 'POST') {
         $.ajax({
             type: 'post',

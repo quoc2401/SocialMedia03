@@ -14,15 +14,10 @@ namespace SocialMedia03.DAL
 {
     public class PostRep : GenericRep<smdbContext, Post>
     {
-        public Post Get(int id)
-        {
-            return base.Context.Set<Post>().Where(p => p.Id == id).FirstOrDefault();
-           
-        }
 
-        public HashSet<Post> Get(int page, string kw)
+        public IQueryable<Post> Get(int page, string kw)
         {
-            HashSet<Post> rs = new HashSet<Post>();
+            IQueryable<Post> rs;
             int size = configs.POST_PAGE_SIZE;
             if (kw == null)
                 kw = "";
@@ -31,70 +26,16 @@ namespace SocialMedia03.DAL
             {
                 int start = (page - 1) * size;
 
-                rs = base.Context.Set<Post>().Where(p => p.Content.Contains(kw)).AsEnumerable().Skip(start).Take(size).ToHashSet();
+                rs = base.Get<Post>(p => p.Content.Contains(kw)).AsEnumerable().Skip(start).Take(size).AsQueryable();
             }
             else
             {
-                rs = base.Context.Set<Post>().Where(p => p.Content.Contains(kw)).ToHashSet();
+                rs = base.Get<Post>(p => p.Content.Contains(kw));
             }
 
             return rs;
         }
 
-        public bool Create(Post p)
-        {
-            try
-            {
-                base.Context.Entry(p).State = p.Id == 0 ?
-                    EntityState.Added : EntityState.Modified;
-                base.Context.SaveChanges();
-
-                return true;
-            }
-            catch (SqlException e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                return false;
-            }
-        }
-
-        public bool Update(Post p)
-        {
-            try
-            {
-                base.Context.Entry(p).State = p.Id == 0 ?
-                    EntityState.Added : EntityState.Modified;
-                base.Context.SaveChanges();
-
-                return true;
-            }
-            catch (SqlException e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                return false;
-            }
-        }
-
-        public bool Delete(Post p)
-        {
-            if (p == null)
-                return true;
-            try
-            {
-                base.Context.Database.ExecuteSqlRaw("Delete Post Where id={0}", p.Id);
-
-                base.Context.SaveChanges();
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                if (e is DbUpdateException)
-                    return true;
-                Debug.WriteLine(e.StackTrace);
-                return false;
-            }
-        }
 
         public Post FindPostByComment(int commentId)
         {

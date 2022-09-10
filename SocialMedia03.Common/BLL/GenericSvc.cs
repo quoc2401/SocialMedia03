@@ -35,26 +35,6 @@ namespace SocialMedia03.Common.BLL
             return res;
         }
 
-        /// <summary>
-        /// Create the models
-        /// </summary>
-        /// <param name="l">List model</param>
-        /// <returns>Return the result</returns>
-        public virtual MultipleRes Create(List<T> l)
-        {
-            var res = new MultipleRes();
-
-            try
-            {
-                _rep.Create(l);
-            }
-            catch (Exception ex)
-            {
-                res.SetError(ex.StackTrace);
-            }
-
-            return res;
-        }
 
         /// <summary>
         /// Read by
@@ -74,7 +54,7 @@ namespace SocialMedia03.Common.BLL
         /// <returns>Return the object</returns>
         public virtual T Get(int id)
         {
-            return null;
+            throw new Exception("No supports");
         }
 
         /// <summary>
@@ -108,26 +88,7 @@ namespace SocialMedia03.Common.BLL
             return res;
         }
 
-        /// <summary>
-        /// Update the models
-        /// </summary>
-        /// <param name="l">List model</param>
-        /// <returns>Return the result</returns>
-        public virtual MultipleRes Update(List<T> l)
-        {
-            var res = new MultipleRes();
-
-            try
-            {
-                _rep.Update(l);
-            }
-            catch (Exception ex)
-            {
-                res.SetError(ex.StackTrace);
-            }
-
-            return res;
-        }
+      
 
         /// <summary>
         /// Delete single object

@@ -1,11 +1,12 @@
-﻿using SocialMedia03.WEB.Models;
+﻿using SocialMedia03.Common.DAL;
+using SocialMedia03.WEB.Models;
 using System;
 using System.Collections.Generic;
 using BC = BCrypt.Net.BCrypt;
 
 namespace SocialMedia03.DAL.Models
 {
-    public partial class User
+    public partial class User : TEntity
     {
         public User()
         {
@@ -21,14 +22,13 @@ namespace SocialMedia03.DAL.Models
             Email = req.Email;
             Firstname = req.Firstname;
             Lastname = req.Lastname;
-            Birthday = (DateTime)req.Birthday;
+            Birthday = req.Birthday;
             Password = BC.HashPassword(req.Password);
             Address = req.Address;
             Hometown = req.Hometown;
             Phone = req.Phone;
             Avatar = req.Avatar;
         }
-        public int Id { get; set; }
         public string Uuid { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;

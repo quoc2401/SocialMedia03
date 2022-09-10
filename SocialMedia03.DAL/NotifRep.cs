@@ -48,21 +48,5 @@ namespace SocialMedia03.DAL
             }
             return rs;
         }
-
-        public bool readNotif(int id)
-        {
-            try
-            {
-                Notif n = base.Context.Notifs.Where(n => n.Id == id).FirstOrDefault();
-                if (n != null)
-                    n.IsRead = true;
-                base.Context.SaveChanges();
-                return true;
-            } catch (SqlException ex) 
-            {
-                return false;
-            }
-            
-        }
     }
 }

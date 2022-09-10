@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SocialMedia03.Common.DAL;
+using System;
 using System.Collections.Generic;
 
 namespace SocialMedia03.DAL.Models
 {
-    public partial class React
+    public partial class React : TEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int? PostId { get; set; }
         public int? CommentId { get; set; }

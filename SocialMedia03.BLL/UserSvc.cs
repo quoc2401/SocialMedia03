@@ -17,7 +17,7 @@ namespace SocialMedia03.BLL
 
         public User Get(int id)
         {
-            return _rep.Get(id);
+            return _rep.GetSingle<User>(id);
         }
 
         public User Authenticate(string email, string password)
@@ -45,7 +45,7 @@ namespace SocialMedia03.BLL
                 u.Avatar = "https://res.cloudinary.com/dynupxxry/image/upload/v1660532211/non-avatar_nw91c3.png";
             }
 
-            return _rep.RegisterNewUser(u);
+            return _rep.Create(u);
         }
 
         public User GetUserByPost(int postId)
@@ -68,8 +68,9 @@ namespace SocialMedia03.BLL
 
         public bool Delete(int id)
         {
-            User u = _rep.Get(id);
-            Debug.WriteLine(u.Uuid);
+            User u = _rep.GetSingle<User>(id);
+            
+
             return _rep.Delete(u);
         }
     }

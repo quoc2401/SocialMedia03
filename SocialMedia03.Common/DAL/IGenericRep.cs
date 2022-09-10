@@ -15,27 +15,27 @@ namespace SocialMedia03.Common.DAL
         /// Create the model
         /// </summary>
         /// <param name="m">The model</param>
-        void Create(T m);
+        bool Create(T m);
 
         /// <summary>
         /// Create list model
         /// </summary>
         /// <param name="l">List model</param>
-        void Create(List<T> l);
+        bool Create(List<T> l);
 
         /// <summary>
         /// Read by
         /// </summary>
         /// <param name="p">Predicate</param>
         /// <returns>Return query data</returns>
-        IQueryable<T> Get(Expression<Func<T, bool>> p);
+        IQueryable<T> Get<T>(Expression<Func<T, bool>> p) where T : class;
 
         /// <summary>
         /// Read single object
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        T Get(int id);
+        T GetSingle<T>(int id) where T : TEntity;
 
         /// <summary>
         /// Read single object
@@ -48,13 +48,20 @@ namespace SocialMedia03.Common.DAL
         /// Update the model
         /// </summary>
         /// <param name="m">The model</param>
-        void Update(T m);
+        bool Update(T m);
 
         /// <summary>
         /// Update list model
         /// </summary>
         /// <param name="l">List model</param>
-        void Update(List<T> l);
+        bool Update(List<T> l);
+
+        /// <summary>
+        /// Delete the model
+        /// </summary>
+        /// <param name="m">The model</param>
+        /// <returns>Return the object</returns>
+        bool Delete(T m);
 
         #endregion
 

@@ -10,7 +10,7 @@ namespace SocialMedia03.WEB.Controllers
     public class AdminController : Controller
     {
         private ReportSvc reportSvc = new ReportSvc();
-        private AdminService adminService = new AdminService();
+        private AdminSvc adminService = new AdminSvc();
         private UserSvc userSvc = new UserSvc();
 
         [Route("")]
@@ -23,20 +23,16 @@ namespace SocialMedia03.WEB.Controllers
         [Route("post-reports")]
         public IActionResult PostReports()
         {
-            List<Report> reportPostList = new List<Report>();
-            reportPostList = reportSvc.GetPostReport();
 
-            return View("Reports", reportPostList);
+            return View("Reports", reportSvc.GetPostReport());
             
         }
 
         [Route("user-reports")]
         public IActionResult UserReports()
         {
-            List<Report> reportUserList = new List<Report>();
-            reportUserList = reportSvc.GetUserReport();
 
-            return View("Reports", reportUserList);
+            return View("Reports", reportSvc.GetUserReport());
         }
 
         [Route("user")]

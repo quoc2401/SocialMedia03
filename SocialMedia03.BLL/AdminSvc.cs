@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SocialMedia03.BLL
 {
-    public class AdminService
+    public class AdminSvc
     {
         UserRep uRep = new UserRep();
         PostRep pRep = new PostRep();

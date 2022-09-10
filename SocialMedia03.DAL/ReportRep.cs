@@ -19,40 +19,16 @@ namespace SocialMedia03.DAL
         { }
 
         //override
-        public List<Report> GetPostReport()
-        {
-            List<Report> res = new List<Report>();
-            res = base.Context.Set<Report>().Where(report => report.TargetPostId != null).ToList<Report>();
-            return res; 
+        public IQueryable<Report> GetPostReport()
+        { 
+            return base.Get<Report>(report => report.TargetPostId != null);
         }
 
-        public List<Report> GetUserReport()
+        public IQueryable<Report> GetUserReport()
         {
-            List<Report> res = new List<Report>();
 
-            res = base.Context.Set<Report>().Where(report => report.TargetUserId != null).ToList<Report>();
-
-            return res;
+            return base.Get<Report>(report => report.TargetUserId != null);
         }
         // 
-
-        public bool CreateReport(Report report)
-        {
-            try
-            {
-                base.Context.Entry(report).State = report.Id == 0 ?
-                    EntityState.Added : EntityState.Modified;
-                base.Context.SaveChanges();
-
-                return true;
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.StackTrace);
-                return false;
-            }
-        }
-
-
     }
 }

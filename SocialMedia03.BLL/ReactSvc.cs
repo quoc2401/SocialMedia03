@@ -19,14 +19,9 @@ namespace SocialMedia03.BLL
             UserSvc = new UserSvc();
         }
 
-        public override React Get(int id)
+        public IQueryable<React> GetReactsByPost(int postId)
         {
-            return _rep.Get(id);
-        }
-
-        public HashSet<React> GetReactsByPost(int postId)
-        {
-            HashSet<React> rs = _rep.GetReactsByPost(postId);  
+            IQueryable<React> rs = _rep.GetReactsByPost(postId);  
             foreach(var r in rs)
             {
                 r.User = UserSvc.Get(r.UserId);
@@ -35,9 +30,9 @@ namespace SocialMedia03.BLL
             return rs;
         }
 
-        public HashSet<React> GetReactsByComment(int commentId)
+        public IQueryable<React> GetReactsByComment(int commentId)
         {
-            HashSet<React> rs = _rep.GetReactsByComment(commentId);
+            IQueryable<React> rs = _rep.GetReactsByComment(commentId);
             foreach (var r in rs)
             {
                 r.User = UserSvc.Get(r.UserId);

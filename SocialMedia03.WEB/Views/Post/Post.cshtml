@@ -60,11 +60,11 @@
                             @Model.Content
                         </p>
 
-                        @if (!String.IsNullOrEmpty(@Model.Image))
+                        @if (!String.IsNullOrWhiteSpace(@Model.Image))
                         {
-                            <img class="card-img post--img" src="@Model.Image" alt="aaaaaaaaaa" onclick="showFull(this)">
+                            <img class="card-img post--img" src="@Model.Image" alt="@Model.Content" onclick="showFull(this)">
                         }
-                        
+                        else
                         {
                             <img class="card-img post--img" src="" alt="Post image" onclick="showFull(this)" style="display:none;">
                         }
