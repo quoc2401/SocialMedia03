@@ -24,7 +24,7 @@ namespace SocialMedia03.BLL
             IQueryable<React> rs = _rep.GetReactsByPost(postId);  
             foreach(var r in rs)
             {
-                r.User = UserSvc.Get(r.UserId);
+                r.User = base.Get<User>(r.UserId);
             }
 
             return rs;
@@ -35,7 +35,7 @@ namespace SocialMedia03.BLL
             IQueryable<React> rs = _rep.GetReactsByComment(commentId);
             foreach (var r in rs)
             {
-                r.User = UserSvc.Get(r.UserId);
+                r.User = base.Get<User>(r.UserId);
             }
 
             return rs;

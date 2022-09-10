@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia03.BLL;
+using SocialMedia03.DAL.Models;
 
 namespace SocialMedia03.WEB.Controllers
 {

@@ -15,13 +15,11 @@ namespace SocialMedia03.BLL
 {
     public class PostSvc : GenericSvc<PostRep, Post>
     {
-        private UserSvc UserSvc;
         private ReactSvc ReactSvc;
         private CommentSvc CommentSvc;
         public PostSvc()
         {
             ReactSvc = new ReactSvc();
-            UserSvc = new UserSvc();
             CommentSvc = new CommentSvc();
         }
 
@@ -32,7 +30,7 @@ namespace SocialMedia03.BLL
                 Post p = _rep.GetSingle<Post>(id);
                 if (p != null)
                 {
-                    p.User = UserSvc.Get(p.UserId);
+                    p.User = base.Get<User>(p.UserId);
                     p.Reacts = ReactSvc.GetReactsByPost(p.Id).ToHashSet();
                     p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
                 }
@@ -46,23 +44,12 @@ namespace SocialMedia03.BLL
            
         }
 
-        public HashSet<Post> GetAll()
-        {
-            HashSet<Post> rs = _rep.All.ToHashSet();
-            //foreach(var p in rs)
-            //{
-            //    p.User = UserSvc.Get(p.UserId);
-            //}
-
-            return rs;
-        }
-
         public IQueryable<Post> Get(int page, string kw)
         {
             IQueryable<Post> rs = _rep.Get(page, kw);
             foreach (var p in rs)
             {
-                p.User = UserSvc.Get(p.UserId);
+                p.User = base.Get<User>(p.UserId);
                 p.Reacts = ReactSvc.GetReactsByPost(p.Id).ToHashSet();
                 p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
             }
@@ -105,9 +92,7 @@ namespace SocialMedia03.BLL
 
         public bool Delete(int postId)
         {
-            Post p = this.Get(postId);
-
-            return _rep.Delete(p);
+            return base.Delete(base.Get<Post>(postId));
         }
 
         public Post FindPostByComment(int commentId)
@@ -129,7 +114,7 @@ namespace SocialMedia03.BLL
             {
                 posts.ForEach(p =>
                 {
-                    p.User = UserSvc.Get(p.UserId);
+                    p.User = base.Get<User>(p.UserId);
                     p.Reacts = ReactSvc.GetReactsByPost(p.Id).ToHashSet();
                     p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
                 });
@@ -150,7 +135,7 @@ namespace SocialMedia03.BLL
             HashSet<Post> rs = _rep.GetPostByUser(userId, page);
             foreach (var p in rs)
             {
-                p.User = UserSvc.Get(p.UserId);
+                p.User = base.Get<User>(p.UserId);
                 p.Reacts = ReactSvc.GetReactsByPost(p.Id).ToHashSet();
                 p.CommentSetLength = CommentSvc.CountCommentByPost(p.Id);
             }

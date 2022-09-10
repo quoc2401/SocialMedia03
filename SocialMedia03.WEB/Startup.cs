@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia03.BLL;
+using SocialMedia03.DAL.Models;
 using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -95,11 +96,6 @@ namespace SocialMedia03.WEB
             }
 
             app.UseSession();
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            //app.Run();
         }
     }
 }

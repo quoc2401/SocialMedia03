@@ -1,10 +1,6 @@
-﻿using SocialMedia03.Common.Res;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SocialMedia03.Common.DAL;
+using SocialMedia03.Common.Res;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMedia03.Common.BLL
 {
@@ -33,7 +29,7 @@ namespace SocialMedia03.Common.BLL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        T Get(int id);
+        T Get<T>(int id) where T : TEntity;
 
         /// <summary>
         /// Read single object
@@ -54,7 +50,7 @@ namespace SocialMedia03.Common.BLL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the result</returns>
-        SingleRes Delete(int id);
+        bool Delete(T obj);
 
         /// <summary>
         /// Delete single object

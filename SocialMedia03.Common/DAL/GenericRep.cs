@@ -70,7 +70,7 @@ namespace SocialMedia03.Common.DAL
         /// <returns>Return the object</returns>
         public virtual T GetSingle<T>(int id) where T: TEntity
         {
-            return _context.Set<T>().Where(T => T.Id == id).SingleOrDefault();
+            return _context.Set<T>().Where(t => t.Id == id).SingleOrDefault();
         }
 
         public virtual T GetSingle<T>(Expression<Func<T, bool>> p) where T : class
@@ -187,6 +187,7 @@ namespace SocialMedia03.Common.DAL
                 return false;
             }
         }
+
 
         #endregion
 
