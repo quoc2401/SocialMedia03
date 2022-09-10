@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SocialMedia03.Common.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia03.DAL.Models
 {
-    public partial class Post
+    public partial class Post : TEntity
     {
         public Post()
         {
@@ -14,7 +15,6 @@ namespace SocialMedia03.DAL.Models
             Reports = new HashSet<Report>();
         }
 
-        public int Id { get; set; }
         public string Content { get; set; } = null!;
         public string? Image { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;

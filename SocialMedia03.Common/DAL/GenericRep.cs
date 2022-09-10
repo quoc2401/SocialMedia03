@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -16,20 +18,39 @@ namespace SocialMedia03.Common.DAL
         /// Create the model
         /// </summary>
         /// <param name="m">The model</param>
-        public void Create(T m)
+        public bool Create(T m)
         {
-            _context.Set<T>().Add(m);
-            _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().Add(m);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         /// <summary>
         /// Create list model
         /// </summary>
         /// <param name="l">List model</param>
-        public void Create(List<T> l)
-        {
+        public bool Create(List<T> l)
+        {  
+            try
+            {
             _context.Set<T>().AddRange(l);
             _context.SaveChanges();
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         /// <summary>
@@ -37,7 +58,7 @@ namespace SocialMedia03.Common.DAL
         /// </summary>
         /// <param name="p">Predicate</param>
         /// <returns>Return query data</returns>
-        public IQueryable<T> Get(Expression<Func<T, bool>> p)
+        public IQueryable<T> Get<T>(Expression<Func<T, bool>> p) where T : class
         {
             return _context.Set<T>().Where(p);
         }
@@ -47,9 +68,14 @@ namespace SocialMedia03.Common.DAL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        public virtual T Get(int id)
+        public virtual T GetSingle<T>(int id) where T: TEntity
         {
-            return null;
+            return _context.Set<T>().Where(T => T.Id == id).SingleOrDefault();
+        }
+
+        public virtual T GetSingle<T>(Expression<Func<T, bool>> p) where T : class
+        {
+            return _context.Set<T>().Where(p).SingleOrDefault();
         }
 
         /// <summary>
@@ -66,20 +92,40 @@ namespace SocialMedia03.Common.DAL
         /// Update the model
         /// </summary>
         /// <param name="m">The model</param>
-        public void Update(T m)
+        public bool Update(T m)
         {
-            _context.Set<T>().Update(m);
-            _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().Update(m);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         /// <summary>
         /// Update list model
         /// </summary>
         /// <param name="l">List model</param>
-        public void Update(List<T> l)
+        public bool Update(List<T> l)
         {
-            _context.Set<T>().UpdateRange(l);
-            _context.SaveChanges();
+            try
+            {
+                _context.Set<T>().UpdateRange(l);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         /// <summary>
@@ -122,10 +168,24 @@ namespace SocialMedia03.Common.DAL
         /// </summary>
         /// <param name="m">The model</param>
         /// <returns>Return the object</returns>
-        protected T Delete(T m)
+        public bool Delete(T m)
         {
-            var t = _context.Set<T>().Remove(m);
-            return t.Entity;
+            if (m == null)
+                return true;
+            try
+            {
+                var t = _context.Set<T>().Remove(m);
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (e is DbUpdateException)
+                    return true;
+                Debug.WriteLine(e.StackTrace);
+                return false;
+            }
         }
 
         #endregion

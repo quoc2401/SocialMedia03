@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SocialMedia03.Common.Res
 {
-    public class NotifRes
+    public class NotifRes : BaseRes
     {
         public int TargetId { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]

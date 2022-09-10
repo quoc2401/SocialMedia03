@@ -21,6 +21,7 @@
                                     <option value="@i">@i</option>
                                 }
                             </select>
+
                             <select type="number" class="form-control me-2 mb-2" name="year" style="width: 200px" id="dash-daterange">
                                 <div>Năm</div>
                                 @for (var j = @DateTime.Now.Year; j >= 2001; j--)
@@ -38,18 +39,27 @@
             </div>
         </div>
     </div>
-
-    <table class="w-100 table-report">
+    @if (Model.Count() > 0)
+    {
+        <table class="w-100 table-report">
         <thead>
             <tr>
             
-                @*<th>Model. == "Báo cáo bài viết" ? "Id bài viết" : reportType == "Báo cáo bài đấu giá" ? "Id bài đấu giá" : "Id người dùng"}</th>*@
+                <th>@if(Model.First().TargetPostId == null)
+                    {
+                        @: Báo cáo bài viết
+                    } else
+                    {
+                        @: Báo cáo người dùng
+                    }
+                </th>
                 <th style="text-align:center; border-right:1px solid white">ID</th>
                 <th style="text-align:center; border-right:1px solid white">ID người báo cáo</th>
                 @if (Model.First().TargetUserId != null)
                 {
                     <th style="text-align:center; border-right:1px solid white">ID người bị tố cáo</th>
-                } else {
+                } else 
+                {
                     <th style="text-align:center; border-right:1px solid white">ID bài viết bị tố cáo</th>
                 }
                 <th style="text-align:center; border-right:1px solid white">Ngày báo cáo</th>
@@ -65,7 +75,8 @@
                 <td style="text-align:center">@r.UserId </td>   
                 @if (r.TargetUserId != null) { 
                         <td style="text-align:center">@r.TargetUserId </td>
-                } else {
+                } else 
+                {
                     <td style ="text-align:center">@r.TargetPostId</td>
                 }
                 <td style="text-align:center">@r.CreatedDate</td>
@@ -76,9 +87,11 @@
             </tr>  
         }  
         </tbody>
-      
-    </table>
+        </table>
+    } else
+    {
+        <i class="page-title">Không có bài báo cáo nào</i>
+    }
 </div>
 
-<script src="~/resources/js/post.js"></script>
-<script src="~/resources/js/auction.js"></script>                
+<script src="~/js/post.js"></script>         

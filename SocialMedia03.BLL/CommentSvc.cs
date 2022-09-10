@@ -24,22 +24,22 @@ namespace SocialMedia03.BLL
 
         public override Comment Get(int id)
         {
-            Comment c = _rep.Get(id);
+            Comment c = _rep.GetSingle<Comment>(id);
             c.User = UserSvc.Get(c.UserId);
-            c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+            c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
             c.CommentSetLength = _rep.CountReplies(c.Id);
             if (c.ParentId != null)
                 c.Parent = this.Get((int)c.ParentId);
             return c;
         }
 
-        public HashSet<Comment> GetCommentsByPost(int postId, int? page)
+        public IQueryable<Comment> GetCommentsByPost(int postId, int? page)
         {
-            HashSet<Comment> rs = _rep.GetCommentsByPost(postId, page);
+            IQueryable<Comment> rs = _rep.GetCommentsByPost(postId, page);
             foreach (var c in rs)
             {
                 c.User = UserSvc.Get(c.UserId);
-                c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+                c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
                 c.CommentSetLength = _rep.CountReplies(c.Id);
             }
 
@@ -51,13 +51,13 @@ namespace SocialMedia03.BLL
             return _rep.CountCommentByPost(postId);
         }
 
-        public HashSet<Comment> GetCommentReplies(int commentId, int? page)
+        public IQueryable<Comment> GetCommentReplies(int commentId, int? page)
         {
-            HashSet<Comment> rs = _rep.GetCommentReplies(commentId, page);
+            IQueryable<Comment> rs = _rep.GetCommentReplies(commentId, page);
             foreach (var c in rs)
             {
                 c.User = UserSvc.Get(c.UserId);
-                c.Reacts = ReactSvc.GetReactsByComment(c.Id);
+                c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
                 c.CommentSetLength = _rep.CountReplies(c.Id);
             }
 
@@ -66,7 +66,7 @@ namespace SocialMedia03.BLL
 
         public bool Delete(int id)
         {
-            Comment c = _rep.Get(id);
+            Comment c = _rep.GetSingle<Comment>(id);
 
             return _rep.Delete(c);
         }
@@ -79,7 +79,6 @@ namespace SocialMedia03.BLL
                 c.Content = req.Content;
                 c.CreatedDate = DateTime.Now;
                 c.UserId = creator.Id;
-                c.User = creator;
                 c.PostId = req.PostId;
                 c.ParentId = req.CommentId;
                 if (_rep.Create(c) == true)
@@ -94,6 +93,8 @@ namespace SocialMedia03.BLL
                         c.Parent = new Comment();
                         c.Parent.User = UserSvc.getUserByComment((int)c.ParentId);
                     }
+
+                    c.User = creator;
                     return c;
                 }
             }
@@ -109,7 +110,7 @@ namespace SocialMedia03.BLL
         {
             Comment currentComment = this.Get(currentCommentId);
             currentComment.User = UserSvc.Get(currentComment.UserId);
-            currentComment.Reacts = ReactSvc.GetReactsByComment(currentComment.Id);
+            currentComment.Reacts = ReactSvc.GetReactsByComment(currentComment.Id).ToHashSet();
             currentComment.Content = req.Content;
             currentComment.CreatedDate = DateTime.Now;
             

@@ -1,14 +1,7 @@
 ﻿using SocialMedia03.Common.BLL;
 using SocialMedia03.Common.Req;
-using SocialMedia03.Common.Res;
 using SocialMedia03.DAL;
 using SocialMedia03.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMedia03.BLL
 {
@@ -16,7 +9,7 @@ namespace SocialMedia03.BLL
     {
         private ReportRep reportRep;
         private UserRep userRep;
-        public PostRep postRep;
+        private PostRep postRep;
         public ReportSvc()
         {
             reportRep = new ReportRep();
@@ -36,25 +29,19 @@ namespace SocialMedia03.BLL
             report.Reason = req.Reason;
             report.IsSolve = false;
             
-            return _rep.CreateReport(report);
+            return _rep.Create(report);
         }
 
-        public List<Report> GetPostReport()
+        public IQueryable<Report> GetPostReport()
         {
-            List<Report> reportPostList = new List<Report>();
 
-            reportPostList = _rep.GetPostReport();
-
-            return reportPostList;
+            return _rep.GetPostReport();
         }
 
-        public List<Report> GetUserReport()
+        public IQueryable<Report> GetUserReport()
         {
-            List<Report> reportUserList = new List<Report>();
 
-            reportUserList = _rep.GetUserReport();
-
-            return reportUserList;
+            return _rep.GetUserReport();
         }
     }
 }

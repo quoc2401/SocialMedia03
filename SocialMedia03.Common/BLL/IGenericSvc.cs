@@ -19,12 +19,6 @@ namespace SocialMedia03.Common.BLL
         /// <returns>Return the result</returns>
         SingleRes Create(T m);
 
-        /// <summary>
-        /// Create the models
-        /// </summary>
-        /// <param name="l">List model</param>
-        /// <returns>Return the result</returns>
-        MultipleRes Create(List<T> l);
 
         /// <summary>
         /// Read by
@@ -54,13 +48,6 @@ namespace SocialMedia03.Common.BLL
         /// <param name="m">The model</param>
         /// <returns>Return the result</returns>
         SingleRes Update(T m);
-
-        /// <summary>
-        /// Update the models
-        /// </summary>
-        /// <param name="l">List model</param>
-        /// <returns>Return the result</returns>
-        MultipleRes Update(List<T> l);
 
         /// <summary>
         /// Delete single object

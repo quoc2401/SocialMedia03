@@ -19,7 +19,10 @@ namespace SocialMedia03.BLL
 
         public bool readNotif(int notifId)
         {
-            return _rep.readNotif(notifId);
+            Notif n = _rep.GetSingle<Notif>(notifId);
+            if (n != null)
+                n.IsRead = true;
+            return _rep.Update(n);
         }
     }
 }

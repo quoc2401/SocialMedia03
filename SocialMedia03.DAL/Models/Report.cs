@@ -1,12 +1,12 @@
-﻿using SocialMedia03.Common.Res;
+﻿using SocialMedia03.Common.DAL;
+using SocialMedia03.Common.Res;
 using System;
 using System.Collections.Generic;
 
 namespace SocialMedia03.DAL.Models
 {
-    public partial class Report
+    public partial class Report : TEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int? TargetUserId { get; set; }
         public int? TargetPostId { get; set; }

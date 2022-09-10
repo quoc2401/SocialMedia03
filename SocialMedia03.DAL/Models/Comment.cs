@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SocialMedia03.Common.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMedia03.DAL.Models
 {
-    public partial class Comment
+    public partial class Comment : TEntity
     {
         public Comment()
         {
@@ -13,7 +14,6 @@ namespace SocialMedia03.DAL.Models
             Reacts = new HashSet<React>();
         }
 
-        public int Id { get; set; }
         public string Content { get; set; } = null!;
         public int UserId { get; set; }
         public int? PostId { get; set; }
