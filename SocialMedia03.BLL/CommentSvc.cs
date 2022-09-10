@@ -22,10 +22,10 @@ namespace SocialMedia03.BLL
             ReactSvc = new ReactSvc();
         }
 
-        public override Comment Get(int id)
+        public Comment Get(int id)
         {
             Comment c = _rep.GetSingle<Comment>(id);
-            c.User = UserSvc.Get(c.UserId);
+            c.User = base.Get<User>(c.UserId);
             c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
             c.CommentSetLength = _rep.CountReplies(c.Id);
             if (c.ParentId != null)
@@ -38,7 +38,7 @@ namespace SocialMedia03.BLL
             IQueryable<Comment> rs = _rep.GetCommentsByPost(postId, page);
             foreach (var c in rs)
             {
-                c.User = UserSvc.Get(c.UserId);
+                c.User = base.Get<User>(c.UserId);
                 c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
                 c.CommentSetLength = _rep.CountReplies(c.Id);
             }
@@ -56,7 +56,7 @@ namespace SocialMedia03.BLL
             IQueryable<Comment> rs = _rep.GetCommentReplies(commentId, page);
             foreach (var c in rs)
             {
-                c.User = UserSvc.Get(c.UserId);
+                c.User = base.Get<User>(c.UserId);
                 c.Reacts = ReactSvc.GetReactsByComment(c.Id).ToHashSet();
                 c.CommentSetLength = _rep.CountReplies(c.Id);
             }
@@ -66,9 +66,7 @@ namespace SocialMedia03.BLL
 
         public bool Delete(int id)
         {
-            Comment c = _rep.GetSingle<Comment>(id);
-
-            return _rep.Delete(c);
+            return base.Delete(base.Get<Comment>(id));
         }
 
         public Comment Create(CommentReq req, User creator)
@@ -109,7 +107,7 @@ namespace SocialMedia03.BLL
         public Comment Update(int currentCommentId, CommentReq req)
         {
             Comment currentComment = this.Get(currentCommentId);
-            currentComment.User = UserSvc.Get(currentComment.UserId);
+            currentComment.User = base.Get<User>(currentComment.UserId);
             currentComment.Reacts = ReactSvc.GetReactsByComment(currentComment.Id).ToHashSet();
             currentComment.Content = req.Content;
             currentComment.CreatedDate = DateTime.Now;

@@ -1,11 +1,6 @@
 ﻿using SocialMedia03.Common.DAL;
 using SocialMedia03.Common.Res;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialMedia03.Common.BLL
 {
@@ -52,9 +47,9 @@ namespace SocialMedia03.Common.BLL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        public virtual T Get(int id)
+        public virtual T Get<T>(int id) where T: TEntity
         {
-            throw new Exception("No supports");
+            return _rep.GetSingle<T>(id);
         }
 
         /// <summary>
@@ -88,16 +83,16 @@ namespace SocialMedia03.Common.BLL
             return res;
         }
 
-      
+
 
         /// <summary>
         /// Delete single object
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the result</returns>
-        public virtual SingleRes Delete(int id)
+        public virtual bool Delete(T obj)
         {
-            return null;
+            return _rep.Delete(obj);
         }
 
         /// <summary>

@@ -15,11 +15,6 @@ namespace SocialMedia03.BLL
     public class UserSvc : GenericSvc<UserRep, User>
     {
 
-        public User Get(int id)
-        {
-            return _rep.GetSingle<User>(id);
-        }
-
         public User Authenticate(string email, string password)
         {
             User user = _rep.GetUserByEmail(email.Trim());
@@ -66,12 +61,14 @@ namespace SocialMedia03.BLL
             return users;
         }
 
+        public User Get(int id) 
+        {
+            return base.Get<User>(id);
+        }
+
         public bool Delete(int id)
         {
-            User u = _rep.GetSingle<User>(id);
-            
-
-            return _rep.Delete(u);
+            return base.Delete(base.Get<User>(id));
         }
     }
 }
