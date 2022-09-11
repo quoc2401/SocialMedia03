@@ -23,13 +23,13 @@ $(function () {
 
     switch (pathName) {
         case undefined:
-            $('#homeMenu').addClass('active');
+            $('.homeMenu').addClass('active');
             break;
-        case "auction":
-            $('#auctionMenu').addClass('active');
+        case "follow":
+            $('.followMenu').addClass('active');
             break;
         case "admin":
-            $('#chartMenu').addClass('active');
+            $('.chartMenu').addClass('active');
             break;
     }
 });

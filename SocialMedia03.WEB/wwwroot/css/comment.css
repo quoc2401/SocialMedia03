@@ -45,7 +45,7 @@
 
 .child-have-reply .comment--item::after {
     content: '';
-    width: 2px;
+    width: 1.5px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -60,7 +60,7 @@
 
 .reply-comments .comment--item .point:before {
     content: '';
-    width: 2px;
+    width: 1.5px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -94,7 +94,7 @@
 
 .commentFormReply .point-to-formReply::before {
     content: '';
-    width: 2px;
+    width: 1.5px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -116,7 +116,7 @@
 
 .btn-load-reply-comments .point-to-showMore::before {
     content: '';
-    width: 2px;
+    width: 1.5px;
     height: 100%;
     background: #c7cacb;
     position: absolute;
@@ -135,7 +135,7 @@
 .count-like-comment {
     border-radius: 50px;
     box-shadow: 0px 2px 4px #999;
-    padding: 2px;
+    padding: 1.5px;
     color: #333;
     font-size: 13.5px;
     display: flex;
