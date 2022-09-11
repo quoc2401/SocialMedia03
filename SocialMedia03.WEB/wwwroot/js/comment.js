@@ -373,7 +373,7 @@ function addReply(currentCommentId, formEl, postId) {
 function formEditComment(commentId, postId) {
     return `<div style="width: 188px">
                 <form class="w-100" onsubmit="editComment(${commentId}, this, ${postId})">
-                    <input name="editContent" placeholder="Aa" rows=2 id="form-edit-comment${commentId}" class="form-edit-comment"></input>
+                    <input name="editContent" style="height: 70px" placeholder="Aa" rows=2 id="form-edit-comment${commentId}" class="form-edit-comment"></input>
                 </form>
                 <div class="cancel-edit-comment cancel-edit-comment${commentId}">Hủy</div>
             </div>`
