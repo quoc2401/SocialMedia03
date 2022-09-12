@@ -17,7 +17,7 @@ function isBlank(str) {
 
 $(function () {
     let pathName = location.pathname.split("/").find(function (element) {
-        if (element.indexOf("SharingHope"))
+        if (element.indexOf("/"))
             return element;
     });
 
