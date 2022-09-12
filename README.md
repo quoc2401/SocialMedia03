@@ -2,19 +2,19 @@
 Website Mạng xã hội
 
 ### Features
-Đăng nhập (vai trò Người dùng, Quản trị)
-Đăng kí người dùng
-Hiển thị, đăng, xóa, cập nhật bài viết
-Hashtag, tìm kiếm theo hashtag
-Lọc tìm kiếm người dùng, bài viết
-Like, comment bài viết
-Like, trả lời comment
-Report bài viết, người dùng
-Trang cá nhân người dùng
-Notification realtime khi có tương tác (socket)
-Dẫn đến bài viết đã được thông báo khi nhấp vào notification
-Chat realtime (firebase)
-Người dùng quản trị có thể xem thống kê báo cáo, xử lí report
+- Đăng nhập (vai trò Người dùng, Quản trị)
+- Đăng kí người dùng
+- Hiển thị, đăng, xóa, cập nhật bài viết
+- Hashtag, tìm kiếm theo hashtag
+- Lọc tìm kiếm người dùng, bài viết
+- Like, comment bài viết
+- Like, trả lời comment
+- Report bài viết, người dùng
+- Trang cá nhân người dùng
+- Notification realtime khi có tương tác (socket)
+- Dẫn đến bài viết đã được thông báo khi nhấp vào notification
+- Chat realtime (firebase)
+- Người dùng quản trị có thể xem thống kê báo cáo, xử lí report
 
 ### Main technology used
 - ASP.NET Core
